@@ -140,7 +140,7 @@ abstract class Cache
 
 	protected function setSerializer(string $serializer)
 	{
-		if ( ! \in_array($serializer, ['igbinary', 'json', 'php'])) {
+		if ( ! \in_array($serializer, ['igbinary', 'json', 'msgpack', 'php'])) {
 			throw new \InvalidArgumentException("Invalid serializer: {$serializer}");
 		}
 		$this->serializer = $serializer;
@@ -159,6 +159,9 @@ abstract class Cache
 		if ($this->serializer === 'json') {
 			return \json_encode($value) ?: '';
 		}
+		if ($this->serializer === 'msgpack') {
+			return \msgpack_pack($value);
+		}
 		return \serialize($value);
 	}
 
@@ -169,6 +172,9 @@ abstract class Cache
 		}
 		if ($this->serializer === 'json') {
 			return \json_decode($value, true);
+		}
+		if ($this->serializer === 'msgpack') {
+			return \msgpack_unpack($value);
 		}
 		return \unserialize($value, [false]);
 	}

@@ -21,6 +21,7 @@
 		"ext-igbinary": "*",
 		"ext-json": "*",
 		"ext-memcached": "*",
+		"ext-msgpack": "*",
 		"ext-redis": "*"
 	},
 	"require-dev": {
