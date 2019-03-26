@@ -17,7 +17,11 @@
 		}
 	],
 	"require": {
-		"php": ">=7.3"
+		"php": ">=7.3",
+		"ext-igbinary": "*",
+		"ext-json": "*",
+		"ext-memcached": "*",
+		"ext-redis": "*"
 	},
 	"require-dev": {
 		"ext-xdebug": "*",
