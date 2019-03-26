@@ -1,6 +1,8 @@
 <?php namespace Tests\Cache;
 
+use Framework\Cache\Cache;
+
 class RedisMsgpackTest extends RedisTest
 {
-	protected $serializer = 'msgpack';
+	protected $serializer = Cache::SERIALIZER_MSGPACK;
 }

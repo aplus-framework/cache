@@ -1,6 +1,8 @@
 <?php namespace Tests\Cache;
 
+use Framework\Cache\Cache;
+
 class RedisJsonTest extends RedisTest
 {
-	protected $serializer = 'json';
+	protected $serializer = Cache::SERIALIZER_JSON;
 }

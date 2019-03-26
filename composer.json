@@ -6,7 +6,10 @@
 		"cache",
 		"files",
 		"memcached",
-		"redis"
+		"redis",
+		"igbinary",
+		"json",
+		"msgpack"
 	],
 	"homepage": "https://gitlab.com/the-framework/cache",
 	"license": "proprietary",

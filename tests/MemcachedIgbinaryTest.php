@@ -1,6 +1,8 @@
 <?php namespace Tests\Cache;
 
+use Framework\Cache\Cache;
+
 class MemcachedIgbinaryTest extends MemcachedTest
 {
-	protected $serializer = 'igbinary';
+	protected $serializer = Cache::SERIALIZER_IGBINARY;
 }

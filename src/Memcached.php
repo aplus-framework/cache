@@ -71,16 +71,16 @@ class Memcached extends Cache
 	protected function connect()
 	{
 		switch ($this->serializer) {
-			case 'igbinary':
+			case static::SERIALIZER_IGBINARY:
 				$serializer = \Memcached::SERIALIZER_IGBINARY;
 				break;
-			case 'json':
+			case static::SERIALIZER_JSON:
 				$serializer = \Memcached::SERIALIZER_JSON;
 				break;
-			case 'msgpack':
+			case static::SERIALIZER_MSGPACK:
 				$serializer = \Memcached::SERIALIZER_MSGPACK;
 				break;
-			case 'php':
+			case static::SERIALIZER_PHP:
 			default:
 				$serializer = \Memcached::SERIALIZER_PHP;
 				break;

@@ -6,6 +6,22 @@
 abstract class Cache
 {
 	/**
+	 * The Igbinary serializer.
+	 */
+	public const SERIALIZER_IGBINARY = 'igbinary';
+	/**
+	 * The JSON serializer.
+	 */
+	public const SERIALIZER_JSON = 'json';
+	/**
+	 * The MessagePack serializer.
+	 */
+	public const SERIALIZER_MSGPACK = 'msgpack';
+	/**
+	 * The PHP serializer.
+	 */
+	public const SERIALIZER_PHP = 'php';
+	/**
 	 * Driver specific configurations.
 	 *
 	 * @var array
@@ -22,17 +38,20 @@ abstract class Cache
 	 *
 	 * @var string
 	 */
-	protected $serializer = 'php';
+	protected $serializer;
 
 	/**
 	 * Cache constructor.
 	 *
 	 * @param array       $configs    Driver specific configurations
 	 * @param string|null $prefix     Keys prefix
-	 * @param string      $serializer Data serializer
+	 * @param string      $serializer Data serializer. One of the SERIALIZER_* constants
 	 */
-	public function __construct(array $configs, string $prefix = null, string $serializer = 'php')
-	{
+	public function __construct(
+		array $configs,
+		string $prefix = null,
+		string $serializer = Cache::SERIALIZER_PHP
+	) {
 		if ($configs) {
 			$this->configs = \array_replace_recursive($this->configs, $configs);
 		}
@@ -140,7 +159,12 @@ abstract class Cache
 
 	protected function setSerializer(string $serializer)
 	{
-		if ( ! \in_array($serializer, ['igbinary', 'json', 'msgpack', 'php'])) {
+		if ( ! \in_array($serializer, [
+			static::SERIALIZER_IGBINARY,
+			static::SERIALIZER_JSON,
+			static::SERIALIZER_MSGPACK,
+			static::SERIALIZER_PHP,
+		], true)) {
 			throw new \InvalidArgumentException("Invalid serializer: {$serializer}");
 		}
 		$this->serializer = $serializer;
@@ -153,13 +177,13 @@ abstract class Cache
 
 	protected function serialize($value) : string
 	{
-		if ($this->serializer === 'igbinary') {
+		if ($this->serializer === static::SERIALIZER_IGBINARY) {
 			return \igbinary_serialize($value);
 		}
-		if ($this->serializer === 'json') {
+		if ($this->serializer === static::SERIALIZER_JSON) {
 			return \json_encode($value) ?: '';
 		}
-		if ($this->serializer === 'msgpack') {
+		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_pack($value);
 		}
 		return \serialize($value);
@@ -167,13 +191,13 @@ abstract class Cache
 
 	protected function unserialize(string $value)
 	{
-		if ($this->serializer === 'igbinary') {
+		if ($this->serializer === static::SERIALIZER_IGBINARY) {
 			return \igbinary_unserialize($value);
 		}
-		if ($this->serializer === 'json') {
+		if ($this->serializer === static::SERIALIZER_JSON) {
 			return \json_decode($value, true);
 		}
-		if ($this->serializer === 'msgpack') {
+		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_unpack($value);
 		}
 		return \unserialize($value, [false]);

@@ -1,6 +1,8 @@
 <?php namespace Tests\Cache;
 
+use Framework\Cache\Cache;
+
 class MemcachedJsonTest extends MemcachedTest
 {
-	protected $serializer = 'json';
+	protected $serializer = Cache::SERIALIZER_JSON;
 }

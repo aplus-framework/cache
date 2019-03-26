@@ -1,9 +1,11 @@
 <?php namespace Tests\Cache;
 
+use Framework\Cache\Cache;
+
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
 	/**
-	 * @var \Framework\Cache\Cache
+	 * @var Cache
 	 */
 	protected $cache;
 	/**
@@ -17,7 +19,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 	/**
 	 * @var string
 	 */
-	protected $serializer = 'php';
+	protected $serializer = Cache::SERIALIZER_PHP;
 
 	public function tearDown()
 	{
