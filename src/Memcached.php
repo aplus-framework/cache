@@ -77,6 +77,9 @@ class Memcached extends Cache
 			case 'json':
 				$serializer = \Memcached::SERIALIZER_JSON;
 				break;
+			case 'msgpack':
+				$serializer = \Memcached::SERIALIZER_MSGPACK;
+				break;
 			case 'php':
 			default:
 				$serializer = \Memcached::SERIALIZER_PHP;
