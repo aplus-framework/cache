@@ -54,7 +54,10 @@ class FilesTest extends TestCase
 
 	public function testCacheDirectoryIsNotWritable()
 	{
-		\chmod($this->configs['directory'], 0644);
+		if (\getenv('GITLAB_CI')) {
+			$this->markTestIncomplete();
+		}
+		\chmod($this->configs['directory'], 0400);
 		$this->expectException(\RuntimeException::class);
 		$this->expectExceptionMessage(
 			"Cache directory is not writable: {$this->configs['directory']}{$this->prefix}"
