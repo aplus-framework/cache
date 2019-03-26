@@ -51,11 +51,11 @@ abstract class Cache
 
 	public function getMulti(array $keys) : array
 	{
-		$keys = \array_fill_keys($keys, false);
-		foreach ($keys as $key => &$value) {
-			$value = $this->get($key);
+		$values = [];
+		foreach ($keys as $key) {
+			$values[$key] = $this->get($key);
 		}
-		return $keys;
+		return $values;
 	}
 
 	/**
@@ -69,12 +69,12 @@ abstract class Cache
 	 */
 	abstract public function set(string $key, $value, int $ttl = 60) : bool;
 
-	public function setMulti(array $keys, int $ttl = 60) : array
+	public function setMulti(array $data, int $ttl = 60) : array
 	{
-		foreach ($keys as $key => &$value) {
+		foreach ($data as $key => &$value) {
 			$value = $this->set($key, $value, $ttl);
 		}
-		return $keys;
+		return $data;
 	}
 
 	/**
@@ -88,11 +88,11 @@ abstract class Cache
 
 	public function deleteMulti(array $keys) : array
 	{
-		$keys = \array_fill_keys($keys, false);
-		foreach ($keys as $key => &$value) {
-			$value = $this->delete($key);
+		$values = [];
+		foreach ($keys as $key) {
+			$values[$key] = $this->delete($key);
 		}
-		return $keys;
+		return $values;
 	}
 
 	/**

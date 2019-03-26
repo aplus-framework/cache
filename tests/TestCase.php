@@ -45,8 +45,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 			$this->cache->setMulti(['foo' => 'x', 'bar' => 'y'], 1)
 		);
 		$this->assertEquals(
-			['bar' => 'y', 'foo' => 'x'],
-			$this->cache->getMulti(['bar', 'foo'])
+			['bar' => 'y', 'foo' => 'x', 'baz' => null],
+			$this->cache->getMulti(['bar', 'foo', 'baz'])
 		);
 		\sleep(2);
 		$this->assertEquals(
