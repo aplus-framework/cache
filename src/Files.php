@@ -51,15 +51,18 @@ class Files extends Cache
 		if ($real === false) {
 			throw new \RuntimeException("Invalid cache directory: {$path}");
 		}
-		$real = $path . \DIRECTORY_SEPARATOR . $this->prefix . \DIRECTORY_SEPARATOR;
+		$real = \rtrim($path, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+		if (isset($this->prefix[0])) {
+			$real .= $this->prefix . \DIRECTORY_SEPARATOR;
+		}
 		if ( ! \is_dir($real)) {
 			throw new \RuntimeException(
-				"Invalid cache directory path: {$path}"
+				"Invalid cache directory path: {$real}"
 			);
 		}
 		if ( ! \is_writable($real)) {
 			throw new \RuntimeException(
-				"Cache directory is not writable: {$path}"
+				"Cache directory is not writable: {$real}"
 			);
 		}
 		$this->baseDirectory = $real . \DIRECTORY_SEPARATOR;
@@ -238,7 +241,8 @@ class Files extends Cache
 		if ( ! \is_dir($real)) {
 			return false;
 		}
-		if (\strpos($real . \DIRECTORY_SEPARATOR, $this->configs['directory']) !== 0) {
+		$real = \rtrim($real, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+		if (\strpos($real, $this->configs['directory']) !== 0) {
 			return false;
 		}
 		return \opendir($real);
