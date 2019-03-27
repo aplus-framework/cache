@@ -103,7 +103,7 @@ class Files extends Cache
 		return $value['data'];
 	}
 
-	protected function makeDirectoryKeys(string $filepath) : void
+	protected function createSubDirectory(string $filepath) : void
 	{
 		$dirname = \dirname($filepath);
 		if (\is_dir($dirname)) {
@@ -119,7 +119,7 @@ class Files extends Cache
 	public function set(string $key, $value, int $ttl = 60) : bool
 	{
 		$filepath = $this->renderFilepath($key);
-		$this->makeDirectoryKeys($filepath);
+		$this->createSubDirectory($filepath);
 		$value = [
 			'ttl' => \time() + $ttl,
 			'data' => $value,
@@ -150,6 +150,10 @@ class Files extends Cache
 
 	/**
 	 * Garbage collector.
+	 *
+	 * Deletes all expired items.
+	 *
+	 * @return bool TRUE if all expired items was deleted, FALSE if a fail occuours
 	 */
 	public function gc() : bool
 	{

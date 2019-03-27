@@ -68,6 +68,13 @@ abstract class Cache
 	 */
 	abstract public function get(string $key);
 
+	/**
+	 * Gets multi items from the cache storage.
+	 *
+	 * @param array $keys List of items names to get
+	 *
+	 * @return array associative array with key names and respective values
+	 */
 	public function getMulti(array $keys) : array
 	{
 		$values = [];
@@ -88,6 +95,14 @@ abstract class Cache
 	 */
 	abstract public function set(string $key, $value, int $ttl = 60) : bool;
 
+	/**
+	 * Sets multi items to the cache storage.
+	 *
+	 * @param array $data Associative array with key names and respective values
+	 * @param int   $ttl  The Time To Live for all the items
+	 *
+	 * @return array associative array with key names and respective set status
+	 */
 	public function setMulti(array $data, int $ttl = 60) : array
 	{
 		foreach ($data as $key => &$value) {
@@ -105,6 +120,13 @@ abstract class Cache
 	 */
 	abstract public function delete(string $key) : bool;
 
+	/**
+	 * Deletes multi items from the cache storage.
+	 *
+	 * @param array $keys List of items names to be deleted
+	 *
+	 * @return array associative array with key names and respective delete status
+	 */
 	public function deleteMulti(array $keys) : array
 	{
 		$values = [];
