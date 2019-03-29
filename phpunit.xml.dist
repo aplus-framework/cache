@@ -26,4 +26,9 @@
 		<log type="coverage-text" target="php://stdout" />
 	</logging>
 
+	<php>
+		<env name="MEMCACHED_HOST" value="memcached"/>
+		<env name="REDIS_HOST" value="redis"/>
+	</php>
+
 </phpunit>

@@ -8,7 +8,7 @@ class MemcachedTest extends TestCase
 	{
 		$this->configs = [
 			[
-				'host' => \getenv('GITLAB_CI') ? 'memcached' : '127.0.0.1',
+				'host' => \getenv('MEMCACHED_HOST'),
 			],
 		];
 		$this->cache = new Memcached($this->configs, $this->prefix, $this->serializer);

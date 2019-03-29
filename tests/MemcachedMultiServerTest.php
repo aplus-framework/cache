@@ -6,10 +6,10 @@ class MemcachedMultiServerTest extends MemcachedTest
 	{
 		$this->configs = [
 			[
-				'host' => \getenv('GITLAB_CI') ? 'memcached' : '127.0.0.1',
+				'host' => \getenv('MEMCACHED_HOST'),
 			],
 			[
-				'host' => \getenv('GITLAB_CI') ? 'memcached' : '127.0.0.1',
+				'host' => \getenv('MEMCACHED_HOST'),
 			],
 		];
 		parent::setUp();
