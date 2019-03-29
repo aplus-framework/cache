@@ -1,8 +1,7 @@
 ---
-image: php:7.3
+image: natanfelles/php-base
 
 test:php7.3:
-  image: php:7.3
   stage: test
   cache:
     paths:
@@ -11,27 +10,6 @@ test:php7.3:
     - memcached
     - redis
   before_script:
-    - apt-get update -yqq
-    - apt-get install -yqq curl git libcurl4-gnutls-dev libmemcached11 libmemcached-dev libxml2-dev libbz2-dev
-      libzip-dev wget zlib1g-dev zip automake autoconf libtool g++
-    # Install PHP extensions
-    - docker-php-ext-install curl json mbstring xml zip
-    # Install PECL extensions
-    - pecl install igbinary msgpack redis xdebug-beta
-    - docker-php-ext-enable igbinary msgpack redis xdebug
-    - pecl download memcached-3.1.3
-    - tar xzvf memcached-3.1.3.tgz
-    - cd memcached-3.1.3
-    - phpize
-    - ./configure --enable-memcached-igbinary --enable-memcached-json --enable-memcached-msgpack
-    - make
-    - make install
-    - cd ..
-    - rm -rf memcached-3.1.3*
-    - docker-php-ext-enable memcached
-    # Install and run Composer
-    - curl -sS https://getcomposer.org/installer | php
-    - mv composer.phar /usr/bin/composer
     - composer install
   script:
     # composer.json normalization
