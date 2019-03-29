@@ -1,0 +1,18 @@
+---
+version: "3"
+services:
+  package:
+    image: natanfelles/package
+    container_name: cache-package
+    working_dir: /package
+    volumes:
+      - .:/package
+    depends_on:
+      - memcached
+      - redis
+  memcached:
+    image: memcached:alpine
+    container_name: cache-memcached
+  redis:
+    image: redis:alpine
+    container_name: cache-redis
