@@ -26,6 +26,16 @@ class FilesTest extends TestCase
 		parent::tearDown();
 	}
 
+	public function testGC()
+	{
+		$this->cache->set('foo', 'bar', 1);
+		$this->cache->set('bar', 'baz', 2);
+		\sleep(1);
+		$this->assertTrue($this->cache->gc());
+		$this->assertNull($this->cache->get('foo'));
+		$this->assertEquals('baz', $this->cache->get('bar'));
+	}
+
 	public function testInvalidGCValue()
 	{
 		$this->configs['gc'] = 0;
@@ -50,6 +60,15 @@ class FilesTest extends TestCase
 			"Invalid cache directory path: {$this->configs['directory']}{$this->prefix}"
 		);
 		new Files($this->configs, $this->prefix, $this->serializer);
+	}
+
+	public function testInvalidSerializer()
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage(
+			'Invalid serializer: foo'
+		);
+		new Files($this->configs, $this->prefix, 'foo');
 	}
 
 	public function testCacheDirectoryIsNotWritable()
