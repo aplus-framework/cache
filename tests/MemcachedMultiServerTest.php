@@ -2,7 +2,7 @@
 
 class MemcachedMultiServerTest extends MemcachedTest
 {
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->configs = [
 			[
@@ -18,10 +18,10 @@ class MemcachedMultiServerTest extends MemcachedTest
 	public function testMutiServerEmptyHost()
 	{
 		$this->expectException(\Exception::class);
-		(new \Framework\Cache\Memcached([
+		new \Framework\Cache\Memcached([
 			'server' => [
 				['foo'],
 			],
-		]));
+		]);
 	}
 }

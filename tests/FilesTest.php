@@ -11,14 +11,14 @@ class FilesTest extends TestCase
 		'directory' => '/tmp/cache/',
 	];
 
-	public function setUp()
+	public function setUp() : void
 	{
 		\exec('rm -rf ' . $this->configs['directory']);
 		\exec('mkdir -p ' . $this->configs['directory'] . $this->prefix);
 		$this->cache = new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
-	public function tearDown()
+	public function tearDown() : void
 	{
 		if (\is_dir($this->configs['directory'])) {
 			\chmod($this->configs['directory'], 0777);

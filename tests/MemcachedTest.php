@@ -4,7 +4,7 @@ use Framework\Cache\Memcached;
 
 class MemcachedTest extends TestCase
 {
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->configs = [
 			[

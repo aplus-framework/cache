@@ -4,7 +4,7 @@ use Framework\Cache\Redis;
 
 class RedisTest extends TestCase
 {
-	public function setUp()
+	public function setUp() : void
 	{
 		$this->configs = [
 			'host' => \getenv('REDIS_HOST'),

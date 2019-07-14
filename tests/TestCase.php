@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 	 */
 	protected $serializer = Cache::SERIALIZER_PHP;
 
-	public function tearDown()
+	public function tearDown() : void
 	{
 		$this->cache->flush();
 		$this->cache = null;
