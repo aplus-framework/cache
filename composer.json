@@ -1,7 +1,7 @@
 {
 	"name": "framework/cache",
 	"type": "library",
-	"description": "The Cache package",
+	"description": "The Framework Cache Library",
 	"keywords": [
 		"cache",
 		"files",
@@ -11,7 +11,7 @@
 		"json",
 		"msgpack"
 	],
-	"homepage": "https://gitlab.com/the-framework/cache",
+	"homepage": "https://the-framework.gitlab.io/libraries/cache.html",
 	"license": "proprietary",
 	"authors": [
 		{
@@ -63,9 +63,9 @@
 	},
 	"support": {
 		"email": "natanfelles@gmail.com",
-		"issues": "https://gitlab.com/the-framework/cache/issues",
-		"wiki": "https://gitlab.com/the-framework/packages/cache",
-		"source": "https://gitlab.com/the-framework/cache",
-		"docs": "https://the-framework.gitlab.io/the-framework/packages/cache/api"
+		"issues": "https://gitlab.com/the-framework/libraries/cache/issues",
+		"wiki": "https://gitlab.com/the-framework/libraries/cache/wikis/home",
+		"source": "https://gitlab.com/the-framework/libraries/cache",
+		"docs": "https://the-framework.gitlab.io/the-framework/libraries/cache/docs/"
 	}
 }
