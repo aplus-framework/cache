@@ -12,7 +12,7 @@
 		"msgpack"
 	],
 	"homepage": "https://the-framework.gitlab.io/libraries/cache.html",
-	"license": "proprietary",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Natan Felles",
