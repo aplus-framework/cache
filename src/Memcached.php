@@ -50,7 +50,8 @@ class Memcached extends Cache
 
 	public function get(string $key)
 	{
-		return $this->memcached->get($this->renderKey($key)) ?: null;
+		$key = $this->memcached->get($this->renderKey($key));
+		return $key !== false ? $key : null;
 	}
 
 	public function set(string $key, $value, int $ttl = 60) : bool
@@ -76,6 +77,9 @@ class Memcached extends Cache
 				break;
 			case static::SERIALIZER_JSON:
 				$serializer = \Memcached::SERIALIZER_JSON;
+				break;
+			case static::SERIALIZER_JSON_ARRAY:
+				$serializer = \Memcached::SERIALIZER_JSON_ARRAY;
 				break;
 			case static::SERIALIZER_MSGPACK:
 				$serializer = \Memcached::SERIALIZER_MSGPACK;

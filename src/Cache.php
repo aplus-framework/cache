@@ -14,6 +14,10 @@ abstract class Cache
 	 */
 	public const SERIALIZER_JSON = 'json';
 	/**
+	 * The JSON Array serializer.
+	 */
+	public const SERIALIZER_JSON_ARRAY = 'json-array';
+	/**
 	 * The MessagePack serializer.
 	 */
 	public const SERIALIZER_MSGPACK = 'msgpack';
@@ -71,7 +75,7 @@ abstract class Cache
 	/**
 	 * Gets multi items from the cache storage.
 	 *
-	 * @param array $keys List of items names to get
+	 * @param array|string[] $keys List of items names to get
 	 *
 	 * @return array associative array with key names and respective values
 	 */
@@ -101,7 +105,7 @@ abstract class Cache
 	 * @param array $data Associative array with key names and respective values
 	 * @param int   $ttl  The Time To Live for all the items
 	 *
-	 * @return array associative array with key names and respective set status
+	 * @return array|bool[] associative array with key names and respective set status
 	 */
 	public function setMulti(array $data, int $ttl = 60) : array
 	{
@@ -123,9 +127,9 @@ abstract class Cache
 	/**
 	 * Deletes multi items from the cache storage.
 	 *
-	 * @param array $keys List of items names to be deleted
+	 * @param array|string[] $keys List of items names to be deleted
 	 *
-	 * @return array associative array with key names and respective delete status
+	 * @return array|bool[] associative array with key names and respective delete status
 	 */
 	public function deleteMulti(array $keys) : array
 	{
@@ -184,6 +188,7 @@ abstract class Cache
 		if ( ! \in_array($serializer, [
 			static::SERIALIZER_IGBINARY,
 			static::SERIALIZER_JSON,
+			static::SERIALIZER_JSON_ARRAY,
 			static::SERIALIZER_MSGPACK,
 			static::SERIALIZER_PHP,
 		], true)) {
@@ -202,8 +207,11 @@ abstract class Cache
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {
 			return \igbinary_serialize($value);
 		}
-		if ($this->serializer === static::SERIALIZER_JSON) {
-			return \json_encode($value) ?: '';
+		if ($this->serializer === static::SERIALIZER_JSON
+			|| $this->serializer === static::SERIALIZER_JSON_ARRAY
+		) {
+			$value = \json_encode($value);
+			return $value !== false ? $value : '';
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_pack($value);
@@ -217,6 +225,9 @@ abstract class Cache
 			return \igbinary_unserialize($value);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON) {
+			return \json_decode($value);
+		}
+		if ($this->serializer === static::SERIALIZER_JSON_ARRAY) {
 			return \json_decode($value, true);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {

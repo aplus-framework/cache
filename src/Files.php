@@ -95,7 +95,7 @@ class Files extends Cache
 		if ($value === false) {
 			return null;
 		}
-		$value = $this->unserialize($value);
+		$value = (array) $this->unserialize($value);
 		if ( ! isset($value['ttl'], $value['data']) || $value['ttl'] <= \time()) {
 			$this->deleteFile($filepath);
 			return null;

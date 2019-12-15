@@ -9,6 +9,7 @@ class FilesTest extends TestCase
 	 */
 	protected $configs = [
 		'directory' => '/tmp/cache/',
+		'gc' => 100,
 	];
 
 	public function setUp() : void
