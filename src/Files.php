@@ -10,7 +10,7 @@ class Files extends Cache
 	 *
 	 * @var array
 	 */
-	protected $configs = [
+	protected array $configs = [
 		'directory' => null,
 		'length' => 4096,
 		'files_permission' => 0644,
@@ -19,7 +19,7 @@ class Files extends Cache
 	/**
 	 * @var string|null
 	 */
-	protected $baseDirectory;
+	protected ?string $baseDirectory;
 
 	public function __construct(array $configs, string $prefix = null, string $serializer = 'php')
 	{

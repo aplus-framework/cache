@@ -5,14 +5,8 @@
  */
 class Memcached extends Cache
 {
-	/**
-	 * @var \Memcached
-	 */
-	protected $memcached;
-	/**
-	 * @var array
-	 */
-	protected $configs = [
+	protected \Memcached $memcached;
+	protected array $configs = [
 		[
 			'host' => '127.0.0.1',
 			'port' => 11211,

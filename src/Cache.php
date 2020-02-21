@@ -30,19 +30,19 @@ abstract class Cache
 	 *
 	 * @var array
 	 */
-	protected $configs = [];
+	protected array $configs = [];
 	/**
 	 * Keys prefix.
 	 *
 	 * @var string|null
 	 */
-	protected $prefix;
+	protected ?string $prefix;
 	/**
 	 * Data serializer.
 	 *
 	 * @var string
 	 */
-	protected $serializer;
+	protected string $serializer;
 
 	/**
 	 * Cache constructor.

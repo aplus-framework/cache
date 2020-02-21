@@ -4,10 +4,7 @@ use Framework\Cache\Files;
 
 class FilesTest extends TestCase
 {
-	/**
-	 * @var array
-	 */
-	protected $configs = [
+	protected array $configs = [
 		'directory' => '/tmp/cache/',
 		'gc' => 100,
 	];
