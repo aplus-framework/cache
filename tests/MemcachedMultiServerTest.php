@@ -17,7 +17,8 @@ class MemcachedMultiServerTest extends MemcachedTest
 
 	public function testMutiServerEmptyHost()
 	{
-		$this->expectException(\Exception::class);
+		$this->expectException(\OutOfBoundsException::class);
+		$this->expectErrorMessage('Memcached server host empty on config "server"');
 		new \Framework\Cache\Memcached([
 			'server' => [
 				['foo'],

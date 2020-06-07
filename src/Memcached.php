@@ -36,7 +36,7 @@ class Memcached extends Cache
 		foreach ($this->configs as $index => $config) {
 			if (empty($config['host'])) {
 				throw new \OutOfBoundsException(
-					"Memcached server host empty on config {$index}"
+					"Memcached server host empty on config \"{$index}\""
 				);
 			}
 		}
