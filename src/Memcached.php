@@ -1,5 +1,7 @@
 <?php namespace Framework\Cache;
 
+use OutOfBoundsException;
+
 /**
  * Class Memcached.
  */
@@ -35,7 +37,7 @@ class Memcached extends Cache
 	{
 		foreach ($this->configs as $index => $config) {
 			if (empty($config['host'])) {
-				throw new \OutOfBoundsException(
+				throw new OutOfBoundsException(
 					"Memcached server host empty on config \"{$index}\""
 				);
 			}

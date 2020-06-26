@@ -1,5 +1,7 @@
 <?php namespace Framework\Cache;
 
+use InvalidArgumentException;
+
 /**
  * Class Cache.
  */
@@ -192,7 +194,7 @@ abstract class Cache
 			static::SERIALIZER_MSGPACK,
 			static::SERIALIZER_PHP,
 		], true)) {
-			throw new \InvalidArgumentException("Invalid serializer: {$serializer}");
+			throw new InvalidArgumentException("Invalid serializer: {$serializer}");
 		}
 		$this->serializer = $serializer;
 	}

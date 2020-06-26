@@ -1,5 +1,8 @@
 <?php namespace Framework\Cache;
 
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * Class Files.
  */
@@ -38,7 +41,7 @@ class Files extends Cache
 	protected function setGC(int $gc)
 	{
 		if ($gc < 1 || $gc > 100) {
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				"Invalid cache GC: {$gc}"
 			);
 		}
@@ -49,19 +52,19 @@ class Files extends Cache
 		$path = $this->configs['directory'];
 		$real = \realpath($path);
 		if ($real === false) {
-			throw new \RuntimeException("Invalid cache directory: {$path}");
+			throw new RuntimeException("Invalid cache directory: {$path}");
 		}
 		$real = \rtrim($path, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 		if (isset($this->prefix[0])) {
 			$real .= $this->prefix . \DIRECTORY_SEPARATOR;
 		}
 		if ( ! \is_dir($real)) {
-			throw new \RuntimeException(
+			throw new RuntimeException(
 				"Invalid cache directory path: {$real}"
 			);
 		}
 		if ( ! \is_writable($real)) {
-			throw new \RuntimeException(
+			throw new RuntimeException(
 				"Cache directory is not writable: {$real}"
 			);
 		}
@@ -110,7 +113,7 @@ class Files extends Cache
 			return;
 		}
 		if ( ! \mkdir($dirname, 0777, true) || ! \is_dir($dirname)) {
-			throw new \RuntimeException(
+			throw new RuntimeException(
 				"Directory key was not created: {$filepath}"
 			);
 		}
