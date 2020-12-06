@@ -11,7 +11,7 @@ class Files extends Cache
 	/**
 	 * Files Driver configurations.
 	 *
-	 * @var array
+	 * @var array|mixed[]
 	 */
 	protected array $configs = [
 		'directory' => null,
@@ -38,7 +38,7 @@ class Files extends Cache
 		}
 	}
 
-	protected function setGC(int $gc)
+	protected function setGC(int $gc) : void
 	{
 		if ($gc < 1 || $gc > 100) {
 			throw new InvalidArgumentException(
@@ -47,7 +47,7 @@ class Files extends Cache
 		}
 	}
 
-	protected function setBaseDirectory()
+	protected function setBaseDirectory() : void
 	{
 		$path = $this->configs['directory'];
 		$real = \realpath($path);
@@ -156,7 +156,7 @@ class Files extends Cache
 	 *
 	 * Deletes all expired items.
 	 *
-	 * @return bool TRUE if all expired items was deleted, FALSE if a fail occuours
+	 * @return bool TRUE if all expired items was deleted, FALSE if a fail occurs
 	 */
 	public function gc() : bool
 	{
@@ -255,6 +255,9 @@ class Files extends Cache
 		return \opendir($real);
 	}
 
+	/**
+	 * @param resource $resource
+	 */
 	protected function closeDir($resource) : void
 	{
 		if (\is_resource($resource)) {

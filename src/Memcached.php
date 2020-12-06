@@ -28,9 +28,7 @@ class Memcached extends Cache
 
 	public function __destruct()
 	{
-		if ($this->memcached) {
-			$this->memcached->quit();
-		}
+		$this->memcached->quit();
 	}
 
 	protected function validateConfigs() : void
@@ -65,7 +63,7 @@ class Memcached extends Cache
 		return $this->memcached->flush();
 	}
 
-	protected function connect()
+	protected function connect() : void
 	{
 		switch ($this->serializer) {
 			case static::SERIALIZER_IGBINARY:

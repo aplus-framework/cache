@@ -30,7 +30,7 @@ abstract class Cache
 	/**
 	 * Driver specific configurations.
 	 *
-	 * @var array
+	 * @var array|mixed[]
 	 */
 	protected array $configs = [];
 	/**
@@ -49,9 +49,9 @@ abstract class Cache
 	/**
 	 * Cache constructor.
 	 *
-	 * @param array       $configs    Driver specific configurations
-	 * @param string|null $prefix     Keys prefix
-	 * @param string      $serializer Data serializer. One of the SERIALIZER_* constants
+	 * @param array|mixed[] $configs    Driver specific configurations
+	 * @param string|null   $prefix     Keys prefix
+	 * @param string        $serializer Data serializer. One of the SERIALIZER_* constants
 	 */
 	public function __construct(
 		array $configs,
@@ -79,7 +79,7 @@ abstract class Cache
 	 *
 	 * @param array|string[] $keys List of items names to get
 	 *
-	 * @return array associative array with key names and respective values
+	 * @return array|mixed[] associative array with key names and respective values
 	 */
 	public function getMulti(array $keys) : array
 	{
@@ -104,8 +104,8 @@ abstract class Cache
 	/**
 	 * Sets multi items to the cache storage.
 	 *
-	 * @param array $data Associative array with key names and respective values
-	 * @param int   $ttl  The Time To Live for all the items
+	 * @param array|mixed[] $data Associative array with key names and respective values
+	 * @param int           $ttl  The Time To Live for all the items
 	 *
 	 * @return array|bool[] associative array with key names and respective set status
 	 */
@@ -185,7 +185,7 @@ abstract class Cache
 		return $value;
 	}
 
-	protected function setSerializer(string $serializer)
+	protected function setSerializer(string $serializer) : void
 	{
 		if ( ! \in_array($serializer, [
 			static::SERIALIZER_IGBINARY,
@@ -204,6 +204,11 @@ abstract class Cache
 		return $this->prefix . $key;
 	}
 
+	/**
+	 * @param mixed $value
+	 *
+	 * @return string
+	 */
 	protected function serialize($value) : string
 	{
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {
@@ -221,6 +226,11 @@ abstract class Cache
 		return \serialize($value);
 	}
 
+	/**
+	 * @param string $value
+	 *
+	 * @return mixed
+	 */
 	protected function unserialize(string $value)
 	{
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {

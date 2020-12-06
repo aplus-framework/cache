@@ -23,12 +23,10 @@ class Redis extends Cache
 
 	public function __destruct()
 	{
-		if ($this->redis) {
-			$this->redis->close();
-		}
+		$this->redis->close();
 	}
 
-	protected function connect()
+	protected function connect() : void
 	{
 		$this->redis = new \Redis();
 		$this->redis->connect(
@@ -58,7 +56,7 @@ class Redis extends Cache
 
 	public function delete(string $key) : bool
 	{
-		return $this->redis->del($this->renderKey($key));
+		return (bool) $this->redis->del($this->renderKey($key));
 	}
 
 	public function flush() : bool
