@@ -129,15 +129,15 @@ class Files extends Cache
 		];
 		$value = $this->serialize($value);
 		$handle = \fopen($filepath, 'wb+');
-		$writed = false;
+		$written = false;
 		if ($handle) {
 			\flock($handle, \LOCK_EX);
-			$writed = \fwrite($handle, $value, $this->configs['length']);
+			$written = \fwrite($handle, $value, $this->configs['length']);
 			\flock($handle, \LOCK_UN);
 			\fclose($handle);
 			\chmod($filepath, $this->configs['files_permission']);
 		}
-		return $writed !== false;
+		return $written !== false;
 	}
 
 	public function delete(string $key) : bool
@@ -249,7 +249,7 @@ class Files extends Cache
 			return false;
 		}
 		$real = \rtrim($real, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
-		if (\strpos($real, $this->configs['directory']) !== 0) {
+		if ( ! \str_starts_with($real, $this->configs['directory'])) {
 			return false;
 		}
 		return \opendir($real);
