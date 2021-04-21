@@ -99,7 +99,7 @@ abstract class Cache
 	 *
 	 * @return bool TRUE if the item was set, FALSE if fail to set
 	 */
-	abstract public function set(string $key, $value, int $ttl = 60) : bool;
+	abstract public function set(string $key, mixed $value, int $ttl = 60) : bool;
 
 	/**
 	 * Sets multi items to the cache storage.

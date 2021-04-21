@@ -45,7 +45,7 @@ class Redis extends Cache
 		return $this->unserialize($value);
 	}
 
-	public function set(string $key, $value, int $ttl = 60) : bool
+	public function set(string $key, mixed $value, int $ttl = 60) : bool
 	{
 		return $this->redis->set(
 			$this->renderKey($key),
