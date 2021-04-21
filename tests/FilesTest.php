@@ -60,6 +60,11 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
+	public function testDefaultConfigs()
+	{
+		$this->assertInstanceOf(Files::class, new Files());
+	}
+
 	public function testInvalidSerializer()
 	{
 		$this->expectException(\InvalidArgumentException::class);

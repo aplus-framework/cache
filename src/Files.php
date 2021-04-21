@@ -24,8 +24,11 @@ class Files extends Cache
 	 */
 	protected ?string $baseDirectory;
 
-	public function __construct(array $configs, string $prefix = null, string $serializer = 'php')
-	{
+	public function __construct(
+		array $configs = [],
+		string $prefix = null,
+		string $serializer = 'php'
+	) {
 		parent::__construct($configs, $prefix, $serializer);
 		$this->setBaseDirectory();
 		$this->setGC($this->configs['gc']);
@@ -50,13 +53,16 @@ class Files extends Cache
 	protected function setBaseDirectory() : void
 	{
 		$path = $this->configs['directory'];
+		if ($path === null) {
+			$path = \sys_get_temp_dir();
+		}
 		$real = \realpath($path);
 		if ($real === false) {
 			throw new RuntimeException("Invalid cache directory: {$path}");
 		}
 		$real = \rtrim($path, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 		if (isset($this->prefix[0])) {
-			$real .= $this->prefix . \DIRECTORY_SEPARATOR;
+			$real .= $this->prefix;
 		}
 		if ( ! \is_dir($real)) {
 			throw new RuntimeException(
