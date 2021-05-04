@@ -207,6 +207,8 @@ abstract class Cache
 	/**
 	 * @param mixed $value
 	 *
+	 * @throws \JsonException
+	 *
 	 * @return string
 	 */
 	protected function serialize($value) : string
@@ -217,8 +219,7 @@ abstract class Cache
 		if ($this->serializer === static::SERIALIZER_JSON
 			|| $this->serializer === static::SERIALIZER_JSON_ARRAY
 		) {
-			$value = \json_encode($value);
-			return $value !== false ? $value : '';
+			return \json_encode($value, \JSON_THROW_ON_ERROR);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_pack($value);
@@ -229,6 +230,8 @@ abstract class Cache
 	/**
 	 * @param string $value
 	 *
+	 * @throws \JsonException
+	 *
 	 * @return mixed
 	 */
 	protected function unserialize(string $value)
@@ -237,10 +240,10 @@ abstract class Cache
 			return \igbinary_unserialize($value);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON) {
-			return \json_decode($value);
+			return \json_decode($value, false, 512, \JSON_THROW_ON_ERROR);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON_ARRAY) {
-			return \json_decode($value, true);
+			return \json_decode($value, true, 512, \JSON_THROW_ON_ERROR);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_unpack($value);
