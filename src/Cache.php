@@ -222,7 +222,7 @@ abstract class Cache
 			return \json_encode($value, \JSON_THROW_ON_ERROR);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
-			return \msgpack_pack($value);
+			return \msgpack_serialize($value);
 		}
 		return \serialize($value);
 	}
@@ -246,7 +246,7 @@ abstract class Cache
 			return \json_decode($value, true, 512, \JSON_THROW_ON_ERROR);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
-			return \msgpack_unpack($value);
+			return \msgpack_unserialize($value);
 		}
 		return \unserialize($value);
 	}
