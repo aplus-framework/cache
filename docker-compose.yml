@@ -9,6 +9,7 @@ services:
     depends_on:
       - memcached
       - redis
+    tty: true
   memcached:
     image: memcached:alpine
     container_name: cache-memcached
