@@ -15,7 +15,6 @@ class Files extends Cache
 	 */
 	protected array $configs = [
 		'directory' => null,
-		'length' => 4096,
 		'files_permission' => 0644,
 		'gc' => 1,
 	];
@@ -98,7 +97,7 @@ class Files extends Cache
 			return null;
 		}
 		\flock($handle, \LOCK_SH);
-		$value = \fread($handle, $this->configs['length']);
+		$value = \fread($handle, \filesize($filepath));
 		\flock($handle, \LOCK_UN);
 		\fclose($handle);
 		if ($value === false) {
@@ -140,7 +139,7 @@ class Files extends Cache
 			return false;
 		}
 		\flock($handle, \LOCK_EX);
-		$written = \fwrite($handle, $value, $this->configs['length']);
+		$written = \fwrite($handle, $value);
 		\flock($handle, \LOCK_UN);
 		\fclose($handle);
 		if ($is_file === false) {
