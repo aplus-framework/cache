@@ -86,4 +86,21 @@ class FilesTest extends TestCase
 		);
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
+
+	public function testSetFailure()
+	{
+		$this->assertTrue($this->cache->set('key', 'value'));
+		\exec('chmod 444 ' . $this->configs['directory'] . '*');
+		$this->assertFalse($this->cache->set('key', 'value'));
+		\exec('chmod 777 ' . $this->configs['directory'] . '*');
+	}
+
+	public function testGetFailure()
+	{
+		$this->assertTrue($this->cache->set('key', 'value'));
+		$this->assertEquals('value', $this->cache->get('key'));
+		\exec('chmod 444 ' . $this->configs['directory'] . '*');
+		$this->assertNull($this->cache->get('key'));
+		\exec('chmod 777 ' . $this->configs['directory'] . '*');
+	}
 }

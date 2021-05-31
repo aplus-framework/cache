@@ -93,7 +93,7 @@ class Files extends Cache
 		if ( ! \is_file($filepath)) {
 			return null;
 		}
-		$handle = \fopen($filepath, 'rb');
+		$handle = @\fopen($filepath, 'rb');
 		if ($handle === false) {
 			return null;
 		}
@@ -134,13 +134,16 @@ class Files extends Cache
 			'data' => $value,
 		];
 		$value = $this->serialize($value);
-		$handle = \fopen($filepath, 'wb+');
-		$written = false;
-		if ($handle) {
-			\flock($handle, \LOCK_EX);
-			$written = \fwrite($handle, $value, $this->configs['length']);
-			\flock($handle, \LOCK_UN);
-			\fclose($handle);
+		$is_file = \is_file($filepath);
+		$handle = @\fopen($filepath, 'wb+');
+		if ($handle === false) {
+			return false;
+		}
+		\flock($handle, \LOCK_EX);
+		$written = \fwrite($handle, $value, $this->configs['length']);
+		\flock($handle, \LOCK_UN);
+		\fclose($handle);
+		if ($is_file === false) {
 			\chmod($filepath, $this->configs['files_permission']);
 		}
 		return $written !== false;
