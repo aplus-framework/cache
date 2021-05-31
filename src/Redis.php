@@ -36,7 +36,7 @@ class Redis extends Cache
 		);
 	}
 
-	public function get(string $key)
+	public function get(string $key) : mixed
 	{
 		$value = $this->redis->get($this->renderKey($key));
 		if ($value === false) {

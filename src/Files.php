@@ -76,7 +76,7 @@ class Files extends Cache
 		$this->baseDirectory = $real . \DIRECTORY_SEPARATOR;
 	}
 
-	public function get(string $key)
+	public function get(string $key) : mixed
 	{
 		$key = $this->renderFilepath($key);
 		return $this->getContents($key);
@@ -85,9 +85,9 @@ class Files extends Cache
 	/**
 	 * @param string $filepath
 	 *
-	 * @return mixed|null
+	 * @return mixed
 	 */
-	protected function getContents(string $filepath)
+	protected function getContents(string $filepath) : mixed
 	{
 		if ( ! \is_file($filepath)) {
 			return null;

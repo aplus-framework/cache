@@ -42,7 +42,7 @@ class Memcached extends Cache
 		}
 	}
 
-	public function get(string $key)
+	public function get(string $key) : mixed
 	{
 		$key = $this->memcached->get($this->renderKey($key));
 		return $key !== false ? $key : null;

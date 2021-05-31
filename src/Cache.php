@@ -70,9 +70,9 @@ abstract class Cache
 	 *
 	 * @param string $key The item name
 	 *
-	 * @return mixed|null The item value or null if not found
+	 * @return mixed The item value or null if not found
 	 */
-	abstract public function get(string $key);
+	abstract public function get(string $key) : mixed;
 
 	/**
 	 * Gets multi items from the cache storage.
@@ -211,7 +211,7 @@ abstract class Cache
 	 *
 	 * @return string
 	 */
-	protected function serialize($value) : string
+	protected function serialize(mixed $value) : string
 	{
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {
 			return \igbinary_serialize($value);
@@ -234,7 +234,7 @@ abstract class Cache
 	 *
 	 * @return mixed
 	 */
-	protected function unserialize(string $value)
+	protected function unserialize(string $value) : mixed
 	{
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {
 			return \igbinary_unserialize($value);
