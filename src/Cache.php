@@ -235,7 +235,7 @@ abstract class Cache
 	protected function unserialize(string $value) : mixed
 	{
 		if ($this->serializer === static::SERIALIZER_IGBINARY) {
-			return \igbinary_unserialize($value);
+			return @\igbinary_unserialize($value);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON) {
 			return \json_decode($value);
