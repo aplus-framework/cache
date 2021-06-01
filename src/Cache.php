@@ -230,8 +230,6 @@ abstract class Cache
 	/**
 	 * @param string $value
 	 *
-	 * @throws \JsonException
-	 *
 	 * @return mixed
 	 */
 	protected function unserialize(string $value) : mixed
@@ -240,10 +238,10 @@ abstract class Cache
 			return \igbinary_unserialize($value);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON) {
-			return \json_decode($value, false, 512, \JSON_THROW_ON_ERROR);
+			return \json_decode($value);
 		}
 		if ($this->serializer === static::SERIALIZER_JSON_ARRAY) {
-			return \json_decode($value, true, 512, \JSON_THROW_ON_ERROR);
+			return \json_decode($value, true);
 		}
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_unserialize($value);
