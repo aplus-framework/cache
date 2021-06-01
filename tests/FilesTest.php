@@ -103,4 +103,14 @@ class FilesTest extends TestCase
 		$this->assertNull($this->cache->get('key'));
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
+
+	public function testGetInvalidFilesize()
+	{
+		$this->assertTrue($this->cache->set('key', 'value'));
+		$this->assertEquals('value', $this->cache->get('key'));
+		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {
+			\file_put_contents($file, '');
+		}
+		$this->assertNull($this->cache->get('key'));
+	}
 }

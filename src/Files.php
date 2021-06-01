@@ -96,8 +96,13 @@ class Files extends Cache
 		if ($handle === false) {
 			return null;
 		}
+		$size = @\filesize($filepath);
+		if (empty($size)) {
+			$this->deleteFile($filepath);
+			return null;
+		}
 		\flock($handle, \LOCK_SH);
-		$value = \fread($handle, \filesize($filepath));
+		$value = \fread($handle, $size);
 		\flock($handle, \LOCK_UN);
 		\fclose($handle);
 		if ($value === false) {
