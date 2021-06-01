@@ -246,6 +246,6 @@ abstract class Cache
 		if ($this->serializer === static::SERIALIZER_MSGPACK) {
 			return \msgpack_unserialize($value);
 		}
-		return \unserialize($value);
+		return \unserialize($value, ['allowed_classes' => true]);
 	}
 }
