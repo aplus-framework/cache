@@ -107,7 +107,6 @@ class FilesTest extends TestCase
 	public function testGetInvalidFilesize()
 	{
 		$this->assertTrue($this->cache->set('key', 'value'));
-		$this->assertEquals('value', $this->cache->get('key'));
 		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {
 			\file_put_contents($file, '');
 		}
