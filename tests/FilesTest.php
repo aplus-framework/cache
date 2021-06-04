@@ -110,7 +110,7 @@ class FilesTest extends TestCase
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
 
-	public function testGetInvalidFilesize()
+	public function testGetInvalidContents()
 	{
 		$this->assertTrue($this->cache->set('key', 'value'));
 		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {

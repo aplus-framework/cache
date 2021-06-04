@@ -92,19 +92,7 @@ class Files extends Cache
 		if ( ! \is_file($filepath)) {
 			return null;
 		}
-		$handle = @\fopen($filepath, 'rb');
-		if ($handle === false) {
-			return null;
-		}
-		$size = @\filesize($filepath);
-		if (empty($size)) {
-			$this->deleteFile($filepath);
-			return null;
-		}
-		\flock($handle, \LOCK_SH);
-		$value = \fread($handle, $size);
-		\flock($handle, \LOCK_UN);
-		\fclose($handle);
+		$value = @\file_get_contents($filepath);
 		if ($value === false) {
 			return null;
 		}
@@ -139,15 +127,8 @@ class Files extends Cache
 		];
 		$value = $this->serialize($value);
 		$is_file = \is_file($filepath);
-		$handle = @\fopen($filepath, 'wb+');
-		if ($handle === false) {
-			return false;
-		}
-		\flock($handle, \LOCK_EX);
-		$written = \fwrite($handle, $value);
-		\flock($handle, \LOCK_UN);
-		\fclose($handle);
-		if ($is_file === false) {
+		$written = @\file_put_contents($filepath, $value, \LOCK_EX);
+		if ($written !== false && $is_file === false) {
 			\chmod($filepath, $this->configs['files_permission']);
 		}
 		return $written !== false;
