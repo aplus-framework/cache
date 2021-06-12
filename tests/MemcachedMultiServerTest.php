@@ -1,6 +1,6 @@
 <?php namespace Tests\Cache;
 
-class MemcachedMultiServerTest extends MemcachedTest
+final class MemcachedMultiServerTest extends MemcachedTest
 {
 	public function setUp() : void
 	{
