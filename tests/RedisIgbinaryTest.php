@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-class RedisIgbinaryTest extends RedisTest
+final class RedisIgbinaryTest extends RedisTest
 {
 	protected string $serializer = Cache::SERIALIZER_IGBINARY;
 }

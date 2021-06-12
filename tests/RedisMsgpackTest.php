@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-class RedisMsgpackTest extends RedisTest
+final class RedisMsgpackTest extends RedisTest
 {
 	protected string $serializer = Cache::SERIALIZER_MSGPACK;
 }
