@@ -24,7 +24,7 @@ class FilesTest extends TestCase
 		parent::tearDown();
 	}
 
-	public function testGC()
+	public function testGC() : void
 	{
 		$this->cache->set('foo', 'bar', 1);
 		$this->cache->set('bar', 'baz', 2);
@@ -34,7 +34,7 @@ class FilesTest extends TestCase
 		$this->assertEquals('baz', $this->cache->get('bar'));
 	}
 
-	public function testInvalidGCValue()
+	public function testInvalidGCValue() : void
 	{
 		$this->configs['gc'] = 0;
 		$this->expectException(\InvalidArgumentException::class);
@@ -42,7 +42,7 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
-	public function testInvalidCacheDirectory()
+	public function testInvalidCacheDirectory() : void
 	{
 		$this->configs['directory'] = '/foo';
 		$this->expectException(\RuntimeException::class);
@@ -50,7 +50,7 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
-	public function testInvalidCacheDirectoryPath()
+	public function testInvalidCacheDirectoryPath() : void
 	{
 		$this->prefix = 'foo';
 		$this->expectException(\RuntimeException::class);
@@ -60,12 +60,12 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
-	public function testDefaultConfigs()
+	public function testDefaultConfigs() : void
 	{
 		$this->assertInstanceOf(Files::class, new Files());
 	}
 
-	public function testInvalidSerializer()
+	public function testInvalidSerializer() : void
 	{
 		$this->expectException(\InvalidArgumentException::class);
 		$this->expectExceptionMessage(
@@ -74,7 +74,7 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, 'foo');
 	}
 
-	public function testCacheDirectoryIsNotWritable()
+	public function testCacheDirectoryIsNotWritable() : void
 	{
 		if (\getenv('GITLAB_CI')) {
 			$this->markTestIncomplete();
@@ -87,7 +87,7 @@ class FilesTest extends TestCase
 		new Files($this->configs, $this->prefix, $this->serializer);
 	}
 
-	public function testSetFailure()
+	public function testSetFailure() : void
 	{
 		if (\getenv('GITLAB_CI')) {
 			$this->markTestIncomplete();
@@ -98,7 +98,7 @@ class FilesTest extends TestCase
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
 
-	public function testGetFailure()
+	public function testGetFailure() : void
 	{
 		if (\getenv('GITLAB_CI')) {
 			$this->markTestIncomplete();
@@ -110,7 +110,7 @@ class FilesTest extends TestCase
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
 
-	public function testGetInvalidContents()
+	public function testGetInvalidContents() : void
 	{
 		$this->assertTrue($this->cache->set('key', 'value'));
 		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {

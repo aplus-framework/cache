@@ -15,7 +15,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$this->cache = null;
 	}
 
-	public function testSetAndGet()
+	public function testSetAndGet() : void
 	{
 		$this->assertNull($this->cache->get('foo'));
 		$this->assertTrue($this->cache->set('foo', 'bar', 1));
@@ -24,7 +24,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$this->assertNull($this->cache->get('foo'));
 	}
 
-	public function testSetMultiAndGetMulti()
+	public function testSetMultiAndGetMulti() : void
 	{
 		$this->assertEquals(
 			['foo' => null, 'bar' => null],
@@ -45,7 +45,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		);
 	}
 
-	public function testDelete()
+	public function testDelete() : void
 	{
 		$this->assertNull($this->cache->get('foo'));
 		$this->assertTrue($this->cache->set('foo', 'bar', 1));
@@ -54,7 +54,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$this->assertNull($this->cache->get('foo'));
 	}
 
-	public function testDeleteMulti()
+	public function testDeleteMulti() : void
 	{
 		$this->assertEquals(
 			['foo' => null, 'bar' => null],
@@ -78,7 +78,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		);
 	}
 
-	public function testFlush()
+	public function testFlush() : void
 	{
 		$this->assertEquals(
 			['foo' => true, 'bar' => true],
@@ -95,7 +95,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		);
 	}
 
-	public function testIncrement()
+	public function testIncrement() : void
 	{
 		$this->assertEquals(1, $this->cache->increment('i'));
 		$this->assertEquals(2, $this->cache->increment('i'));
@@ -106,7 +106,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$this->assertEquals(11, $this->cache->increment('i', 10));
 	}
 
-	public function testDecrement()
+	public function testDecrement() : void
 	{
 		$this->assertEquals(-1, $this->cache->decrement('i'));
 		$this->assertEquals(-2, $this->cache->decrement('i'));
@@ -117,7 +117,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		$this->assertEquals(-11, $this->cache->decrement('i', 10));
 	}
 
-	public function testIncrementAndDecrement()
+	public function testIncrementAndDecrement() : void
 	{
 		$this->assertEquals(1, $this->cache->increment('id'));
 		$this->assertEquals(2, $this->cache->increment('id'));
