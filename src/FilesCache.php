@@ -11,7 +11,7 @@ class FilesCache extends Cache
 	/**
 	 * Files Cache handler configurations.
 	 *
-	 * @var array<int|string,mixed>
+	 * @var array<string,mixed>
 	 */
 	protected array $configs = [
 		'directory' => null,

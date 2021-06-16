@@ -9,7 +9,7 @@ class RedisCache extends Cache
 	/**
 	 * Redis Cache handler configurations.
 	 *
-	 * @var array<int|string,mixed>
+	 * @var array<string,mixed>
 	 */
 	protected array $configs = [
 		'host' => '127.0.0.1',

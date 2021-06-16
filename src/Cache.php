@@ -30,7 +30,7 @@ abstract class Cache
 	/**
 	 * Driver specific configurations.
 	 *
-	 * @var array<int|string,mixed>
+	 * @var array<string,mixed>
 	 */
 	protected array $configs = [];
 	/**
@@ -49,7 +49,7 @@ abstract class Cache
 	/**
 	 * Cache constructor.
 	 *
-	 * @param array<int|string,mixed> $configs Driver specific configurations
+	 * @param array<string,mixed> $configs Driver specific configurations
 	 * @param string|null $prefix Keys prefix
 	 * @param string $serializer Data serializer. One of the SERIALIZER_* constants
 	 */

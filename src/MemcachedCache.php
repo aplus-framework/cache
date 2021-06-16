@@ -11,13 +11,15 @@ class MemcachedCache extends Cache
 	/**
 	 * Memcached Cache handler configurations.
 	 *
-	 * @var array<int|string,mixed>
+	 * @var array<string,mixed>
 	 */
 	protected array $configs = [
-		[
-			'host' => '127.0.0.1',
-			'port' => 11211,
-			'weight' => 1,
+		'servers' => [
+			[
+				'host' => '127.0.0.1',
+				'port' => 11211,
+				'weight' => 0,
+			],
 		],
 	];
 
@@ -38,10 +40,10 @@ class MemcachedCache extends Cache
 
 	protected function validateConfigs() : void
 	{
-		foreach ($this->configs as $index => $config) {
+		foreach ($this->configs['servers'] as $index => $config) {
 			if (empty($config['host'])) {
 				throw new OutOfBoundsException(
-					"Memcached server host empty on config \"{$index}\""
+					"Memcached host config empty on server '{$index}'"
 				);
 			}
 		}
@@ -92,11 +94,11 @@ class MemcachedCache extends Cache
 			\Memcached::OPT_SERIALIZER => $serializer,
 			\Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
 		]);
-		foreach ($this->configs as $configs) {
+		foreach ($this->configs['servers'] as $server) {
 			$this->memcached->addServer(
-				$configs['host'],
-				$configs['port'] ?? 11211,
-				$configs['weight'] ?? 1
+				$server['host'],
+				$server['port'] ?? 11211,
+				$server['weight'] ?? 0
 			);
 		}
 	}

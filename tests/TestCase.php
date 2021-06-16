@@ -6,7 +6,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
 	protected ?Cache $cache;
 	/**
-	 * @var array<int|string,mixed>
+	 * @var array<string,mixed>
 	 */
 	protected array $configs = [];
 	protected string $prefix = 'test';

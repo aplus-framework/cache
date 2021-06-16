@@ -7,11 +7,13 @@ final class MemcachedCacheMultiServerTest extends MemcachedCacheTest
 	public function setUp() : void
 	{
 		$this->configs = [
-			[
-				'host' => \getenv('MEMCACHED_HOST'),
-			],
-			[
-				'host' => \getenv('MEMCACHED_HOST'),
+			'servers' => [
+				[
+					'host' => \getenv('MEMCACHED_HOST'),
+				],
+				[
+					'host' => \getenv('MEMCACHED_HOST'),
+				],
 			],
 		];
 		parent::setUp();
