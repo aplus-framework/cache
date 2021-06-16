@@ -1,5 +1,6 @@
 <?php namespace Framework\Cache;
 
+use Framework\Log\Logger;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ExpectedValues;
 
@@ -46,6 +47,7 @@ abstract class Cache
 	 * @var string
 	 */
 	protected string $serializer;
+	protected ?Logger $logger;
 
 	/**
 	 * Cache constructor.
@@ -63,13 +65,15 @@ abstract class Cache
 			Cache::SERIALIZER_JSON_ARRAY,
 			Cache::SERIALIZER_MSGPACK,
 			Cache::SERIALIZER_PHP,
-		])] string $serializer = Cache::SERIALIZER_PHP
+		])] string $serializer = Cache::SERIALIZER_PHP,
+		Logger $logger = null
 	) {
 		if ($configs) {
 			$this->configs = \array_replace_recursive($this->configs, $configs);
 		}
 		$this->prefix = $prefix;
 		$this->setSerializer($serializer);
+		$this->logger = $logger;
 		$this->initialize();
 	}
 
@@ -78,6 +82,24 @@ abstract class Cache
 	 */
 	protected function initialize() : void
 	{
+	}
+
+	protected function log(
+		string $message,
+		#[ExpectedValues([
+			Logger::DEBUG,
+			Logger::INFO,
+			Logger::NOTICE,
+			Logger::WARNING,
+			Logger::ERROR,
+			Logger::CRITICAL,
+			Logger::ALERT,
+			Logger::EMERGENCY,
+		])] int $level = Logger::ERROR
+	) : void {
+		if (isset($this->logger)) {
+			$this->logger->log($level, $message);
+		}
 	}
 
 	/**
