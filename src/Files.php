@@ -157,19 +157,19 @@ class Files extends Cache
 		return $this->deleteExpired($this->baseDirectory);
 	}
 
-	protected function deleteExpired(string $base_directory) : bool
+	protected function deleteExpired(string $baseDirectory) : bool
 	{
-		$handle = $this->openDir($base_directory);
+		$handle = $this->openDir($baseDirectory);
 		if ($handle === false) {
 			return false;
 		}
-		$base_directory = \rtrim($base_directory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+		$baseDirectory = \rtrim($baseDirectory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 		$status = true;
 		while (($path = \readdir($handle)) !== false) {
 			if ($path[0] === '.') {
 				continue;
 			}
-			$path = $base_directory . $path;
+			$path = $baseDirectory . $path;
 			if (\is_file($path)) {
 				$this->getContents($path);
 				continue;
@@ -187,19 +187,19 @@ class Files extends Cache
 		return $status;
 	}
 
-	protected function deleteAll(string $base_directory) : bool
+	protected function deleteAll(string $baseDirectory) : bool
 	{
-		$handle = $this->openDir($base_directory);
+		$handle = $this->openDir($baseDirectory);
 		if ($handle === false) {
 			return false;
 		}
-		$base_directory = \rtrim($base_directory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+		$baseDirectory = \rtrim($baseDirectory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
 		$status = true;
 		while (($path = \readdir($handle)) !== false) {
 			if ($path[0] === '.') {
 				continue;
 			}
-			$path = $base_directory . $path;
+			$path = $baseDirectory . $path;
 			if (\is_file($path)) {
 				if (\unlink($path)) {
 					continue;
