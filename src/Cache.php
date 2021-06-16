@@ -1,6 +1,7 @@
 <?php namespace Framework\Cache;
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\ExpectedValues;
 
 /**
  * Class Cache.
@@ -56,7 +57,13 @@ abstract class Cache
 	public function __construct(
 		array $configs = [],
 		string $prefix = null,
-		string $serializer = Cache::SERIALIZER_PHP
+		#[ExpectedValues([
+			Cache::SERIALIZER_IGBINARY,
+			Cache::SERIALIZER_JSON,
+			Cache::SERIALIZER_JSON_ARRAY,
+			Cache::SERIALIZER_MSGPACK,
+			Cache::SERIALIZER_PHP,
+		])] string $serializer = Cache::SERIALIZER_PHP
 	) {
 		if ($configs) {
 			$this->configs = \array_replace_recursive($this->configs, $configs);
