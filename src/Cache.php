@@ -54,7 +54,7 @@ abstract class Cache
 	 * @param string $serializer Data serializer. One of the SERIALIZER_* constants
 	 */
 	public function __construct(
-		array $configs,
+		array $configs = [],
 		string $prefix = null,
 		string $serializer = Cache::SERIALIZER_PHP
 	) {
@@ -63,6 +63,14 @@ abstract class Cache
 		}
 		$this->prefix = $prefix;
 		$this->setSerializer($serializer);
+		$this->initialize();
+	}
+
+	/**
+	 * Initialize Cache handlers and configurations.
+	 */
+	protected function initialize() : void
+	{
 	}
 
 	/**

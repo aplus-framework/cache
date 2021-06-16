@@ -23,21 +23,17 @@ class FilesCache extends Cache
 	 */
 	protected ?string $baseDirectory;
 
-	public function __construct(
-		array $configs = [],
-		string $prefix = null,
-		string $serializer = 'php'
-	) {
-		parent::__construct($configs, $prefix, $serializer);
-		$this->setBaseDirectory();
-		$this->setGC($this->configs['gc']);
-	}
-
 	public function __destruct()
 	{
 		if (\rand(1, 100) <= $this->configs['gc']) {
 			$this->gc();
 		}
+	}
+
+	protected function initialize() : void
+	{
+		$this->setBaseDirectory();
+		$this->setGC($this->configs['gc']);
 	}
 
 	protected function setGC(int $gc) : void

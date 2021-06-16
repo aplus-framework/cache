@@ -19,18 +19,14 @@ class RedisCache extends Cache
 		'timeout' => 0.0,
 	];
 
-	public function __construct(
-		array $configs = [],
-		string $prefix = null,
-		string $serializer = 'php'
-	) {
-		parent::__construct($configs, $prefix, $serializer);
-		$this->connect();
-	}
-
 	public function __destruct()
 	{
 		$this->redis->close();
+	}
+
+	protected function initialize() : void
+	{
+		$this->connect();
 	}
 
 	protected function connect() : void

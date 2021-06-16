@@ -27,19 +27,15 @@ class MemcachedCache extends Cache
 		],
 	];
 
-	public function __construct(
-		array $configs = [],
-		string $prefix = null,
-		string $serializer = 'php'
-	) {
-		parent::__construct($configs, $prefix, $serializer);
-		$this->validateConfigs();
-		$this->connect();
-	}
-
 	public function __destruct()
 	{
 		$this->memcached->quit();
+	}
+
+	protected function initialize() : void
+	{
+		$this->validateConfigs();
+		$this->connect();
 	}
 
 	protected function validateConfigs() : void
