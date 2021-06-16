@@ -1,7 +1,9 @@
 <?php namespace Framework\Cache;
 
+use Framework\Log\Logger;
 use Memcached;
 use OutOfBoundsException;
+use RuntimeException;
 
 /**
  * Class MemcachedCache.
@@ -80,13 +82,29 @@ class MemcachedCache extends Cache
 			default => Memcached::SERIALIZER_PHP,
 		};
 		$this->memcached = new Memcached();
-		$this->memcached->setOptions($this->configs['options']);
+		$pool = [];
 		foreach ($this->configs['servers'] as $server) {
-			$this->memcached->addServer(
+			$host = $server['host'] . ':' . $server['port'];
+			if (\in_array($host, $pool, true)) {
+				$this->log('Cache (memcached): Server pool already has ' . $host, Logger::DEBUG);
+				continue;
+			}
+			$result = $this->memcached->addServer(
 				$server['host'],
 				$server['port'] ?? 11211,
 				$server['weight'] ?? 0
 			);
+			if ($result === false) {
+				$this->log("Cache (memcached): Could not add {$host} to server pool");
+			}
+			$pool[] = $host;
+		}
+		$result = $this->memcached->setOptions($this->configs['options']);
+		if ($result === false) {
+			$this->log('Cache (memcached): ' . $this->memcached->getLastErrorMessage());
+		}
+		if ( ! $this->memcached->getStats()) {
+			throw new RuntimeException('Cache (memcached): Could not connect to any server');
 		}
 	}
 }
