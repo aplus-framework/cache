@@ -84,7 +84,7 @@ class MemcachedCache extends Cache
 		$this->memcached = new Memcached();
 		$pool = [];
 		foreach ($this->configs['servers'] as $server) {
-			$host = $server['host'] . ':' . $server['port'];
+			$host = $server['host'] . ':' . ($server['port'] ?? 11211);
 			if (\in_array($host, $pool, true)) {
 				$this->log('Cache (memcached): Server pool already has ' . $host, Logger::DEBUG);
 				continue;
