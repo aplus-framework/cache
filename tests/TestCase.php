@@ -17,29 +17,29 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
 	public function testSetAndGet() : void
 	{
-		$this->assertNull($this->cache->get('foo'));
-		$this->assertTrue($this->cache->set('foo', 'bar', 1));
-		$this->assertEquals('bar', $this->cache->get('foo'));
+		self::assertNull($this->cache->get('foo'));
+		self::assertTrue($this->cache->set('foo', 'bar', 1));
+		self::assertSame('bar', $this->cache->get('foo'));
 		\sleep(2);
-		$this->assertNull($this->cache->get('foo'));
+		self::assertNull($this->cache->get('foo'));
 	}
 
 	public function testSetMultiAndGetMulti() : void
 	{
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => null, 'bar' => null],
 			$this->cache->getMulti(['foo', 'bar'])
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => true, 'bar' => true],
 			$this->cache->setMulti(['foo' => 'x', 'bar' => 'y'], 1)
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['bar' => 'y', 'foo' => 'x', 'baz' => null],
 			$this->cache->getMulti(['bar', 'foo', 'baz'])
 		);
 		\sleep(2);
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => null, 'bar' => null],
 			$this->cache->getMulti(['foo', 'bar'])
 		);
@@ -47,32 +47,32 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
 	public function testDelete() : void
 	{
-		$this->assertNull($this->cache->get('foo'));
-		$this->assertTrue($this->cache->set('foo', 'bar', 1));
-		$this->assertEquals('bar', $this->cache->get('foo'));
-		$this->assertTrue($this->cache->delete('foo'));
-		$this->assertNull($this->cache->get('foo'));
+		self::assertNull($this->cache->get('foo'));
+		self::assertTrue($this->cache->set('foo', 'bar', 1));
+		self::assertSame('bar', $this->cache->get('foo'));
+		self::assertTrue($this->cache->delete('foo'));
+		self::assertNull($this->cache->get('foo'));
 	}
 
 	public function testDeleteMulti() : void
 	{
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => null, 'bar' => null],
 			$this->cache->getMulti(['foo', 'bar'])
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => true, 'bar' => true],
 			$this->cache->setMulti(['foo' => 'x', 'bar' => 'y'], 1)
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['bar' => 'y', 'foo' => 'x'],
 			$this->cache->getMulti(['bar', 'foo'])
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => true, 'bar' => true],
 			$this->cache->deleteMulti(['foo', 'bar'])
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => null, 'bar' => null],
 			$this->cache->getMulti(['foo', 'bar'])
 		);
@@ -80,16 +80,16 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
 	public function testFlush() : void
 	{
-		$this->assertEquals(
+		self::assertSame(
 			['foo' => true, 'bar' => true],
 			$this->cache->setMulti(['foo' => 'x', 'bar' => 'y'], 1)
 		);
-		$this->assertEquals(
+		self::assertSame(
 			['bar' => 'y', 'foo' => 'x'],
 			$this->cache->getMulti(['bar', 'foo'])
 		);
-		$this->assertTrue($this->cache->flush());
-		$this->assertEquals(
+		self::assertTrue($this->cache->flush());
+		self::assertSame(
 			['bar' => null, 'foo' => null],
 			$this->cache->getMulti(['bar', 'foo'])
 		);
@@ -97,32 +97,32 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
 	public function testIncrement() : void
 	{
-		$this->assertEquals(1, $this->cache->increment('i'));
-		$this->assertEquals(2, $this->cache->increment('i'));
-		$this->assertEquals(5, $this->cache->increment('i', 3));
-		$this->assertEquals(6, $this->cache->increment('i', 1, 2));
+		self::assertSame(1, $this->cache->increment('i'));
+		self::assertSame(2, $this->cache->increment('i'));
+		self::assertSame(5, $this->cache->increment('i', 3));
+		self::assertSame(6, $this->cache->increment('i', 1, 2));
 		\sleep(3);
-		$this->assertEquals(1, $this->cache->increment('i'));
-		$this->assertEquals(11, $this->cache->increment('i', 10));
+		self::assertSame(1, $this->cache->increment('i'));
+		self::assertSame(11, $this->cache->increment('i', 10));
 	}
 
 	public function testDecrement() : void
 	{
-		$this->assertEquals(-1, $this->cache->decrement('i'));
-		$this->assertEquals(-2, $this->cache->decrement('i'));
-		$this->assertEquals(-5, $this->cache->decrement('i', 3));
-		$this->assertEquals(-6, $this->cache->decrement('i', 1, 2));
+		self::assertSame(-1, $this->cache->decrement('i'));
+		self::assertSame(-2, $this->cache->decrement('i'));
+		self::assertSame(-5, $this->cache->decrement('i', 3));
+		self::assertSame(-6, $this->cache->decrement('i', 1, 2));
 		\sleep(3);
-		$this->assertEquals(-1, $this->cache->decrement('i'));
-		$this->assertEquals(-11, $this->cache->decrement('i', 10));
+		self::assertSame(-1, $this->cache->decrement('i'));
+		self::assertSame(-11, $this->cache->decrement('i', 10));
 	}
 
 	public function testIncrementAndDecrement() : void
 	{
-		$this->assertEquals(1, $this->cache->increment('id'));
-		$this->assertEquals(2, $this->cache->increment('id'));
-		$this->assertEquals(3, $this->cache->increment('id'));
-		$this->assertEquals(2, $this->cache->decrement('id'));
-		$this->assertEquals(0, $this->cache->decrement('id', 2));
+		self::assertSame(1, $this->cache->increment('id'));
+		self::assertSame(2, $this->cache->increment('id'));
+		self::assertSame(3, $this->cache->increment('id'));
+		self::assertSame(2, $this->cache->decrement('id'));
+		self::assertSame(0, $this->cache->decrement('id', 2));
 	}
 }

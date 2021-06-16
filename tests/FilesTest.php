@@ -29,9 +29,9 @@ class FilesTest extends TestCase
 		$this->cache->set('foo', 'bar', 1);
 		$this->cache->set('bar', 'baz', 2);
 		\sleep(1);
-		$this->assertTrue($this->cache->gc());
-		$this->assertNull($this->cache->get('foo'));
-		$this->assertEquals('baz', $this->cache->get('bar'));
+		self::assertTrue($this->cache->gc());
+		self::assertNull($this->cache->get('foo'));
+		self::assertSame('baz', $this->cache->get('bar'));
 	}
 
 	public function testInvalidGCValue() : void
@@ -62,7 +62,7 @@ class FilesTest extends TestCase
 
 	public function testDefaultConfigs() : void
 	{
-		$this->assertInstanceOf(Files::class, new Files());
+		self::assertInstanceOf(Files::class, new Files());
 	}
 
 	public function testInvalidSerializer() : void
@@ -92,9 +92,9 @@ class FilesTest extends TestCase
 		if (\getenv('GITLAB_CI')) {
 			$this->markTestIncomplete();
 		}
-		$this->assertTrue($this->cache->set('key', 'value'));
+		self::assertTrue($this->cache->set('key', 'value'));
 		\exec('chmod 444 ' . $this->configs['directory'] . '*');
-		$this->assertFalse($this->cache->set('key', 'value'));
+		self::assertFalse($this->cache->set('key', 'value'));
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
 
@@ -103,19 +103,19 @@ class FilesTest extends TestCase
 		if (\getenv('GITLAB_CI')) {
 			$this->markTestIncomplete();
 		}
-		$this->assertTrue($this->cache->set('key', 'value'));
-		$this->assertEquals('value', $this->cache->get('key'));
+		self::assertTrue($this->cache->set('key', 'value'));
+		self::assertSame('value', $this->cache->get('key'));
 		\exec('chmod 444 ' . $this->configs['directory'] . '*');
-		$this->assertNull($this->cache->get('key'));
+		self::assertNull($this->cache->get('key'));
 		\exec('chmod 777 ' . $this->configs['directory'] . '*');
 	}
 
 	public function testGetInvalidContents() : void
 	{
-		$this->assertTrue($this->cache->set('key', 'value'));
+		self::assertTrue($this->cache->set('key', 'value'));
 		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {
 			\file_put_contents($file, '');
 		}
-		$this->assertNull($this->cache->get('key'));
+		self::assertNull($this->cache->get('key'));
 	}
 }
