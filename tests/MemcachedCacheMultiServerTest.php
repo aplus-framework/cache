@@ -22,10 +22,12 @@ final class MemcachedCacheMultiServerTest extends MemcachedCacheTest
 	public function testMultiServerEmptyHost() : void
 	{
 		$this->expectException(\OutOfBoundsException::class);
-		$this->expectErrorMessage('Memcached server host empty on config "server"');
+		$this->expectErrorMessage("Memcached host config empty on server '0'");
 		new MemcachedCache([
-			'server' => [
-				['foo'],
+			'servers' => [
+				[
+					'host' => '',
+				],
 			],
 		]);
 	}

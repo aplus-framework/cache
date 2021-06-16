@@ -21,6 +21,9 @@ class MemcachedCache extends Cache
 				'weight' => 0,
 			],
 		],
+		'options' => [
+			\Memcached::OPT_BINARY_PROTOCOL => true,
+		],
 	];
 
 	public function __construct(
@@ -72,7 +75,7 @@ class MemcachedCache extends Cache
 
 	protected function connect() : void
 	{
-		$serializer = match ($this->serializer) {
+		$this->configs['options'][\Memcached::OPT_SERIALIZER] = match ($this->serializer) {
 			static::SERIALIZER_IGBINARY => \Memcached::SERIALIZER_IGBINARY,
 			static::SERIALIZER_JSON => \Memcached::SERIALIZER_JSON,
 			static::SERIALIZER_JSON_ARRAY => \Memcached::SERIALIZER_JSON_ARRAY,
@@ -80,20 +83,7 @@ class MemcachedCache extends Cache
 			default => \Memcached::SERIALIZER_PHP,
 		};
 		$this->memcached = new \Memcached();
-		$this->memcached->setOptions([
-			\Memcached::OPT_BINARY_PROTOCOL => true,
-			\Memcached::OPT_CONNECT_TIMEOUT => 100,
-			\Memcached::OPT_COMPRESSION => true,
-			\Memcached::OPT_DISTRIBUTION => \Memcached::DISTRIBUTION_CONSISTENT,
-			\Memcached::OPT_LIBKETAMA_COMPATIBLE => true,
-			\Memcached::OPT_POLL_TIMEOUT => 100,
-			\Memcached::OPT_RECV_TIMEOUT => 100,
-			\Memcached::OPT_REMOVE_FAILED_SERVERS => true,
-			\Memcached::OPT_RETRY_TIMEOUT => 1,
-			\Memcached::OPT_SEND_TIMEOUT => 100,
-			\Memcached::OPT_SERIALIZER => $serializer,
-			\Memcached::OPT_SERVER_FAILURE_LIMIT => 2,
-		]);
+		$this->memcached->setOptions($this->configs['options']);
 		foreach ($this->configs['servers'] as $server) {
 			$this->memcached->addServer(
 				$server['host'],
