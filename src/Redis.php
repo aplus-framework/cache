@@ -6,6 +6,11 @@
 class Redis extends Cache
 {
 	protected \Redis $redis;
+	/**
+	 * Redis Driver configurations.
+	 *
+	 * @var array<int|string,mixed>
+	 */
 	protected array $configs = [
 		'host' => '127.0.0.1',
 		'port' => 6379,

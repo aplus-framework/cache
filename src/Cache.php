@@ -30,7 +30,7 @@ abstract class Cache
 	/**
 	 * Driver specific configurations.
 	 *
-	 * @var array|mixed[]
+	 * @var array<int|string,mixed>
 	 */
 	protected array $configs = [];
 	/**
@@ -49,9 +49,9 @@ abstract class Cache
 	/**
 	 * Cache constructor.
 	 *
-	 * @param array|mixed[] $configs    Driver specific configurations
-	 * @param string|null   $prefix     Keys prefix
-	 * @param string        $serializer Data serializer. One of the SERIALIZER_* constants
+	 * @param array<int|string,mixed> $configs Driver specific configurations
+	 * @param string|null $prefix Keys prefix
+	 * @param string $serializer Data serializer. One of the SERIALIZER_* constants
 	 */
 	public function __construct(
 		array $configs,
@@ -77,9 +77,9 @@ abstract class Cache
 	/**
 	 * Gets multi items from the cache storage.
 	 *
-	 * @param array|string[] $keys List of items names to get
+	 * @param array<int,string> $keys List of items names to get
 	 *
-	 * @return array|mixed[] associative array with key names and respective values
+	 * @return array<string,mixed> associative array with key names and respective values
 	 */
 	public function getMulti(array $keys) : array
 	{
@@ -93,9 +93,9 @@ abstract class Cache
 	/**
 	 * Sets one item to the cache storage.
 	 *
-	 * @param string $key   The item name
-	 * @param mixed  $value The item value
-	 * @param int    $ttl   The Time To Live for the item
+	 * @param string $key The item name
+	 * @param mixed $value The item value
+	 * @param int $ttl The Time To Live for the item
 	 *
 	 * @return bool TRUE if the item was set, FALSE if fail to set
 	 */
@@ -104,10 +104,10 @@ abstract class Cache
 	/**
 	 * Sets multi items to the cache storage.
 	 *
-	 * @param array|mixed[] $data Associative array with key names and respective values
-	 * @param int           $ttl  The Time To Live for all the items
+	 * @param array<string,mixed> $data Associative array with key names and respective values
+	 * @param int $ttl The Time To Live for all the items
 	 *
-	 * @return array|bool[] associative array with key names and respective set status
+	 * @return array<string,bool> associative array with key names and respective set status
 	 */
 	public function setMulti(array $data, int $ttl = 60) : array
 	{
@@ -129,9 +129,9 @@ abstract class Cache
 	/**
 	 * Deletes multi items from the cache storage.
 	 *
-	 * @param array|string[] $keys List of items names to be deleted
+	 * @param array<int,string> $keys List of items names to be deleted
 	 *
-	 * @return array|bool[] associative array with key names and respective delete status
+	 * @return array<string,bool> associative array with key names and respective delete status
 	 */
 	public function deleteMulti(array $keys) : array
 	{
@@ -152,9 +152,9 @@ abstract class Cache
 	/**
 	 * Increments the value of one item.
 	 *
-	 * @param string $key    The item name
-	 * @param int    $offset The value to increment
-	 * @param int    $ttl    The Time To Live for the item
+	 * @param string $key The item name
+	 * @param int $offset The value to increment
+	 * @param int $ttl The Time To Live for the item
 	 *
 	 * @return int The current item value
 	 */
@@ -170,9 +170,9 @@ abstract class Cache
 	/**
 	 * Decrements the value of one item.
 	 *
-	 * @param string $key    The item name
-	 * @param int    $offset The value to decrement
-	 * @param int    $ttl    The Time To Live for the item
+	 * @param string $key The item name
+	 * @param int $offset The value to decrement
+	 * @param int $ttl The Time To Live for the item
 	 *
 	 * @return int The current item value
 	 */

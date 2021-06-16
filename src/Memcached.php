@@ -8,6 +8,11 @@ use OutOfBoundsException;
 class Memcached extends Cache
 {
 	protected \Memcached $memcached;
+	/**
+	 * Memcached Driver configurations.
+	 *
+	 * @var array<int|string,mixed>
+	 */
 	protected array $configs = [
 		[
 			'host' => '127.0.0.1',

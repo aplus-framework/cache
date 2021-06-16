@@ -11,7 +11,7 @@ class Files extends Cache
 	/**
 	 * Files Driver configurations.
 	 *
-	 * @var array|mixed[]
+	 * @var array<int|string,mixed>
 	 */
 	protected array $configs = [
 		'directory' => null,
