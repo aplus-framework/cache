@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-final class RedisIgbinaryTest extends RedisTest
+final class MemcachedCacheIgbinaryTest extends MemcachedCacheTest
 {
 	protected string $serializer = Cache::SERIALIZER_IGBINARY;
 }

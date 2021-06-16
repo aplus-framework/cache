@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-final class MemcachedIgbinaryTest extends MemcachedTest
+final class FilesCacheIgbinaryTest extends FilesCacheTest
 {
 	protected string $serializer = Cache::SERIALIZER_IGBINARY;
 }

@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-final class RedisJsonTest extends RedisTest
+final class FilesCacheJsonTest extends FilesCacheTest
 {
 	protected string $serializer = Cache::SERIALIZER_JSON;
 }

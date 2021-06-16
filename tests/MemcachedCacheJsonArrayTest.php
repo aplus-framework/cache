@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-final class FilesJsonArrayTest extends FilesTest
+final class MemcachedCacheJsonArrayTest extends MemcachedCacheTest
 {
 	protected string $serializer = Cache::SERIALIZER_JSON_ARRAY;
 }

@@ -2,7 +2,7 @@
 
 use Framework\Cache\Cache;
 
-final class MemcachedMsgpackTest extends MemcachedTest
+final class FilesCacheMsgpackTest extends FilesCacheTest
 {
 	protected string $serializer = Cache::SERIALIZER_MSGPACK;
 }

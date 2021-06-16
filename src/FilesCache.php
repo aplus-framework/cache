@@ -4,12 +4,12 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Class Files.
+ * Class FilesCache.
  */
-class Files extends Cache
+class FilesCache extends Cache
 {
 	/**
-	 * Files Driver configurations.
+	 * Files Cache handler configurations.
 	 *
 	 * @var array<int|string,mixed>
 	 */

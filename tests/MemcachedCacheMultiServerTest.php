@@ -1,6 +1,8 @@
 <?php namespace Tests\Cache;
 
-final class MemcachedMultiServerTest extends MemcachedTest
+use Framework\Cache\MemcachedCache;
+
+final class MemcachedCacheMultiServerTest extends MemcachedCacheTest
 {
 	public function setUp() : void
 	{
@@ -15,11 +17,11 @@ final class MemcachedMultiServerTest extends MemcachedTest
 		parent::setUp();
 	}
 
-	public function testMutiServerEmptyHost() : void
+	public function testMultiServerEmptyHost() : void
 	{
 		$this->expectException(\OutOfBoundsException::class);
 		$this->expectErrorMessage('Memcached server host empty on config "server"');
-		new \Framework\Cache\Memcached([
+		new MemcachedCache([
 			'server' => [
 				['foo'],
 			],

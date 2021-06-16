@@ -1,8 +1,8 @@
 <?php namespace Tests\Cache;
 
-use Framework\Cache\Files;
+use Framework\Cache\FilesCache;
 
-class FilesTest extends TestCase
+class FilesCacheTest extends TestCase
 {
 	protected array $configs = [
 		'directory' => '/tmp/cache/',
@@ -13,7 +13,7 @@ class FilesTest extends TestCase
 	{
 		\exec('rm -rf ' . $this->configs['directory']);
 		\exec('mkdir -p ' . $this->configs['directory'] . $this->prefix);
-		$this->cache = new Files($this->configs, $this->prefix, $this->serializer);
+		$this->cache = new FilesCache($this->configs, $this->prefix, $this->serializer);
 	}
 
 	public function tearDown() : void
@@ -39,7 +39,7 @@ class FilesTest extends TestCase
 		$this->configs['gc'] = 0;
 		$this->expectException(\InvalidArgumentException::class);
 		$this->expectExceptionMessage('Invalid cache GC: 0');
-		new Files($this->configs, $this->prefix, $this->serializer);
+		new FilesCache($this->configs, $this->prefix, $this->serializer);
 	}
 
 	public function testInvalidCacheDirectory() : void
@@ -47,7 +47,7 @@ class FilesTest extends TestCase
 		$this->configs['directory'] = '/foo';
 		$this->expectException(\RuntimeException::class);
 		$this->expectExceptionMessage('Invalid cache directory: /foo');
-		new Files($this->configs, $this->prefix, $this->serializer);
+		new FilesCache($this->configs, $this->prefix, $this->serializer);
 	}
 
 	public function testInvalidCacheDirectoryPath() : void
@@ -57,12 +57,12 @@ class FilesTest extends TestCase
 		$this->expectExceptionMessage(
 			"Invalid cache directory path: {$this->configs['directory']}{$this->prefix}"
 		);
-		new Files($this->configs, $this->prefix, $this->serializer);
+		new FilesCache($this->configs, $this->prefix, $this->serializer);
 	}
 
 	public function testDefaultConfigs() : void
 	{
-		self::assertInstanceOf(Files::class, new Files());
+		self::assertInstanceOf(FilesCache::class, new FilesCache());
 	}
 
 	public function testInvalidSerializer() : void
@@ -71,7 +71,7 @@ class FilesTest extends TestCase
 		$this->expectExceptionMessage(
 			'Invalid serializer: foo'
 		);
-		new Files($this->configs, $this->prefix, 'foo');
+		new FilesCache($this->configs, $this->prefix, 'foo');
 	}
 
 	public function testCacheDirectoryIsNotWritable() : void
@@ -84,7 +84,7 @@ class FilesTest extends TestCase
 		$this->expectExceptionMessage(
 			"Cache directory is not writable: {$this->configs['directory']}{$this->prefix}"
 		);
-		new Files($this->configs, $this->prefix, $this->serializer);
+		new FilesCache($this->configs, $this->prefix, $this->serializer);
 	}
 
 	public function testSetFailure() : void

@@ -3,13 +3,13 @@
 use OutOfBoundsException;
 
 /**
- * Class Memcached.
+ * Class MemcachedCache.
  */
-class Memcached extends Cache
+class MemcachedCache extends Cache
 {
 	protected \Memcached $memcached;
 	/**
-	 * Memcached Driver configurations.
+	 * Memcached Cache handler configurations.
 	 *
 	 * @var array<int|string,mixed>
 	 */

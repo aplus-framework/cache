@@ -1,13 +1,13 @@
 <?php namespace Framework\Cache;
 
 /**
- * Class Redis.
+ * Class RedisCache.
  */
-class Redis extends Cache
+class RedisCache extends Cache
 {
 	protected \Redis $redis;
 	/**
-	 * Redis Driver configurations.
+	 * Redis Cache handler configurations.
 	 *
 	 * @var array<int|string,mixed>
 	 */
