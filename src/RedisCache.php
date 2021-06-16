@@ -1,11 +1,13 @@
 <?php namespace Framework\Cache;
 
+use Redis;
+
 /**
  * Class RedisCache.
  */
 class RedisCache extends Cache
 {
-	protected \Redis $redis;
+	protected Redis $redis;
 	/**
 	 * Redis Cache handler configurations.
 	 *
@@ -33,7 +35,7 @@ class RedisCache extends Cache
 
 	protected function connect() : void
 	{
-		$this->redis = new \Redis();
+		$this->redis = new Redis();
 		$this->redis->connect(
 			$this->configs['host'],
 			$this->configs['port'],

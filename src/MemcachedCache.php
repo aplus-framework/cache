@@ -1,5 +1,6 @@
 <?php namespace Framework\Cache;
 
+use Memcached;
 use OutOfBoundsException;
 
 /**
@@ -7,7 +8,7 @@ use OutOfBoundsException;
  */
 class MemcachedCache extends Cache
 {
-	protected \Memcached $memcached;
+	protected Memcached $memcached;
 	/**
 	 * Memcached Cache handler configurations.
 	 *
@@ -22,7 +23,7 @@ class MemcachedCache extends Cache
 			],
 		],
 		'options' => [
-			\Memcached::OPT_BINARY_PROTOCOL => true,
+			Memcached::OPT_BINARY_PROTOCOL => true,
 		],
 	];
 
@@ -75,14 +76,14 @@ class MemcachedCache extends Cache
 
 	protected function connect() : void
 	{
-		$this->configs['options'][\Memcached::OPT_SERIALIZER] = match ($this->serializer) {
-			static::SERIALIZER_IGBINARY => \Memcached::SERIALIZER_IGBINARY,
-			static::SERIALIZER_JSON => \Memcached::SERIALIZER_JSON,
-			static::SERIALIZER_JSON_ARRAY => \Memcached::SERIALIZER_JSON_ARRAY,
-			static::SERIALIZER_MSGPACK => \Memcached::SERIALIZER_MSGPACK,
-			default => \Memcached::SERIALIZER_PHP,
+		$this->configs['options'][Memcached::OPT_SERIALIZER] = match ($this->serializer) {
+			static::SERIALIZER_IGBINARY => Memcached::SERIALIZER_IGBINARY,
+			static::SERIALIZER_JSON => Memcached::SERIALIZER_JSON,
+			static::SERIALIZER_JSON_ARRAY => Memcached::SERIALIZER_JSON_ARRAY,
+			static::SERIALIZER_MSGPACK => Memcached::SERIALIZER_MSGPACK,
+			default => Memcached::SERIALIZER_PHP,
 		};
-		$this->memcached = new \Memcached();
+		$this->memcached = new Memcached();
 		$this->memcached->setOptions($this->configs['options']);
 		foreach ($this->configs['servers'] as $server) {
 			$this->memcached->addServer(
