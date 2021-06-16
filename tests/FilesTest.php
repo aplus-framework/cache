@@ -29,7 +29,7 @@ class FilesTest extends TestCase
 		$this->cache->set('foo', 'bar', 1);
 		$this->cache->set('bar', 'baz', 2);
 		\sleep(1);
-		self::assertTrue($this->cache->gc());
+		self::assertTrue($this->cache->gc()); // @phpstan-ignore-line
 		self::assertNull($this->cache->get('foo'));
 		self::assertSame('baz', $this->cache->get('bar'));
 	}
@@ -113,8 +113,8 @@ class FilesTest extends TestCase
 	public function testGetInvalidContents() : void
 	{
 		self::assertTrue($this->cache->set('key', 'value'));
-		foreach (\glob($this->configs['directory'] . '*/*/*') as $file) {
-			\file_put_contents($file, '');
+		foreach ((array) \glob($this->configs['directory'] . '*/*/*') as $file) {
+			\file_put_contents((string) $file, '');
 		}
 		self::assertNull($this->cache->get('key'));
 	}

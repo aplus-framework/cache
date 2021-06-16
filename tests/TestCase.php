@@ -5,6 +5,9 @@ use Framework\Cache\Cache;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
 	protected ?Cache $cache;
+	/**
+	 * @var array<int|string,mixed>
+	 */
 	protected array $configs = [];
 	protected string $prefix = 'test';
 	protected string $serializer = Cache::SERIALIZER_PHP;
