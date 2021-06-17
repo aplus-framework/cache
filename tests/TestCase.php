@@ -27,6 +27,16 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 		self::assertNull($this->cache->get('foo'));
 	}
 
+	public function testSetAndGetNullAndFalseValues() : void
+	{
+		$this->assertNull($this->cache->get('null-value'));
+		$this->assertNull($this->cache->get('false-value'));
+		$this->cache->set('null-value', null);
+		$this->cache->set('false-value', false);
+		$this->assertNull($this->cache->get('null-value'));
+		$this->assertFalse($this->cache->get('false-value'));
+	}
+
 	public function testSetMultiAndGetMulti() : void
 	{
 		self::assertSame(

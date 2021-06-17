@@ -54,7 +54,9 @@ class MemcachedCache extends Cache
 	public function get(string $key) : mixed
 	{
 		$key = $this->memcached->get($this->renderKey($key));
-		return $key !== false ? $key : null;
+		return $key === false && $this->memcached->getResultCode() === Memcached::RES_NOTFOUND
+			? null
+			: $key;
 	}
 
 	public function set(string $key, mixed $value, int $ttl = null) : bool
