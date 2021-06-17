@@ -113,12 +113,12 @@ class FilesCache extends Cache
 		}
 	}
 
-	public function set(string $key, mixed $value, int $ttl = 60) : bool
+	public function set(string $key, mixed $value, int $ttl = null) : bool
 	{
 		$filepath = $this->renderFilepath($key);
 		$this->createSubDirectory($filepath);
 		$value = [
-			'ttl' => \time() + $ttl,
+			'ttl' => \time() + $this->makeTTL($ttl),
 			'data' => $value,
 		];
 		$value = $this->serialize($value);

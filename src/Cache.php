@@ -47,7 +47,20 @@ abstract class Cache
 	 * @var string
 	 */
 	protected string $serializer;
+	/**
+	 * The Logger instance if is set.
+	 *
+	 * @var Logger|null
+	 */
 	protected ?Logger $logger;
+	/**
+	 * The default Time To Live value.
+	 *
+	 * Used when set methods has the $ttl param as null.
+	 *
+	 * @var int
+	 */
+	public int $defaultTTL = 60;
 
 	/**
 	 * Cache constructor.
@@ -103,6 +116,18 @@ abstract class Cache
 	}
 
 	/**
+	 * Make the Time To Live value.
+	 *
+	 * @param int|null $seconds TTL value or null to use the default
+	 *
+	 * @return int The input $seconds or the $defaultTTL as integer
+	 */
+	protected function makeTTL(?int $seconds) : int
+	{
+		return $seconds ?? $this->defaultTTL;
+	}
+
+	/**
 	 * Gets one item from the cache storage.
 	 *
 	 * @param string $key The item name
@@ -132,21 +157,21 @@ abstract class Cache
 	 *
 	 * @param string $key The item name
 	 * @param mixed $value The item value
-	 * @param int $ttl The Time To Live for the item
+	 * @param int|null $ttl The Time To Live for the item or null to use the default
 	 *
 	 * @return bool TRUE if the item was set, FALSE if fail to set
 	 */
-	abstract public function set(string $key, mixed $value, int $ttl = 60) : bool;
+	abstract public function set(string $key, mixed $value, int $ttl = null) : bool;
 
 	/**
 	 * Sets multi items to the cache storage.
 	 *
 	 * @param array<string,mixed> $data Associative array with key names and respective values
-	 * @param int $ttl The Time To Live for all the items
+	 * @param int|null $ttl The Time To Live for all the items or null to use the default
 	 *
 	 * @return array<string,bool> associative array with key names and respective set status
 	 */
-	public function setMulti(array $data, int $ttl = 60) : array
+	public function setMulti(array $data, int $ttl = null) : array
 	{
 		foreach ($data as $key => &$value) {
 			$value = $this->set($key, $value, $ttl);
@@ -191,11 +216,11 @@ abstract class Cache
 	 *
 	 * @param string $key The item name
 	 * @param int $offset The value to increment
-	 * @param int $ttl The Time To Live for the item
+	 * @param int|null $ttl The Time To Live for the item or null to use the default
 	 *
 	 * @return int The current item value
 	 */
-	public function increment(string $key, int $offset = 1, int $ttl = 60) : int
+	public function increment(string $key, int $offset = 1, int $ttl = null) : int
 	{
 		$offset = (int) \abs($offset);
 		$value = (int) $this->get($key);
@@ -209,11 +234,11 @@ abstract class Cache
 	 *
 	 * @param string $key The item name
 	 * @param int $offset The value to decrement
-	 * @param int $ttl The Time To Live for the item
+	 * @param int|null $ttl The Time To Live for the item or null to use the default
 	 *
 	 * @return int The current item value
 	 */
-	public function decrement(string $key, int $offset = 1, int $ttl = 60) : int
+	public function decrement(string $key, int $offset = 1, int $ttl = null) : int
 	{
 		$offset = (int) \abs($offset);
 		$value = (int) $this->get($key);

@@ -57,9 +57,9 @@ class MemcachedCache extends Cache
 		return $key !== false ? $key : null;
 	}
 
-	public function set(string $key, mixed $value, int $ttl = 60) : bool
+	public function set(string $key, mixed $value, int $ttl = null) : bool
 	{
-		return $this->memcached->set($this->renderKey($key), $value, $ttl);
+		return $this->memcached->set($this->renderKey($key), $value, $this->makeTTL($ttl));
 	}
 
 	public function delete(string $key) : bool
