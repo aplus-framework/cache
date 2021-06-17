@@ -90,6 +90,7 @@ class FilesCache extends Cache
 		}
 		$value = @\file_get_contents($filepath);
 		if ($value === false) {
+			$this->log("Cache (files): File '{$filepath}' could not be read");
 			return null;
 		}
 		$value = (array) $this->unserialize($value);
@@ -127,7 +128,11 @@ class FilesCache extends Cache
 		if ($written !== false && $is_file === false) {
 			\chmod($filepath, $this->configs['files_permission']);
 		}
-		return $written !== false;
+		if ($written === false) {
+			$this->log("Cache (files): File '{$filepath}' could not be written");
+			return false;
+		}
+		return true;
 	}
 
 	public function delete(string $key) : bool
@@ -200,6 +205,7 @@ class FilesCache extends Cache
 				if (\unlink($path)) {
 					continue;
 				}
+				$this->log("Cache (files): File '{$path}' could not be deleted");
 				$status = false;
 				break;
 			}
@@ -219,7 +225,11 @@ class FilesCache extends Cache
 	protected function deleteFile(string $filepath) : bool
 	{
 		if (\is_file($filepath)) {
-			return \unlink($filepath);
+			$deleted = \unlink($filepath);
+			if ($deleted === false) {
+				$this->log("Cache (files): File '{$filepath}' could not be deleted");
+				return false;
+			}
 		}
 		return true;
 	}
