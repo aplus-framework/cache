@@ -12,6 +12,7 @@ namespace Framework\Cache;
 use Framework\Log\Logger;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ExpectedValues;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * Class Cache.
@@ -131,6 +132,7 @@ abstract class Cache
 	 *
 	 * @return int The input $seconds or the $defaultTTL as integer
 	 */
+	#[Pure]
 	protected function makeTTL(?int $seconds) : int
 	{
 		return $seconds ?? $this->defaultTTL;
@@ -270,6 +272,7 @@ abstract class Cache
 		$this->serializer = $serializer;
 	}
 
+	#[Pure]
 	protected function renderKey(string $key) : string
 	{
 		return $this->prefix . $key;

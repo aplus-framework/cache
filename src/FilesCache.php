@@ -10,6 +10,7 @@
 namespace Framework\Cache;
 
 use InvalidArgumentException;
+use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 
 /**
@@ -274,6 +275,7 @@ class FilesCache extends Cache
 		}
 	}
 
+	#[Pure]
 	protected function renderFilepath(string $key) : string
 	{
 		$key = \md5($key);
