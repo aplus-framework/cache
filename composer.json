@@ -1,65 +1,65 @@
 {
-	"name": "natanfelles/cache",
-	"type": "library",
-	"description": "The Framework Cache Library",
-	"keywords": [
-		"cache",
-		"files",
-		"memcached",
-		"redis",
-		"igbinary",
-		"json",
-		"msgpack"
-	],
-	"homepage": "https://the-framework.gitlab.io/libraries/cache.html",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Natan Felles",
-			"email": "natanfelles@gmail.com",
-			"homepage": "https://natanfelles.github.io"
-		}
-	],
-	"require": {
-		"php": ">=8.0",
-		"ext-igbinary": "*",
-		"ext-json": "*",
-		"ext-memcached": "*",
-		"ext-msgpack": "*",
-		"ext-redis": "*",
-		"natanfelles/log": "^2.0"
-	},
-	"require-dev": {
-		"ext-xdebug": "*",
-		"ergebnis/composer-normalize": "^2.15",
-		"jetbrains/phpstorm-attributes": "^1.0",
-		"natanfelles/coding-standard": "^1.7",
-		"phpmd/phpmd": "^2.10",
-		"phpstan/phpstan": "^0.12",
-		"phpunit/phpunit": "^9.5"
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true
-	},
-	"autoload": {
-		"psr-4": {
-			"Framework\\Cache\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\Cache\\": "tests/"
-		}
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"support": {
-		"email": "natanfelles@gmail.com",
-		"issues": "https://gitlab.com/the-framework/libraries/cache/issues",
-		"wiki": "https://gitlab.com/the-framework/libraries/cache/wikis/home",
-		"source": "https://gitlab.com/the-framework/libraries/cache",
-		"docs": "https://the-framework.gitlab.io/the-framework/libraries/cache/docs/"
-	}
+    "name": "natanfelles/cache",
+    "type": "library",
+    "description": "The Framework Cache Library",
+    "keywords": [
+        "cache",
+        "files",
+        "memcached",
+        "redis",
+        "igbinary",
+        "json",
+        "msgpack"
+    ],
+    "homepage": "https://the-framework.gitlab.io/libraries/cache.html",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Natan Felles",
+            "email": "natanfelles@gmail.com",
+            "homepage": "https://natanfelles.github.io"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-igbinary": "*",
+        "ext-json": "*",
+        "ext-memcached": "*",
+        "ext-msgpack": "*",
+        "ext-redis": "*",
+        "natanfelles/log": "^2.0"
+    },
+    "require-dev": {
+        "ext-xdebug": "*",
+        "ergebnis/composer-normalize": "^2.15",
+        "jetbrains/phpstorm-attributes": "^1.0",
+        "natanfelles/coding-standard": "^1.7",
+        "phpmd/phpmd": "^2.10",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^9.5"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Framework\\Cache\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Cache\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "support": {
+        "email": "natanfelles@gmail.com",
+        "issues": "https://gitlab.com/the-framework/libraries/cache/issues",
+        "wiki": "https://gitlab.com/the-framework/libraries/cache/wikis/home",
+        "source": "https://gitlab.com/the-framework/libraries/cache",
+        "docs": "https://the-framework.gitlab.io/the-framework/libraries/cache/docs/"
+    }
 }

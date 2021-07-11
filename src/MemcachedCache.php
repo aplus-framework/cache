@@ -19,103 +19,103 @@ use RuntimeException;
  */
 class MemcachedCache extends Cache
 {
-	protected Memcached $memcached;
-	/**
-	 * Memcached Cache handler configurations.
-	 *
-	 * @var array<string,mixed>
-	 */
-	protected array $configs = [
-		'servers' => [
-			[
-				'host' => '127.0.0.1',
-				'port' => 11211,
-				'weight' => 0,
-			],
-		],
-		'options' => [
-			Memcached::OPT_BINARY_PROTOCOL => true,
-		],
-	];
+    protected Memcached $memcached;
+    /**
+     * Memcached Cache handler configurations.
+     *
+     * @var array<string,mixed>
+     */
+    protected array $configs = [
+        'servers' => [
+            [
+                'host' => '127.0.0.1',
+                'port' => 11211,
+                'weight' => 0,
+            ],
+        ],
+        'options' => [
+            Memcached::OPT_BINARY_PROTOCOL => true,
+        ],
+    ];
 
-	public function __destruct()
-	{
-		$this->memcached->quit();
-	}
+    public function __destruct()
+    {
+        $this->memcached->quit();
+    }
 
-	protected function initialize() : void
-	{
-		$this->validateConfigs();
-		$this->connect();
-	}
+    protected function initialize() : void
+    {
+        $this->validateConfigs();
+        $this->connect();
+    }
 
-	protected function validateConfigs() : void
-	{
-		foreach ($this->configs['servers'] as $index => $config) {
-			if (empty($config['host'])) {
-				throw new OutOfBoundsException(
-					"Memcached host config empty on server '{$index}'"
-				);
-			}
-		}
-	}
+    protected function validateConfigs() : void
+    {
+        foreach ($this->configs['servers'] as $index => $config) {
+            if (empty($config['host'])) {
+                throw new OutOfBoundsException(
+                    "Memcached host config empty on server '{$index}'"
+                );
+            }
+        }
+    }
 
-	public function get(string $key) : mixed
-	{
-		$key = $this->memcached->get($this->renderKey($key));
-		return $key === false && $this->memcached->getResultCode() === Memcached::RES_NOTFOUND
-			? null
-			: $key;
-	}
+    public function get(string $key) : mixed
+    {
+        $key = $this->memcached->get($this->renderKey($key));
+        return $key === false && $this->memcached->getResultCode() === Memcached::RES_NOTFOUND
+            ? null
+            : $key;
+    }
 
-	public function set(string $key, mixed $value, int $ttl = null) : bool
-	{
-		return $this->memcached->set($this->renderKey($key), $value, $this->makeTTL($ttl));
-	}
+    public function set(string $key, mixed $value, int $ttl = null) : bool
+    {
+        return $this->memcached->set($this->renderKey($key), $value, $this->makeTTL($ttl));
+    }
 
-	public function delete(string $key) : bool
-	{
-		return $this->memcached->delete($this->renderKey($key));
-	}
+    public function delete(string $key) : bool
+    {
+        return $this->memcached->delete($this->renderKey($key));
+    }
 
-	public function flush() : bool
-	{
-		return $this->memcached->flush();
-	}
+    public function flush() : bool
+    {
+        return $this->memcached->flush();
+    }
 
-	protected function connect() : void
-	{
-		$this->configs['options'][Memcached::OPT_SERIALIZER] = match ($this->serializer) {
-			static::SERIALIZER_IGBINARY => Memcached::SERIALIZER_IGBINARY,
-			static::SERIALIZER_JSON => Memcached::SERIALIZER_JSON,
-			static::SERIALIZER_JSON_ARRAY => Memcached::SERIALIZER_JSON_ARRAY,
-			static::SERIALIZER_MSGPACK => Memcached::SERIALIZER_MSGPACK,
-			default => Memcached::SERIALIZER_PHP,
-		};
-		$this->memcached = new Memcached();
-		$pool = [];
-		foreach ($this->configs['servers'] as $server) {
-			$host = $server['host'] . ':' . ($server['port'] ?? 11211);
-			if (\in_array($host, $pool, true)) {
-				$this->log('Cache (memcached): Server pool already has ' . $host, Logger::DEBUG);
-				continue;
-			}
-			$result = $this->memcached->addServer(
-				$server['host'],
-				$server['port'] ?? 11211,
-				$server['weight'] ?? 0
-			);
-			if ($result === false) {
-				$this->log("Cache (memcached): Could not add {$host} to server pool");
-			}
-			$pool[] = $host;
-		}
-		$result = $this->memcached->setOptions($this->configs['options']);
-		if ($result === false) {
-			$this->log('Cache (memcached): ' . $this->memcached->getLastErrorMessage());
-		}
-		if ( ! $this->memcached->getStats()) {
-			throw new RuntimeException('Cache (memcached): Could not connect to any server');
-		}
-	}
+    protected function connect() : void
+    {
+        $this->configs['options'][Memcached::OPT_SERIALIZER] = match ($this->serializer) {
+            static::SERIALIZER_IGBINARY => Memcached::SERIALIZER_IGBINARY,
+            static::SERIALIZER_JSON => Memcached::SERIALIZER_JSON,
+            static::SERIALIZER_JSON_ARRAY => Memcached::SERIALIZER_JSON_ARRAY,
+            static::SERIALIZER_MSGPACK => Memcached::SERIALIZER_MSGPACK,
+            default => Memcached::SERIALIZER_PHP,
+        };
+        $this->memcached = new Memcached();
+        $pool = [];
+        foreach ($this->configs['servers'] as $server) {
+            $host = $server['host'] . ':' . ($server['port'] ?? 11211);
+            if (\in_array($host, $pool, true)) {
+                $this->log('Cache (memcached): Server pool already has ' . $host, Logger::DEBUG);
+                continue;
+            }
+            $result = $this->memcached->addServer(
+                $server['host'],
+                $server['port'] ?? 11211,
+                $server['weight'] ?? 0
+            );
+            if ($result === false) {
+                $this->log("Cache (memcached): Could not add {$host} to server pool");
+            }
+            $pool[] = $host;
+        }
+        $result = $this->memcached->setOptions($this->configs['options']);
+        if ($result === false) {
+            $this->log('Cache (memcached): ' . $this->memcached->getLastErrorMessage());
+        }
+        if ( ! $this->memcached->getStats()) {
+            throw new RuntimeException('Cache (memcached): Could not connect to any server');
+        }
+    }
 }

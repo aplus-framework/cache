@@ -13,5 +13,5 @@ use Framework\Cache\Cache;
 
 final class FilesCacheIgbinaryTest extends FilesCacheTest
 {
-	protected string $serializer = Cache::SERIALIZER_IGBINARY;
+    protected string $serializer = Cache::SERIALIZER_IGBINARY;
 }

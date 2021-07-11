@@ -13,5 +13,5 @@ use Framework\Cache\Cache;
 
 final class FilesCacheJsonTest extends FilesCacheTest
 {
-	protected string $serializer = Cache::SERIALIZER_JSON;
+    protected string $serializer = Cache::SERIALIZER_JSON;
 }
