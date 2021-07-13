@@ -9,6 +9,7 @@
         "redis",
         "igbinary",
         "json",
+        "json-array",
         "msgpack"
     ],
     "homepage": "https://the-framework.gitlab.io/libraries/cache.html",
