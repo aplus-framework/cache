@@ -1,7 +1,7 @@
 {
-    "name": "natanfelles/cache",
+    "name": "aplus/cache",
     "type": "library",
-    "description": "The Framework Cache Library",
+    "description": "Aplus Framework Cache Library",
     "keywords": [
         "cache",
         "files",
@@ -12,7 +12,7 @@
         "json-array",
         "msgpack"
     ],
-    "homepage": "https://the-framework.gitlab.io/libraries/cache.html",
+    "homepage": "https://aplus-framework.com/docs/cache",
     "license": "MIT",
     "authors": [
         {
@@ -58,9 +58,9 @@
     "prefer-stable": true,
     "support": {
         "email": "natanfelles@gmail.com",
-        "issues": "https://gitlab.com/the-framework/libraries/cache/issues",
-        "wiki": "https://gitlab.com/the-framework/libraries/cache/wikis/home",
-        "source": "https://gitlab.com/the-framework/libraries/cache",
-        "docs": "https://the-framework.gitlab.io/the-framework/libraries/cache/docs/"
+        "issues": "https://gitlab.com/aplus-framework/libraries/cache/issues",
+        "wiki": "https://gitlab.com/aplus-framework/libraries/cache/wikis/home",
+        "source": "https://gitlab.com/aplus-framework/libraries/cache",
+        "docs": "https://aplus-framework.gitlab.io/aplus-framework/libraries/cache/docs/"
     }
 }
