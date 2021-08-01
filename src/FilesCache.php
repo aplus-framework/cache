@@ -133,9 +133,9 @@ class FilesCache extends Cache
             'data' => $value,
         ];
         $value = $this->serialize($value);
-        $is_file = \is_file($filepath);
+        $isFile = \is_file($filepath);
         $written = @\file_put_contents($filepath, $value, \LOCK_EX);
-        if ($written !== false && $is_file === false) {
+        if ($written !== false && $isFile === false) {
             \chmod($filepath, $this->configs['files_permission']);
         }
         if ($written === false) {
