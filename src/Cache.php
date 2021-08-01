@@ -70,7 +70,7 @@ abstract class Cache
      *
      * @var int
      */
-    public int $defaultTTL = 60;
+    public int $defaultTtl = 60;
 
     /**
      * Cache constructor.
@@ -130,12 +130,12 @@ abstract class Cache
      *
      * @param int|null $seconds TTL value or null to use the default
      *
-     * @return int The input $seconds or the $defaultTTL as integer
+     * @return int The input $seconds or the $defaultTtl as integer
      */
     #[Pure]
-    protected function makeTTL(?int $seconds) : int
+    protected function makeTtl(?int $seconds) : int
     {
-        return $seconds ?? $this->defaultTTL;
+        return $seconds ?? $this->defaultTtl;
     }
 
     /**

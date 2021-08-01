@@ -129,7 +129,7 @@ class FilesCache extends Cache
         $filepath = $this->renderFilepath($key);
         $this->createSubDirectory($filepath);
         $value = [
-            'ttl' => \time() + $this->makeTTL($ttl),
+            'ttl' => \time() + $this->makeTtl($ttl),
             'data' => $value,
         ];
         $value = $this->serialize($value);

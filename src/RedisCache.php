@@ -62,7 +62,7 @@ class RedisCache extends Cache
         return $this->redis->set(
             $this->renderKey($key),
             $this->serialize($value),
-            $this->makeTTL($ttl)
+            $this->makeTtl($ttl)
         );
     }
 
