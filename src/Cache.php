@@ -16,6 +16,8 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * Class Cache.
+ *
+ * @package cache
  */
 abstract class Cache
 {

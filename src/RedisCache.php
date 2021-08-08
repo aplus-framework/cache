@@ -13,6 +13,8 @@ use Redis;
 
 /**
  * Class RedisCache.
+ *
+ * @package cache
  */
 class RedisCache extends Cache
 {

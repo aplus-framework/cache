@@ -15,6 +15,8 @@ use RuntimeException;
 
 /**
  * Class FilesCache.
+ *
+ * @package cache
  */
 class FilesCache extends Cache
 {

@@ -16,6 +16,8 @@ use RuntimeException;
 
 /**
  * Class MemcachedCache.
+ *
+ * @package cache
  */
 class MemcachedCache extends Cache
 {
