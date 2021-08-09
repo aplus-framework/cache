@@ -12,7 +12,7 @@
         "json-array",
         "msgpack"
     ],
-    "homepage": "https://aplus-framework.com/docs/cache",
+    "homepage": "https://docs.aplus-framework.com/guides/libraries/cache/",
     "license": "MIT",
     "authors": [
         {
@@ -61,6 +61,6 @@
         "issues": "https://gitlab.com/aplus-framework/libraries/cache/issues",
         "wiki": "https://gitlab.com/aplus-framework/libraries/cache/wikis/home",
         "source": "https://gitlab.com/aplus-framework/libraries/cache",
-        "docs": "https://aplus-framework.gitlab.io/aplus-framework/libraries/cache/docs/"
+        "docs": "https://docs.aplus-framework.com/guides/libraries/cache/"
     }
 }
