@@ -1,3 +1,5 @@
+<a href="https://gitlab.com/aplus-framework/libraries/cache"><img src="https://gitlab.com/aplus-framework/libraries/cache/-/raw/master/guide/image.png" alt="Aplus Framework Cache Library" align="right" width="100"></a>
+
 # Aplus Framework Cache Library
 
 - [User Guide](https://docs.aplus-framework.com/guides/libraries/cache/index.html)
