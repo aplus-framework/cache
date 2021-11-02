@@ -1,6 +1,9 @@
 Cache
 =====
 
+.. image:: image.png
+    :alt: Aplus Framework Cache Library
+
 Aplus Framework Cache Library.
 
 - `Installation`_
