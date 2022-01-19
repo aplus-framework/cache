@@ -86,8 +86,15 @@ class FilesCache extends Cache
 
     public function get(string $key) : mixed
     {
-        $key = $this->renderFilepath($key);
-        return $this->getContents($key);
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugGet(
+                $key,
+                $start,
+                $this->getContents($this->renderFilepath($key))
+            );
+        }
+        return $this->getContents($this->renderFilepath($key));
     }
 
     /**
@@ -128,6 +135,21 @@ class FilesCache extends Cache
 
     public function set(string $key, mixed $value, int $ttl = null) : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            $this->addDebugSet(
+                $key,
+                $ttl,
+                $start,
+                $value,
+                $this->setValue($key, $value, $ttl)
+            );
+        }
+        return $this->setValue($key, $value, $ttl);
+    }
+
+    public function setValue(string $key, mixed $value, int $ttl = null) : bool
+    {
         $filepath = $this->renderFilepath($key);
         $this->createSubDirectory($filepath);
         $value = [
@@ -149,12 +171,26 @@ class FilesCache extends Cache
 
     public function delete(string $key) : bool
     {
-        $key = $this->renderFilepath($key);
-        return $this->deleteFile($key);
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugDelete(
+                $key,
+                $start,
+                $this->deleteFile($this->renderFilepath($key))
+            );
+        }
+        return $this->deleteFile($this->renderFilepath($key));
     }
 
     public function flush() : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugFlush(
+                $start,
+                $this->deleteAll($this->baseDirectory)
+            );
+        }
         return $this->deleteAll($this->baseDirectory);
     }
 

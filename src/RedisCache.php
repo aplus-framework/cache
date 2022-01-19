@@ -52,6 +52,19 @@ class RedisCache extends Cache
 
     public function get(string $key) : mixed
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugGet(
+                $key,
+                $start,
+                $this->getValue($key)
+            );
+        }
+        return $this->getValue($key);
+    }
+
+    protected function getValue(string $key) : mixed
+    {
         $value = $this->redis->get($this->renderKey($key));
         if ($value === false) {
             return null;
@@ -61,6 +74,20 @@ class RedisCache extends Cache
 
     public function set(string $key, mixed $value, int $ttl = null) : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            $this->addDebugSet(
+                $key,
+                $ttl,
+                $start,
+                $value,
+                $this->redis->set(
+                    $this->renderKey($key),
+                    $this->serialize($value),
+                    $this->makeTtl($ttl)
+                )
+            );
+        }
         return $this->redis->set(
             $this->renderKey($key),
             $this->serialize($value),
@@ -70,11 +97,26 @@ class RedisCache extends Cache
 
     public function delete(string $key) : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugDelete(
+                $key,
+                $start,
+                (bool) $this->redis->del($this->renderKey($key))
+            );
+        }
         return (bool) $this->redis->del($this->renderKey($key));
     }
 
     public function flush() : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugFlush(
+                $start,
+                $this->redis->flushAll()
+            );
+        }
         return $this->redis->flushAll();
     }
 }

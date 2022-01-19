@@ -64,6 +64,19 @@ class MemcachedCache extends Cache
 
     public function get(string $key) : mixed
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugGet(
+                $key,
+                $start,
+                $this->getValue($key)
+            );
+        }
+        return $this->getValue($key);
+    }
+
+    protected function getValue(string $key) : mixed
+    {
         $key = $this->memcached->get($this->renderKey($key));
         return $key === false && $this->memcached->getResultCode() === Memcached::RES_NOTFOUND
             ? null
@@ -72,16 +85,41 @@ class MemcachedCache extends Cache
 
     public function set(string $key, mixed $value, int $ttl = null) : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            $this->addDebugSet(
+                $key,
+                $ttl,
+                $start,
+                $value,
+                $this->memcached->set($this->renderKey($key), $value, $this->makeTtl($ttl))
+            );
+        }
         return $this->memcached->set($this->renderKey($key), $value, $this->makeTtl($ttl));
     }
 
     public function delete(string $key) : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugDelete(
+                $key,
+                $start,
+                $this->memcached->delete($this->renderKey($key))
+            );
+        }
         return $this->memcached->delete($this->renderKey($key));
     }
 
     public function flush() : bool
     {
+        if (isset($this->debugCollector)) {
+            $start = \microtime(true);
+            return $this->addDebugFlush(
+                $start,
+                $this->memcached->flush()
+            );
+        }
         return $this->memcached->flush();
     }
 

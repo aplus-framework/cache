@@ -9,6 +9,7 @@
  */
 namespace Framework\Cache;
 
+use Framework\Cache\Debug\CacheCollector;
 use Framework\Log\Logger;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ExpectedValues;
@@ -73,6 +74,7 @@ abstract class Cache
      * @var int
      */
     public int $defaultTtl = 60;
+    protected CacheCollector $debugCollector;
 
     /**
      * Cache constructor.
@@ -323,5 +325,82 @@ abstract class Cache
             return \msgpack_unserialize($value);
         }
         return \unserialize($value, ['allowed_classes' => true]);
+    }
+
+    public function setDebugCollector(CacheCollector $debugCollector) : static
+    {
+        $this->debugCollector = $debugCollector;
+        $this->debugCollector->setInfo([
+            'class' => static::class,
+            'serializer' => $this->serializer,
+        ]);
+        return $this;
+    }
+
+    protected function addDebugGet(string $key, float $start, mixed $value) : mixed
+    {
+        $end = \microtime(true);
+        $this->debugCollector->addData([
+            'start' => $start,
+            'end' => $end,
+            'command' => 'GET',
+            'status' => $value === null ? 'FAIL' : 'OK',
+            'key' => $key,
+            'value' => $this->makeDebugValue($value),
+        ]);
+        return $value;
+    }
+
+    protected function addDebugSet(string $key, ?int $ttl, float $start, mixed $value, bool $status) : mixed
+    {
+        $end = \microtime(true);
+        $this->debugCollector->addData([
+            'start' => $start,
+            'end' => $end,
+            'command' => 'SET',
+            'status' => $status ? 'OK' : 'FAIL',
+            'key' => $key,
+            'value' => $this->makeDebugValue($value),
+            'ttl' => $this->makeTtl($ttl),
+        ]);
+        return $value;
+    }
+
+    protected function addDebugDelete(string $key, float $start, bool $status) : bool
+    {
+        $end = \microtime(true);
+        $this->debugCollector->addData([
+            'start' => $start,
+            'end' => $end,
+            'command' => 'DELETE',
+            'status' => $status ? 'OK' : 'FAIL',
+            'key' => $key,
+        ]);
+        return $status;
+    }
+
+    protected function addDebugFlush(float $start, bool $status) : bool
+    {
+        $end = \microtime(true);
+        $this->debugCollector->addData([
+            'start' => $start,
+            'end' => $end,
+            'command' => 'FLUSH',
+            'status' => $status ? 'OK' : 'FAIL',
+        ]);
+        return $status;
+    }
+
+    protected function makeDebugValue(mixed $value) : string
+    {
+        $type = \get_debug_type($value);
+        return (string) match ($type) {
+            'array' => 'array',
+            'bool' => $value ? 'true' : 'false',
+            'float', 'int' => $value,
+            'null' => 'null',
+            'string' => "'" . \strtr($value, ["'" => "\\'"]) . "'",
+            default => 'instanceof ' . $type,
+        };
     }
 }
