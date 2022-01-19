@@ -87,7 +87,7 @@ class MemcachedCache extends Cache
     {
         if (isset($this->debugCollector)) {
             $start = \microtime(true);
-            $this->addDebugSet(
+            return $this->addDebugSet(
                 $key,
                 $ttl,
                 $start,

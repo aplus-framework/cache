@@ -351,7 +351,7 @@ abstract class Cache
         return $value;
     }
 
-    protected function addDebugSet(string $key, ?int $ttl, float $start, mixed $value, bool $status) : mixed
+    protected function addDebugSet(string $key, ?int $ttl, float $start, mixed $value, bool $status) : bool
     {
         $end = \microtime(true);
         $this->debugCollector->addData([
@@ -363,7 +363,7 @@ abstract class Cache
             'value' => $this->makeDebugValue($value),
             'ttl' => $this->makeTtl($ttl),
         ]);
-        return $value;
+        return $status;
     }
 
     protected function addDebugDelete(string $key, float $start, bool $status) : bool
