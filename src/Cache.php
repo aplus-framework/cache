@@ -10,6 +10,7 @@
 namespace Framework\Cache;
 
 use Framework\Cache\Debug\CacheCollector;
+use Framework\Debug\Debugger;
 use Framework\Log\Logger;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ExpectedValues;
@@ -346,7 +347,7 @@ abstract class Cache
             'command' => 'GET',
             'status' => $value === null ? 'FAIL' : 'OK',
             'key' => $key,
-            'value' => $this->makeDebugValue($value),
+            'value' => Debugger::makeDebugValue($value),
         ]);
         return $value;
     }
@@ -360,7 +361,7 @@ abstract class Cache
             'command' => 'SET',
             'status' => $status ? 'OK' : 'FAIL',
             'key' => $key,
-            'value' => $this->makeDebugValue($value),
+            'value' => Debugger::makeDebugValue($value),
             'ttl' => $this->makeTtl($ttl),
         ]);
         return $status;
@@ -389,18 +390,5 @@ abstract class Cache
             'status' => $status ? 'OK' : 'FAIL',
         ]);
         return $status;
-    }
-
-    protected function makeDebugValue(mixed $value) : string
-    {
-        $type = \get_debug_type($value);
-        return (string) match ($type) {
-            'array' => 'array',
-            'bool' => $value ? 'true' : 'false',
-            'float', 'int' => $value,
-            'null' => 'null',
-            'string' => "'" . \strtr($value, ["'" => "\\'"]) . "'",
-            default => 'instanceof ' . $type,
-        };
     }
 }
