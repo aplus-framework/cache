@@ -37,6 +37,22 @@ class CacheCollector extends Collector
         return $this;
     }
 
+    public function getActivities() : array
+    {
+        $activities = [];
+        foreach ($this->getData() as $data) {
+            $key = isset($data['key']) ? ' key ' . $data['key'] : '';
+            $activities[] = [
+                'collector' => $this->getName(),
+                'class' => static::class,
+                'description' => \ucfirst(\strtolower($data['command'])) . $key,
+                'start' => $data['start'],
+                'end' => $data['end'],
+            ];
+        }
+        return $activities;
+    }
+
     public function getContents() : string
     {
         if (empty($this->info)) {
