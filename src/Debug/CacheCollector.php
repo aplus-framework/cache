@@ -40,12 +40,11 @@ class CacheCollector extends Collector
     public function getActivities() : array
     {
         $activities = [];
-        foreach ($this->getData() as $data) {
-            $key = isset($data['key']) ? ' key ' . $data['key'] : '';
+        foreach ($this->getData() as $index => $data) {
             $activities[] = [
                 'collector' => $this->getName(),
                 'class' => static::class,
-                'description' => \ucfirst(\strtolower($data['command'])) . $key,
+                'description' => 'Run command ' . $index + 1,
                 'start' => $data['start'],
                 'end' => $data['end'],
             ];
@@ -72,10 +71,13 @@ class CacheCollector extends Collector
         if ( ! $this->hasData()) {
             return '<p>No command was run.</p>';
         }
+        $count = \count($this->getData());
         \ob_start(); ?>
+        <p>Ran <?= $count ?> command<?= $count === 1 ? '' : 's' ?>:</p>
         <table>
             <thead>
             <tr>
+                <th>#</th>
                 <th>Command</th>
                 <th>Status</th>
                 <th>Key</th>
@@ -86,8 +88,9 @@ class CacheCollector extends Collector
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->getData() as $data): ?>
+            <?php foreach ($this->getData() as $index => $data): ?>
                 <tr>
+                    <td><?= $index + 1 ?></td>
                     <td><?= \htmlentities($data['command']) ?></td>
                     <td><?= \htmlentities($data['status']) ?></td>
                     <td><?= \htmlentities($data['key'] ?? '') ?></td>
