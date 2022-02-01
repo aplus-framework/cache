@@ -10,6 +10,10 @@
 namespace Tests\Cache;
 
 use Framework\Cache\Cache;
+use Framework\Cache\Debug\CacheCollector;
+use Framework\Cache\FilesCache;
+use Framework\Cache\MemcachedCache;
+use Framework\Cache\RedisCache;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -146,5 +150,103 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         self::assertSame(3, $this->cache->increment('id'));
         self::assertSame(2, $this->cache->decrement('id'));
         self::assertSame(0, $this->cache->decrement('id', 2));
+    }
+
+    protected function setCollector() : CacheCollector
+    {
+        $collector = new CacheCollector();
+        $this->cache->setDebugCollector($collector);
+        return $collector;
+    }
+
+    public function testDebugCacheNotSet() : void
+    {
+        $collector = new CacheCollector();
+        self::assertStringContainsString(
+            'This collector has not been added to a Cache instance',
+            $collector->getContents()
+        );
+    }
+
+    public function testDebugActivities() : void
+    {
+        $collector = $this->setCollector();
+        self::assertEmpty($collector->getActivities());
+        $this->cache->get('foo');
+        self::assertSame(
+            [
+                'collector',
+                'class',
+                'description',
+                'start',
+                'end',
+            ],
+            \array_keys($collector->getActivities()[0])
+        );
+    }
+
+    public function testDebugDefault() : void
+    {
+        $collector = $this->setCollector();
+        self::assertStringContainsString(
+            $this->serializer,
+            $collector->getContents()
+        );
+        self::assertStringContainsString(
+            'No command was run',
+            $collector->getContents()
+        );
+    }
+
+    public function testDebugRunCommands() : void
+    {
+        $collector = $this->setCollector();
+        $this->cache->get('foo');
+        $contents = $collector->getContents();
+        self::assertStringContainsString('Ran 1 command', $contents);
+        self::assertStringContainsString('GET', $contents);
+        $this->cache->set('xxx', 'foo', 1);
+        $contents = $collector->getContents();
+        self::assertStringContainsString('Ran 2 commands', $contents);
+        self::assertStringContainsString('SET', $contents);
+        $this->cache->delete('xxx');
+        $contents = $collector->getContents();
+        self::assertStringContainsString('Ran 3 commands', $contents);
+        self::assertStringContainsString('DELETE', $contents);
+        $this->cache->flush();
+        $contents = $collector->getContents();
+        self::assertStringContainsString('Ran 4 commands', $contents);
+        self::assertStringContainsString('FLUSH', $contents);
+    }
+
+    public function testDebugHandler() : void
+    {
+        $collector = new class() extends CacheCollector {
+            public function getHandler() : string
+            {
+                return parent::getHandler();
+            }
+        };
+        $this->cache->setDebugCollector($collector);
+        // @phpstan-ignore-next-line
+        $handler = match ($this->cache::class) {
+            FilesCache::class => 'files',
+            MemcachedCache::class => 'memcached',
+            RedisCache::class => 'redis',
+        };
+        self::assertSame($handler, $collector->getHandler());
+        $cache = new class() extends FilesCache {
+            protected string $serializer = Cache::SERIALIZER_PHP;
+
+            public function __construct()
+            {
+            }
+
+            public function __destruct()
+            {
+            }
+        };
+        $cache->setDebugCollector($collector);
+        self::assertStringContainsString('@anonymous', $collector->getHandler());
     }
 }
