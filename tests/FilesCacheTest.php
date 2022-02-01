@@ -22,7 +22,12 @@ class FilesCacheTest extends TestCase
     {
         \exec('rm -rf ' . $this->configs['directory']);
         \exec('mkdir -p ' . $this->configs['directory'] . $this->prefix);
-        $this->cache = new FilesCache($this->configs, $this->prefix, $this->serializer);
+        $this->cache = new FilesCache(
+            $this->configs,
+            $this->prefix,
+            $this->serializer,
+            $this->getLogger()
+        );
     }
 
     public function tearDown() : void

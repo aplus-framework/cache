@@ -18,6 +18,11 @@ class RedisCacheTest extends TestCase
         $this->configs = [
             'host' => \getenv('REDIS_HOST'),
         ];
-        $this->cache = new RedisCache($this->configs, $this->prefix, $this->serializer);
+        $this->cache = new RedisCache(
+            $this->configs,
+            $this->prefix,
+            $this->serializer,
+            $this->getLogger()
+        );
     }
 }

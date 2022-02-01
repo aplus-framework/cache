@@ -22,6 +22,11 @@ class MemcachedCacheTest extends TestCase
                 ],
             ],
         ];
-        $this->cache = new MemcachedCache($this->configs, $this->prefix, $this->serializer);
+        $this->cache = new MemcachedCache(
+            $this->configs,
+            $this->prefix,
+            $this->serializer,
+            $this->getLogger()
+        );
     }
 }

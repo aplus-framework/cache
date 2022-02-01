@@ -14,6 +14,7 @@ use Framework\Cache\Debug\CacheCollector;
 use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
+use Framework\Log\Logger;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -29,6 +30,18 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $this->cache->flush();
         $this->cache = null;
+    }
+
+    protected function getLogger() : Logger
+    {
+        static $logger;
+        if ( ! $logger) {
+            $dir = \sys_get_temp_dir() . '/cache-logs';
+            \exec('rm -rf ' . $dir);
+            \exec('mkdir -p ' . $dir);
+            $logger = new Logger($dir);
+        }
+        return $logger;
     }
 
     public function testSetAndGet() : void
