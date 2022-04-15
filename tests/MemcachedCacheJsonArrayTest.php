@@ -9,9 +9,9 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Framework\Cache\Serializer;
 
 final class MemcachedCacheJsonArrayTest extends MemcachedCacheTest
 {
-    protected string $serializer = Cache::SERIALIZER_JSON_ARRAY;
+    protected Serializer $serializer = Serializer::JSON_ARRAY;
 }

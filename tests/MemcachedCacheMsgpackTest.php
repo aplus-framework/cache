@@ -9,9 +9,9 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Framework\Cache\Serializer;
 
 final class MemcachedCacheMsgpackTest extends MemcachedCacheTest
 {
-    protected string $serializer = Cache::SERIALIZER_MSGPACK;
+    protected Serializer $serializer = Serializer::MSGPACK;
 }

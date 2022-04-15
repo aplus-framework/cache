@@ -79,15 +79,6 @@ class FilesCacheTest extends TestCase
         self::assertInstanceOf(FilesCache::class, new FilesCache());
     }
 
-    public function testInvalidSerializer() : void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'Invalid serializer: foo'
-        );
-        new FilesCache($this->configs, $this->prefix, 'foo');
-    }
-
     public function testCacheDirectoryIsNotWritable() : void
     {
         if (\getenv('GITLAB_CI')) {

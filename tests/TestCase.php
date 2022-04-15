@@ -14,6 +14,7 @@ use Framework\Cache\Debug\CacheCollector;
 use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
+use Framework\Cache\Serializer;
 use Framework\Log\Logger;
 use Framework\Log\Loggers\MultiFileLogger;
 
@@ -25,7 +26,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected array $configs = [];
     protected string $prefix = 'test';
-    protected string $serializer = Cache::SERIALIZER_PHP;
+    protected Serializer $serializer = Serializer::PHP;
 
     public function tearDown() : void
     {
@@ -203,7 +204,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $collector = $this->setCollector();
         self::assertStringContainsString(
-            $this->serializer,
+            $this->serializer->value,
             $collector->getContents()
         );
         self::assertStringContainsString(
@@ -250,7 +251,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         };
         self::assertSame($handler, $collector->getHandler());
         $cache = new class() extends FilesCache {
-            protected string $serializer = Cache::SERIALIZER_PHP;
+            protected Serializer $serializer = Serializer::PHP;
 
             public function __construct()
             {

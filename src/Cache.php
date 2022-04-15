@@ -13,8 +13,6 @@ use Framework\Cache\Debug\CacheCollector;
 use Framework\Debug\Debugger;
 use Framework\Log\Logger;
 use Framework\Log\LogLevel;
-use InvalidArgumentException;
-use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -24,26 +22,6 @@ use JetBrains\PhpStorm\Pure;
  */
 abstract class Cache
 {
-    /**
-     * The Igbinary serializer.
-     */
-    public const SERIALIZER_IGBINARY = 'igbinary';
-    /**
-     * The JSON serializer.
-     */
-    public const SERIALIZER_JSON = 'json';
-    /**
-     * The JSON Array serializer.
-     */
-    public const SERIALIZER_JSON_ARRAY = 'json-array';
-    /**
-     * The MessagePack serializer.
-     */
-    public const SERIALIZER_MSGPACK = 'msgpack';
-    /**
-     * The PHP serializer.
-     */
-    public const SERIALIZER_PHP = 'php';
     /**
      * Driver specific configurations.
      *
@@ -59,9 +37,9 @@ abstract class Cache
     /**
      * Data serializer.
      *
-     * @var string
+     * @var Serializer
      */
-    protected string $serializer;
+    protected Serializer $serializer;
     /**
      * The Logger instance if is set.
      *
@@ -83,25 +61,19 @@ abstract class Cache
      *
      * @param array<string,mixed> $configs Driver specific configurations
      * @param string|null $prefix Keys prefix
-     * @param string $serializer Data serializer. One of the SERIALIZER_* constants
+     * @param Serializer $serializer Data serializer
      */
     public function __construct(
         array $configs = [],
         string $prefix = null,
-        #[ExpectedValues([
-            Cache::SERIALIZER_IGBINARY,
-            Cache::SERIALIZER_JSON,
-            Cache::SERIALIZER_JSON_ARRAY,
-            Cache::SERIALIZER_MSGPACK,
-            Cache::SERIALIZER_PHP,
-        ])] string $serializer = Cache::SERIALIZER_PHP,
+        Serializer $serializer = Serializer::PHP,
         Logger $logger = null
     ) {
         if ($configs) {
             $this->configs = \array_replace_recursive($this->configs, $configs);
         }
         $this->prefix = $prefix;
-        $this->setSerializer($serializer);
+        $this->serializer = $serializer;
         $this->logger = $logger;
         $this->initialize();
     }
@@ -255,20 +227,6 @@ abstract class Cache
         return $value;
     }
 
-    protected function setSerializer(string $serializer) : void
-    {
-        if ( ! \in_array($serializer, [
-            static::SERIALIZER_IGBINARY,
-            static::SERIALIZER_JSON,
-            static::SERIALIZER_JSON_ARRAY,
-            static::SERIALIZER_MSGPACK,
-            static::SERIALIZER_PHP,
-        ], true)) {
-            throw new InvalidArgumentException("Invalid serializer: {$serializer}");
-        }
-        $this->serializer = $serializer;
-    }
-
     #[Pure]
     protected function renderKey(string $key) : string
     {
@@ -284,15 +242,15 @@ abstract class Cache
      */
     protected function serialize(mixed $value) : string
     {
-        if ($this->serializer === static::SERIALIZER_IGBINARY) {
+        if ($this->serializer === Serializer::IGBINARY) {
             return \igbinary_serialize($value);
         }
-        if ($this->serializer === static::SERIALIZER_JSON
-            || $this->serializer === static::SERIALIZER_JSON_ARRAY
+        if ($this->serializer === Serializer::JSON
+            || $this->serializer === Serializer::JSON_ARRAY
         ) {
             return \json_encode($value, \JSON_THROW_ON_ERROR);
         }
-        if ($this->serializer === static::SERIALIZER_MSGPACK) {
+        if ($this->serializer === Serializer::MSGPACK) {
             return \msgpack_serialize($value);
         }
         return \serialize($value);
@@ -305,16 +263,16 @@ abstract class Cache
      */
     protected function unserialize(string $value) : mixed
     {
-        if ($this->serializer === static::SERIALIZER_IGBINARY) {
+        if ($this->serializer === Serializer::IGBINARY) {
             return @\igbinary_unserialize($value);
         }
-        if ($this->serializer === static::SERIALIZER_JSON) {
+        if ($this->serializer === Serializer::JSON) {
             return \json_decode($value);
         }
-        if ($this->serializer === static::SERIALIZER_JSON_ARRAY) {
+        if ($this->serializer === Serializer::JSON_ARRAY) {
             return \json_decode($value, true);
         }
-        if ($this->serializer === static::SERIALIZER_MSGPACK) {
+        if ($this->serializer === Serializer::MSGPACK) {
             return \msgpack_unserialize($value);
         }
         return \unserialize($value, ['allowed_classes' => true]);
@@ -325,7 +283,7 @@ abstract class Cache
         $this->debugCollector = $debugCollector;
         $this->debugCollector->setInfo([
             'class' => static::class,
-            'serializer' => $this->serializer,
+            'serializer' => $this->serializer->value,
         ]);
         return $this;
     }

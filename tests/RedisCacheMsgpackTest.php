@@ -9,9 +9,9 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Framework\Cache\Serializer;
 
 final class RedisCacheMsgpackTest extends RedisCacheTest
 {
-    protected string $serializer = Cache::SERIALIZER_MSGPACK;
+    protected Serializer $serializer = Serializer::MSGPACK;
 }

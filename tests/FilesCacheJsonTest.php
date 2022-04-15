@@ -9,9 +9,9 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Framework\Cache\Serializer;
 
 final class FilesCacheJsonTest extends FilesCacheTest
 {
-    protected string $serializer = Cache::SERIALIZER_JSON;
+    protected Serializer $serializer = Serializer::JSON;
 }

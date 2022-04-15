@@ -9,9 +9,9 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Framework\Cache\Serializer;
 
 final class RedisCacheIgbinaryTest extends RedisCacheTest
 {
-    protected string $serializer = Cache::SERIALIZER_IGBINARY;
+    protected Serializer $serializer = Serializer::IGBINARY;
 }
