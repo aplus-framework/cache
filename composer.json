@@ -41,8 +41,8 @@
         "ext-memcached": "*",
         "ext-msgpack": "*",
         "ext-redis": "*",
-        "aplus/debug": "^2.4",
-        "aplus/log": "^2.2"
+        "aplus/debug": "^3.0",
+        "aplus/log": "^3.0"
     },
     "require-dev": {
         "ext-xdebug": "*",
