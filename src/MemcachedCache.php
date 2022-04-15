@@ -9,7 +9,7 @@
  */
 namespace Framework\Cache;
 
-use Framework\Log\Logger;
+use Framework\Log\LogLevel;
 use Memcached;
 use OutOfBoundsException;
 use RuntimeException;
@@ -137,7 +137,10 @@ class MemcachedCache extends Cache
         foreach ($this->configs['servers'] as $server) {
             $host = $server['host'] . ':' . ($server['port'] ?? 11211);
             if (\in_array($host, $pool, true)) {
-                $this->log('Cache (memcached): Server pool already has ' . $host, Logger::DEBUG);
+                $this->log(
+                    'Cache (memcached): Server pool already has ' . $host,
+                    LogLevel::DEBUG
+                );
                 continue;
             }
             $result = $this->memcached->addServer(

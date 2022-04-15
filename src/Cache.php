@@ -12,6 +12,7 @@ namespace Framework\Cache;
 use Framework\Cache\Debug\CacheCollector;
 use Framework\Debug\Debugger;
 use Framework\Log\Logger;
+use Framework\Log\LogLevel;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ExpectedValues;
 use JetBrains\PhpStorm\Pure;
@@ -114,16 +115,7 @@ abstract class Cache
 
     protected function log(
         string $message,
-        #[ExpectedValues([
-            Logger::DEBUG,
-            Logger::INFO,
-            Logger::NOTICE,
-            Logger::WARNING,
-            Logger::ERROR,
-            Logger::CRITICAL,
-            Logger::ALERT,
-            Logger::EMERGENCY,
-        ])] int $level = Logger::ERROR
+        LogLevel $level = LogLevel::ERROR
     ) : void {
         if (isset($this->logger)) {
             $this->logger->log($level, $message);
