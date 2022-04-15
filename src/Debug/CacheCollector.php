@@ -44,7 +44,7 @@ class CacheCollector extends Collector
             $activities[] = [
                 'collector' => $this->getName(),
                 'class' => static::class,
-                'description' => 'Run command ' . $index + 1,
+                'description' => 'Run command ' . ($index + 1),
                 'start' => $data['start'],
                 'end' => $data['end'],
             ];
