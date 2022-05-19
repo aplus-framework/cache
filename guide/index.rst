@@ -47,7 +47,6 @@ The logic for caching values is similar to the example below:
     
     return $data;
 
-
 If the value of "data" is cached it returns that value.
 
 Otherwise, the value is added to the cache to be responded to in the next request,
@@ -69,12 +68,12 @@ Items can be cached individually or several at a time.
         'foo'=> 'bar',
     ], 10);
 
-O TTL pode ser setado como o terceiro argumento do método ``set`` ou diretamente
-na propriedade ``defaultTll``.
+The TTL can be set as the third argument of the ``set`` method or directly in
+the ``defaultTtl`` property.
 
 .. code-block:: php
 
-    $cache::$defaultTtl = 60;
+    $cache->defaultTtl = 60;
 
 Get Values
 ----------
@@ -88,7 +87,6 @@ Get values can also be individually or multiple at once:
 
     // Data is an array with the keys "key", "foo" and "baz"
     $data = $cache->getMulti(['key', 'foo', 'baz']);
-
 
 Increment and Decrement
 -----------------------
