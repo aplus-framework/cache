@@ -14,7 +14,7 @@ namespace Framework\Cache;
  *
  * @package cache
  */
-enum Serializer: string
+enum Serializer : string
 {
     /**
      * The Igbinary serializer.
