@@ -196,7 +196,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
                 'start',
                 'end',
             ],
-            \array_keys($collector->getActivities()[0])
+            \array_keys($collector->getActivities()[0]) // @phpstan-ignore-line
         );
     }
 
