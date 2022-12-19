@@ -18,6 +18,7 @@ test:php:
     - memcached
     - redis
   before_script:
+    - php -v
     - composer update
   script:
     - composer normalize --dry-run --indent-size=4 --indent-style=space
