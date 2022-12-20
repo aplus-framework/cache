@@ -10,6 +10,16 @@ services:
       - memcached
       - redis
     tty: true
+  package-last:
+    image: registry.gitlab.com/aplus-framework/images/package:3
+    container_name: package-cache-last
+    working_dir: /package
+    volumes:
+      - .:/package
+    depends_on:
+      - memcached
+      - redis
+    tty: true
   memcached:
     image: memcached:alpine
     container_name: cache-memcached
