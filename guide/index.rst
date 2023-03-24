@@ -36,7 +36,7 @@ The logic for caching values is similar to the example below:
         'directory' => '/tmp/cache/'
     ]);
     
-    $data = $cache->get('data');
+    $data = $cache->get('data'); // Data value or null
     
     if  ($data !== null) { // If data is cached, return now
         return $data;
@@ -60,13 +60,13 @@ Items can be cached individually or several at a time.
 .. code-block:: php
 
     // Set the value of "key" for 10 seconds
-    $cache->set('key', 'value', 10);
+    $cache->set('key', 'value', 10); // bool
 
     // Set the values of "key" and "foo" for 10 seconds
     $cache->setMulti([
         'key'=> 'value',
         'foo'=> 'bar',
-    ], 10);
+    ], 10); // array of booleans
 
 The TTL can be set as the third argument of the ``set`` method or directly in
 the ``defaultTtl`` property.
@@ -86,6 +86,7 @@ Get values can also be individually or multiple at once:
     $data = $cache->get('key'); 
 
     // Data is an array with the keys "key", "foo" and "baz"
+    // Items not found have null value
     $data = $cache->getMulti(['key', 'foo', 'baz']);
 
 Increment and Decrement
