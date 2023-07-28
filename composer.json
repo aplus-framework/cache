@@ -23,9 +23,9 @@
     "homepage": "https://aplus-framework.com/packages/cache",
     "support": {
         "email": "support@aplus-framework.com",
-        "issues": "https://gitlab.com/aplus-framework/libraries/cache/issues",
+        "issues": "https://github.com/aplus-framework/cache/issues",
         "forum": "https://aplus-framework.com/forum",
-        "source": "https://gitlab.com/aplus-framework/libraries/cache",
+        "source": "https://github.com/aplus-framework/cache",
         "docs": "https://docs.aplus-framework.com/guides/libraries/cache/"
     },
     "funding": [

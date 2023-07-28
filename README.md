@@ -1,4 +1,4 @@
-<a href="https://gitlab.com/aplus-framework/libraries/cache"><img src="https://gitlab.com/aplus-framework/libraries/cache/-/raw/master/guide/image.png" alt="Aplus Framework Cache Library" align="right" width="100"></a>
+<a href="https://github.com/aplus-framework/cache"><img src="https://raw.githubusercontent.com/aplus-framework/cache/master/guide/image.png" alt="Aplus Framework Cache Library" align="right" width="100"></a>
 
 # Aplus Framework Cache Library
 
@@ -7,7 +7,6 @@
 - [API Documentation](https://docs.aplus-framework.com/packages/cache.html)
 
 [![tests](https://github.com/aplus-framework/cache/actions/workflows/tests.yml/badge.svg)](https://github.com/aplus-framework/cache/actions/workflows/tests.yml)
-[![pipeline](https://gitlab.com/aplus-framework/libraries/cache/badges/master/pipeline.svg)](https://gitlab.com/aplus-framework/libraries/cache/-/pipelines?scope=branches)
-[![coverage](https://gitlab.com/aplus-framework/libraries/cache/badges/master/coverage.svg?job=test:php)](https://aplus-framework.gitlab.io/libraries/cache/coverage/)
+[![coverage](https://coveralls.io/repos/github/aplus-framework/cache/badge.svg?branch=master)](https://coveralls.io/github/aplus-framework/cache?branch=master)
 [![packagist](https://img.shields.io/packagist/v/aplus/cache)](https://packagist.org/packages/aplus/cache)
 [![open-source](https://img.shields.io/badge/open--source-sponsor-magenta)](https://aplus-framework.com/sponsor)
