@@ -181,6 +181,7 @@ If it is necessary to define another address, do as in the example below:
         'host' => '192.168.1.100',
         'port' => 6379,
         'timeout' => 0.0,
+        'auth' => '',
     ];
     $cache = new RedisCache($configs);
 
