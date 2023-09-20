@@ -37,7 +37,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function getLogger() : Logger
     {
         static $logger;
-        if ( ! $logger) {
+        if (!$logger) {
             $dir = \sys_get_temp_dir() . '/cache-logs';
             \exec('rm -rf ' . $dir);
             \exec('mkdir -p ' . $dir);

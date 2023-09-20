@@ -157,7 +157,7 @@ class MemcachedCache extends Cache
         if ($result === false) {
             $this->log('Cache (memcached): ' . $this->memcached->getLastErrorMessage());
         }
-        if ( ! $this->memcached->getStats()) {
+        if (!$this->memcached->getStats()) {
             throw new RuntimeException('Cache (memcached): Could not connect to any server');
         }
     }

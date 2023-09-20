@@ -68,7 +68,7 @@ class CacheCollector extends Collector
 
     protected function renderCommands() : string
     {
-        if ( ! $this->hasData()) {
+        if (!$this->hasData()) {
             return '<p>No command was run.</p>';
         }
         $count = \count($this->getData());

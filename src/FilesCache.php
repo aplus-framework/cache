@@ -71,12 +71,12 @@ class FilesCache extends Cache
         if (isset($this->prefix[0])) {
             $real .= $this->prefix;
         }
-        if ( ! \is_dir($real)) {
+        if (!\is_dir($real)) {
             throw new RuntimeException(
                 "Invalid cache directory path: {$real}"
             );
         }
-        if ( ! \is_writable($real)) {
+        if (!\is_writable($real)) {
             throw new RuntimeException(
                 "Cache directory is not writable: {$real}"
             );
@@ -104,7 +104,7 @@ class FilesCache extends Cache
      */
     protected function getContents(string $filepath) : mixed
     {
-        if ( ! \is_file($filepath)) {
+        if (!\is_file($filepath)) {
             return null;
         }
         $value = @\file_get_contents($filepath);
@@ -113,7 +113,7 @@ class FilesCache extends Cache
             return null;
         }
         $value = (array) $this->unserialize($value);
-        if ( ! isset($value['ttl'], $value['data']) || $value['ttl'] <= \time()) {
+        if (!isset($value['ttl'], $value['data']) || $value['ttl'] <= \time()) {
             $this->deleteFile($filepath);
             return null;
         }
@@ -126,7 +126,7 @@ class FilesCache extends Cache
         if (\is_dir($dirname)) {
             return;
         }
-        if ( ! \mkdir($dirname, 0777, true) || ! \is_dir($dirname)) {
+        if (!\mkdir($dirname, 0777, true) || !\is_dir($dirname)) {
             throw new RuntimeException(
                 "Directory key was not created: {$filepath}"
             );
@@ -223,11 +223,11 @@ class FilesCache extends Cache
                 $this->getContents($path);
                 continue;
             }
-            if ( ! $this->deleteExpired($path)) {
+            if (!$this->deleteExpired($path)) {
                 $status = false;
                 break;
             }
-            if (\scandir($path, \SCANDIR_SORT_ASCENDING) === ['.', '..'] && ! \rmdir($path)) {
+            if (\scandir($path, \SCANDIR_SORT_ASCENDING) === ['.', '..'] && !\rmdir($path)) {
                 $status = false;
                 break;
             }
@@ -257,11 +257,11 @@ class FilesCache extends Cache
                 $status = false;
                 break;
             }
-            if ( ! $this->deleteAll($path)) {
+            if (!$this->deleteAll($path)) {
                 $status = false;
                 break;
             }
-            if (\scandir($path, \SCANDIR_SORT_ASCENDING) === ['.', '..'] && ! \rmdir($path)) {
+            if (\scandir($path, \SCANDIR_SORT_ASCENDING) === ['.', '..'] && !\rmdir($path)) {
                 $status = false;
                 break;
             }
@@ -293,11 +293,11 @@ class FilesCache extends Cache
         if ($real === false) {
             return false;
         }
-        if ( ! \is_dir($real)) {
+        if (!\is_dir($real)) {
             return false;
         }
         $real = \rtrim($real, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
-        if ( ! \str_starts_with($real, $this->configs['directory'])) {
+        if (!\str_starts_with($real, $this->configs['directory'])) {
             return false;
         }
         return \opendir($real);
