@@ -14,6 +14,7 @@ use Framework\Debug\Debugger;
 use Framework\Log\Logger;
 use Framework\Log\LogLevel;
 use JetBrains\PhpStorm\Pure;
+use SensitiveParameter;
 
 /**
  * Class Cache.
@@ -64,6 +65,7 @@ abstract class Cache
      * @param Serializer $serializer Data serializer
      */
     public function __construct(
+        #[SensitiveParameter]
         array $configs = [],
         string $prefix = null,
         Serializer $serializer = Serializer::PHP,
