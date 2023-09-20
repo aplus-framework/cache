@@ -18,11 +18,36 @@ class RedisCacheTest extends TestCase
         $this->configs = [
             'host' => \getenv('REDIS_HOST'),
         ];
+        $this->setCache();
+    }
+
+    protected function setCache() : void
+    {
         $this->cache = new RedisCache(
             $this->configs,
             $this->prefix,
             $this->serializer,
             $this->getLogger()
         );
+    }
+
+    public function testAuth() : void
+    {
+        $this->configs = [
+            'host' => \getenv('REDIS_HOST'),
+            'password' => 'foo',
+        ];
+        $this->expectException(\RedisException::class);
+        $this->setCache();
+    }
+
+    public function testSelect() : void
+    {
+        $this->configs = [
+            'host' => \getenv('REDIS_HOST'),
+            'database' => 0,
+        ];
+        $this->setCache();
+        self::assertInstanceOf(RedisCache::class, $this->cache);
     }
 }

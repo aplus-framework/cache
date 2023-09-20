@@ -28,6 +28,8 @@ class RedisCache extends Cache
         'host' => '127.0.0.1',
         'port' => 6379,
         'timeout' => 0.0,
+        'password' => null,
+        'database' => null,
     ];
 
     public function __destruct()
@@ -48,6 +50,12 @@ class RedisCache extends Cache
             $this->configs['port'],
             $this->configs['timeout']
         );
+        if (isset($this->configs['password'])) {
+            $this->redis->auth($this->configs['password']);
+        }
+        if (isset($this->configs['database'])) {
+            $this->redis->select($this->configs['database']);
+        }
     }
 
     public function get(string $key) : mixed
