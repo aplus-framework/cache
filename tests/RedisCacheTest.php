@@ -50,4 +50,13 @@ class RedisCacheTest extends TestCase
         $this->setCache();
         self::assertInstanceOf(RedisCache::class, $this->cache);
     }
+
+    public function testCustomInstance() : void
+    {
+        $cache = new RedisCache(null);
+        self::assertNull($cache->getRedis());
+        $redis = new \Redis();
+        $cache->setRedis($redis);
+        self::assertSame($redis, $cache->getRedis());
+    }
 }

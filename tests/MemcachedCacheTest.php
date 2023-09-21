@@ -29,4 +29,13 @@ class MemcachedCacheTest extends TestCase
             $this->getLogger()
         );
     }
+
+    public function testCustomInstance() : void
+    {
+        $cache = new MemcachedCache(null);
+        self::assertNull($cache->getMemcached());
+        $memcached = new \Memcached();
+        $cache->setMemcached($memcached);
+        self::assertSame($memcached, $cache->getMemcached());
+    }
 }

@@ -58,6 +58,17 @@ class RedisCache extends Cache
         }
     }
 
+    public function setRedis(Redis $redis) : static
+    {
+        $this->redis = $redis;
+        return $this;
+    }
+
+    public function getRedis() : ?Redis
+    {
+        return $this->redis ?? null;
+    }
+
     public function get(string $key) : mixed
     {
         if (isset($this->debugCollector)) {

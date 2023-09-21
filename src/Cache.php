@@ -60,24 +60,27 @@ abstract class Cache
     /**
      * Cache constructor.
      *
-     * @param array<string,mixed> $configs Driver specific configurations
+     * @param array<string,mixed>|null $configs Driver specific configurations. Set
+     * null to not initialize and set a custom object.
      * @param string|null $prefix Keys prefix
      * @param Serializer $serializer Data serializer
      */
     public function __construct(
         #[SensitiveParameter]
-        array $configs = [],
+        ?array $configs = [],
         string $prefix = null,
         Serializer $serializer = Serializer::PHP,
         Logger $logger = null
     ) {
-        if ($configs) {
-            $this->configs = \array_replace_recursive($this->configs, $configs);
-        }
         $this->prefix = $prefix;
         $this->serializer = $serializer;
         $this->logger = $logger;
-        $this->initialize();
+        if ($configs !== null) {
+            if ($configs) {
+                $this->configs = \array_replace_recursive($this->configs, $configs);
+            }
+            $this->initialize();
+        }
     }
 
     /**
