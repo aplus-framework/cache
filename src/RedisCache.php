@@ -58,12 +58,28 @@ class RedisCache extends Cache
         }
     }
 
+    /**
+     * Set custom Redis instance.
+     *
+     * @since 3.2
+     *
+     * @param Redis $redis
+     *
+     * @return static
+     */
     public function setRedis(Redis $redis) : static
     {
         $this->redis = $redis;
         return $this;
     }
 
+    /**
+     * Get Redis instance or null.
+     *
+     * @since 3.2
+     *
+     * @return Redis|null
+     */
     public function getRedis() : ?Redis
     {
         return $this->redis ?? null;

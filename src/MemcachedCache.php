@@ -62,12 +62,28 @@ class MemcachedCache extends Cache
         }
     }
 
+    /**
+     * Set custom Memcached instance.
+     *
+     * @since 3.2
+     *
+     * @param Memcached $memcached
+     *
+     * @return static
+     */
     public function setMemcached(Memcached $memcached) : static
     {
         $this->memcached = $memcached;
         return $this;
     }
 
+    /**
+     * Get Memcached instance or null.
+     *
+     * @since 3.2
+     *
+     * @return Memcached|null
+     */
     public function getMemcached() : ?Memcached
     {
         return $this->memcached ?? null;
