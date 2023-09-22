@@ -166,7 +166,7 @@ If you want to set different configs, do as follows:
     ];
     $cache = new MemcachedCache($configs);
 
-If you want to use a custom Memcached instance, pass `null` in the first parameter
+If you want to use a custom Memcached instance, pass ``null`` in the first parameter
 of the constructor and then set the instance:
 
 .. code-block:: php
@@ -196,7 +196,7 @@ If it is necessary to define another address, do as in the example below:
     ];
     $cache = new RedisCache($configs);
 
-If you want to use a custom Redis instance, pass `null` in the first parameter
+If you want to use a custom Redis instance, pass ``null`` in the first parameter
 of the constructor and then set the instance:
 
 .. code-block:: php
