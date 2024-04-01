@@ -38,6 +38,26 @@ class FilesCacheTest extends TestCase
         parent::tearDown();
     }
 
+    public function testSerializer() : void
+    {
+        $this->cache = new FilesCache(
+            $this->configs,
+            $this->prefix,
+            $this->serializer->value,
+            $this->getLogger()
+        );
+        $this->expectException(\ValueError::class);
+        $this->expectExceptionMessage(
+            '"foo" is not a valid backing value for enum Framework\Cache\Serializer'
+        );
+        $this->cache = new FilesCache(
+            $this->configs,
+            $this->prefix,
+            'foo',
+            $this->getLogger()
+        );
+    }
+
     public function testGC() : void
     {
         $this->cache->set('foo', 'bar', 1);

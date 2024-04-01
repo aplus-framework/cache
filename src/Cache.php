@@ -63,16 +63,19 @@ abstract class Cache
      * @param array<string,mixed>|null $configs Driver specific configurations. Set
      * null to not initialize and set a custom object.
      * @param string|null $prefix Keys prefix
-     * @param Serializer $serializer Data serializer
+     * @param Serializer|string $serializer Data serializer
      */
     public function __construct(
         #[SensitiveParameter]
         ?array $configs = [],
         string $prefix = null,
-        Serializer $serializer = Serializer::PHP,
+        Serializer|string $serializer = Serializer::PHP,
         Logger $logger = null
     ) {
         $this->prefix = $prefix;
+        if (\is_string($serializer)) {
+            $serializer = Serializer::from($serializer);
+        }
         $this->serializer = $serializer;
         $this->logger = $logger;
         if ($configs !== null) {
