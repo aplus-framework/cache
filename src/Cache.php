@@ -13,6 +13,7 @@ use Framework\Cache\Debug\CacheCollector;
 use Framework\Debug\Debugger;
 use Framework\Log\Logger;
 use Framework\Log\LogLevel;
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use SensitiveParameter;
 
@@ -54,7 +55,7 @@ abstract class Cache
      *
      * @var int
      */
-    public int $defaultTtl = 60;
+    protected int $defaultTtl = 60;
     protected CacheCollector $debugCollector;
 
     /**
@@ -69,7 +70,7 @@ abstract class Cache
         #[SensitiveParameter]
         ?array $configs = [],
         string $prefix = null,
-        Serializer|string $serializer = Serializer::PHP,
+        Serializer | string $serializer = Serializer::PHP,
         Logger $logger = null
     ) {
         $this->prefix = $prefix;
@@ -103,6 +104,35 @@ abstract class Cache
     }
 
     /**
+     * Get the default Time To Live value in seconds.
+     *
+     * @return int
+     */
+    #[Pure]
+    public function getDefaultTtl() : int
+    {
+        return $this->defaultTtl;
+    }
+
+    /**
+     * Set the default Time To Live value in seconds.
+     *
+     * @param int $seconds An integer greater than zero
+     *
+     * @return static
+     */
+    public function setDefaultTtl(int $seconds) : static
+    {
+        if ($seconds < 1) {
+            throw new InvalidArgumentException(
+                'Default TTL must be greater than 0. ' . $seconds . ' given'
+            );
+        }
+        $this->defaultTtl = $seconds;
+        return $this;
+    }
+
+    /**
      * Make the Time To Live value.
      *
      * @param int|null $seconds TTL value or null to use the default
@@ -112,7 +142,7 @@ abstract class Cache
     #[Pure]
     protected function makeTtl(?int $seconds) : int
     {
-        return $seconds ?? $this->defaultTtl;
+        return $seconds ?? $this->getDefaultTtl();
     }
 
     /**
