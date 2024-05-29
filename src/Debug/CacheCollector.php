@@ -59,6 +59,11 @@ class CacheCollector extends Collector
         }
         \ob_start(); ?>
         <p><strong>Handler:</strong> <?= $this->getHandler() ?></p>
+        <?php
+        if (isset($this->info['prefix'])) : ?>
+            <p><strong>Keys Prefix:</strong> <?= $this->info['prefix'] ?></p>
+        <?php
+        endif ?>
         <p><strong>Serializer:</strong> <?= $this->info['serializer'] ?></p>
         <h1>Commands</h1>
         <?php

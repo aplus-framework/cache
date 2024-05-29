@@ -35,7 +35,7 @@ abstract class Cache
      *
      * @var string|null
      */
-    protected ?string $prefix;
+    protected ?string $prefix = null;
     /**
      * Data serializer.
      *
@@ -321,6 +321,7 @@ abstract class Cache
         $this->debugCollector = $debugCollector;
         $this->debugCollector->setInfo([
             'class' => static::class,
+            'prefix' => $this->prefix,
             'serializer' => $this->serializer->value,
         ]);
         return $this;
