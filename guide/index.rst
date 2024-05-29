@@ -68,12 +68,12 @@ Items can be cached individually or several at a time.
         'foo'=> 'bar',
     ], 10); // array of booleans
 
-The TTL can be set as the third argument of the ``set`` method or directly in
-the ``defaultTtl`` property.
+The TTL can be set as the third argument of the ``set`` method or with the
+``setDefaultTtl`` method:
 
 .. code-block:: php
 
-    $cache->defaultTtl = 60;
+    $cache->setDefaultTtl(60);
 
 Get Values
 ----------
