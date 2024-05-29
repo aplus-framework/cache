@@ -58,13 +58,19 @@ class CacheCollector extends Collector
             return '<p>This collector has not been added to a Cache instance.</p>';
         }
         \ob_start(); ?>
-        <p><strong>Handler:</strong> <?= $this->getHandler() ?></p>
+        <p><strong>Handler:</strong>
+            <?= \htmlentities($this->getHandler()) ?>
+        </p>
         <?php
         if (isset($this->info['prefix'])) : ?>
-            <p><strong>Keys Prefix:</strong> <?= $this->info['prefix'] ?></p>
+            <p><strong>Keys Prefix:</strong>
+                <?= \htmlentities($this->info['prefix']) ?>
+            </p>
         <?php
         endif ?>
-        <p><strong>Serializer:</strong> <?= $this->info['serializer'] ?></p>
+        <p><strong>Serializer:</strong>
+            <?= \htmlentities($this->info['serializer']) ?>
+        </p>
         <h1>Commands</h1>
         <?php
         echo $this->renderCommands();
