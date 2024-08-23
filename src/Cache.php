@@ -69,9 +69,9 @@ abstract class Cache
     public function __construct(
         #[SensitiveParameter]
         ?array $configs = [],
-        string $prefix = null,
+        ?string $prefix = null,
         Serializer | string $serializer = Serializer::PHP,
-        Logger $logger = null
+        ?Logger $logger = null
     ) {
         $this->prefix = $prefix;
         if (\is_string($serializer)) {
@@ -179,7 +179,7 @@ abstract class Cache
      *
      * @return bool TRUE if the item was set, FALSE if fail to set
      */
-    abstract public function set(string $key, mixed $value, int $ttl = null) : bool;
+    abstract public function set(string $key, mixed $value, ?int $ttl = null) : bool;
 
     /**
      * Sets multi items to the cache storage.
@@ -189,7 +189,7 @@ abstract class Cache
      *
      * @return array<string,bool> associative array with key names and respective set status
      */
-    public function setMulti(array $data, int $ttl = null) : array
+    public function setMulti(array $data, ?int $ttl = null) : array
     {
         foreach ($data as $key => &$value) {
             $value = $this->set($key, $value, $ttl);
@@ -238,7 +238,7 @@ abstract class Cache
      *
      * @return int The current item value
      */
-    public function increment(string $key, int $offset = 1, int $ttl = null) : int
+    public function increment(string $key, int $offset = 1, ?int $ttl = null) : int
     {
         $offset = (int) \abs($offset);
         $value = (int) $this->get($key);
@@ -256,7 +256,7 @@ abstract class Cache
      *
      * @return int The current item value
      */
-    public function decrement(string $key, int $offset = 1, int $ttl = null) : int
+    public function decrement(string $key, int $offset = 1, ?int $ttl = null) : int
     {
         $offset = (int) \abs($offset);
         $value = (int) $this->get($key);

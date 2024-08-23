@@ -133,7 +133,7 @@ class FilesCache extends Cache
         }
     }
 
-    public function set(string $key, mixed $value, int $ttl = null) : bool
+    public function set(string $key, mixed $value, ?int $ttl = null) : bool
     {
         if (isset($this->debugCollector)) {
             $start = \microtime(true);
@@ -148,7 +148,7 @@ class FilesCache extends Cache
         return $this->setValue($key, $value, $ttl);
     }
 
-    public function setValue(string $key, mixed $value, int $ttl = null) : bool
+    public function setValue(string $key, mixed $value, ?int $ttl = null) : bool
     {
         $filepath = $this->renderFilepath($key);
         $this->createSubDirectory($filepath);

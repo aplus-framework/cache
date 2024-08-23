@@ -23,7 +23,7 @@ class CacheMock extends Cache
         return 1;
     }
 
-    public function set(string $key, mixed $value, int $ttl = null) : bool
+    public function set(string $key, mixed $value, ?int $ttl = null) : bool
     {
         return true;
     }

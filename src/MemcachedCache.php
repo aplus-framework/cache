@@ -110,7 +110,7 @@ class MemcachedCache extends Cache
             : $key;
     }
 
-    public function set(string $key, mixed $value, int $ttl = null) : bool
+    public function set(string $key, mixed $value, ?int $ttl = null) : bool
     {
         if (isset($this->debugCollector)) {
             $start = \microtime(true);
