@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Debug;
+namespace Tests\Cache\Debug;
 
 use Framework\Cache\Debug\CacheCollection;
 use PHPUnit\Framework\TestCase;
