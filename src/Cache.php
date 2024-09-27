@@ -93,13 +93,20 @@ abstract class Cache
         }
     }
 
+    /**
+     * @since 4.1
+     *
+     * @return bool
+     */
     public function isAutoClose() : bool
     {
         return $this->autoClose;
     }
 
     /**
-     * @param bool $autoClose True to auto close on destructor, otherwise false
+     * @since 4.1
+     *
+     * @param bool $autoClose True to enable auto close, false to disable
      *
      * @return static
      */
@@ -110,6 +117,8 @@ abstract class Cache
     }
 
     /**
+     * @since 4.1
+     *
      * @param array<string,mixed> $configs
      *
      * @return static
@@ -120,6 +129,13 @@ abstract class Cache
         return $this;
     }
 
+    /**
+     * @since 4.1
+     *
+     * @param Serializer|string $serializer
+     *
+     * @return static
+     */
     protected function setSerializer(Serializer | string $serializer) : static
     {
         if (\is_string($serializer)) {
