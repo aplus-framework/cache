@@ -65,6 +65,7 @@ abstract class Cache
      * null to not initialize and set a custom object.
      * @param string|null $prefix Keys prefix
      * @param Serializer|string $serializer Data serializer
+     * @param Logger|null $logger Logger instance
      */
     public function __construct(
         #[SensitiveParameter]
