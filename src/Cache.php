@@ -76,12 +76,23 @@ abstract class Cache
         $this->prefix = $prefix;
         $this->setSerializer($serializer);
         $this->logger = $logger;
-        if ($configs !== null) {
+        if (\is_array($configs)) {
             if ($configs) {
-                $this->configs = \array_replace_recursive($this->configs, $configs);
+                $this->setConfigs($configs);
             }
             $this->initialize();
         }
+    }
+
+    /**
+     * @param array<string,mixed> $configs
+     *
+     * @return static
+     */
+    protected function setConfigs(array $configs) : static
+    {
+        $this->configs = \array_replace_recursive($this->configs, $configs);
+        return $this;
     }
 
     protected function setSerializer(Serializer | string $serializer) : static
