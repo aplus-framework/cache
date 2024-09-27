@@ -13,6 +13,7 @@ use Framework\Log\Logger;
 use Framework\Log\LogLevel;
 use Memcached;
 use OutOfBoundsException;
+use Override;
 use RuntimeException;
 use SensitiveParameter;
 
@@ -62,11 +63,6 @@ class MemcachedCache extends Cache
         if ($configs instanceof Memcached) {
             $this->setMemcached($configs);
         }
-    }
-
-    public function __destruct()
-    {
-        $this->memcached->quit();
     }
 
     protected function initialize() : void
@@ -172,6 +168,12 @@ class MemcachedCache extends Cache
             );
         }
         return $this->memcached->flush();
+    }
+
+    #[Override]
+    public function close() : bool
+    {
+        return $this->memcached->quit();
     }
 
     protected function connect() : void

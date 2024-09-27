@@ -10,6 +10,7 @@
 namespace Framework\Cache;
 
 use Framework\Log\Logger;
+use Override;
 use Redis;
 use SensitiveParameter;
 
@@ -54,11 +55,6 @@ class RedisCache extends Cache
         if ($configs instanceof Redis) {
             $this->setRedis($configs);
         }
-    }
-
-    public function __destruct()
-    {
-        $this->redis->close();
     }
 
     protected function initialize() : void
@@ -177,5 +173,11 @@ class RedisCache extends Cache
             );
         }
         return $this->redis->flushAll();
+    }
+
+    #[Override]
+    public function close() : bool
+    {
+        return $this->redis->close();
     }
 }

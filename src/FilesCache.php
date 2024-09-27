@@ -40,6 +40,7 @@ class FilesCache extends Cache
         if (\rand(1, 100) <= $this->configs['gc']) {
             $this->gc();
         }
+        parent::__destruct();
     }
 
     protected function initialize() : void

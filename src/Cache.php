@@ -85,6 +85,11 @@ abstract class Cache
         }
     }
 
+    public function __destruct()
+    {
+        $this->close();
+    }
+
     /**
      * @param array<string,mixed> $configs
      *
@@ -281,6 +286,18 @@ abstract class Cache
         $value = $value ? $value - $offset : -$offset;
         $this->set($key, $value, $ttl);
         return $value;
+    }
+
+    /**
+     * Close the cache storage.
+     *
+     * @since 4.1
+     *
+     * @return bool TRUE on success, otherwise FALSE
+     */
+    public function close() : bool
+    {
+        return true;
     }
 
     #[Pure]
