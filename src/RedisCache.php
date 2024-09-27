@@ -9,7 +9,9 @@
  */
 namespace Framework\Cache;
 
+use Framework\Log\Logger;
 use Redis;
+use SensitiveParameter;
 
 /**
  * Class RedisCache.
@@ -31,6 +33,28 @@ class RedisCache extends Cache
         'password' => null,
         'database' => null,
     ];
+
+    /**
+     * RedisCache constructor.
+     *
+     * @param Redis|array<string,mixed>|null $configs Driver specific
+     * configurations. Set null to not initialize or a custom Redis object.
+     * @param string|null $prefix Keys prefix
+     * @param Serializer|string $serializer Data serializer
+     * @param Logger|null $logger Logger instance
+     */
+    public function __construct(
+        #[SensitiveParameter]
+        Redis | array | null $configs = [],
+        ?string $prefix = null,
+        Serializer | string $serializer = Serializer::PHP,
+        ?Logger $logger = null
+    ) {
+        parent::__construct($configs, $prefix, $serializer, $logger);
+        if ($configs instanceof Redis) {
+            $this->setRedis($configs);
+        }
+    }
 
     public function __destruct()
     {
