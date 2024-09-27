@@ -74,10 +74,7 @@ abstract class Cache
         ?Logger $logger = null
     ) {
         $this->prefix = $prefix;
-        if (\is_string($serializer)) {
-            $serializer = Serializer::from($serializer);
-        }
-        $this->serializer = $serializer;
+        $this->setSerializer($serializer);
         $this->logger = $logger;
         if ($configs !== null) {
             if ($configs) {
@@ -85,6 +82,15 @@ abstract class Cache
             }
             $this->initialize();
         }
+    }
+
+    protected function setSerializer(Serializer | string $serializer) : static
+    {
+        if (\is_string($serializer)) {
+            $serializer = Serializer::from($serializer);
+        }
+        $this->serializer = $serializer;
+        return $this;
     }
 
     /**
