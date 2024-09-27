@@ -61,14 +61,14 @@ abstract class Cache
     /**
      * Cache constructor.
      *
-     * @param array<string,mixed>|null $configs Driver specific configurations. Set
+     * @param mixed $configs Driver specific configurations. Set
      * null to not initialize and set a custom object.
      * @param string|null $prefix Keys prefix
      * @param Serializer|string $serializer Data serializer
      */
     public function __construct(
         #[SensitiveParameter]
-        ?array $configs = [],
+        mixed $configs = [],
         ?string $prefix = null,
         Serializer | string $serializer = Serializer::PHP,
         ?Logger $logger = null
