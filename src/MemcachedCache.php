@@ -9,10 +9,12 @@
  */
 namespace Framework\Cache;
 
+use Framework\Log\Logger;
 use Framework\Log\LogLevel;
 use Memcached;
 use OutOfBoundsException;
 use RuntimeException;
+use SensitiveParameter;
 
 /**
  * Class MemcachedCache.
@@ -39,6 +41,28 @@ class MemcachedCache extends Cache
             Memcached::OPT_BINARY_PROTOCOL => true,
         ],
     ];
+
+    /**
+     * MemcachedCache constructor.
+     *
+     * @param Memcached|array<string,mixed>|null $configs Driver specific
+     * configurations. Set null to not initialize or a custom Memcached object.
+     * @param string|null $prefix Keys prefix
+     * @param Serializer|string $serializer Data serializer
+     * @param Logger|null $logger Logger instance
+     */
+    public function __construct(
+        #[SensitiveParameter]
+        Memcached | array | null $configs = [],
+        ?string $prefix = null,
+        Serializer | string $serializer = Serializer::PHP,
+        ?Logger $logger = null
+    ) {
+        parent::__construct($configs, $prefix, $serializer, $logger);
+        if ($configs instanceof Memcached) {
+            $this->setMemcached($configs);
+        }
+    }
 
     public function __destruct()
     {
