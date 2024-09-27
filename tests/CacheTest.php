@@ -31,4 +31,14 @@ final class CacheTest extends TestCase
         );
         $this->cache->setDefaultTtl(0);
     }
+
+    public function testAutoClose() : void
+    {
+        self::assertTrue($this->cache->isAutoClose());
+        $this->cache->setAutoClose(false);
+        self::assertFalse($this->cache->isAutoClose());
+        $this->cache->setAutoClose(true);
+        self::assertTrue($this->cache->isAutoClose());
+        unset($this->cache);
+    }
 }

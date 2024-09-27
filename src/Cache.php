@@ -57,6 +57,7 @@ abstract class Cache
      */
     protected int $defaultTtl = 60;
     protected CacheCollector $debugCollector;
+    protected bool $autoClose = true;
 
     /**
      * Cache constructor.
@@ -87,7 +88,25 @@ abstract class Cache
 
     public function __destruct()
     {
-        $this->close();
+        if ($this->isAutoClose()) {
+            $this->close();
+        }
+    }
+
+    public function isAutoClose() : bool
+    {
+        return $this->autoClose;
+    }
+
+    /**
+     * @param bool $autoClose True to auto close on destructor, otherwise false
+     *
+     * @return static
+     */
+    public function setAutoClose(bool $autoClose) : static
+    {
+        $this->autoClose = $autoClose;
+        return $this;
     }
 
     /**
