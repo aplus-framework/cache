@@ -11,6 +11,8 @@ Aplus Framework Cache Library.
 - `Set Values`_
 - `Get Values`_
 - `Increment and Decrement`_
+- `Flush`_
+- `Close`_
 - `Cache Handlers`_
 - `Conclusion`_
 
@@ -107,6 +109,33 @@ Example below:
     $data = $cache->decrement('foo'); // $data is -2
     $data = $cache->decrement('foo', 3); // $data is -5
 
+Flush
+-----
+
+If you want to remove all items from the cache use the ``flush`` method:
+
+.. code-block:: php
+
+    $flushed = $cache->flush(); // bool
+
+Close
+-----
+
+By default, the cache handler will be closed upon deconstruction of the Cache
+class. You can close it at any time using the ``close`` method:
+
+.. code-block:: php
+
+    $closed = $cache->close(); // bool
+
+It is also possible to disable automatic closing with the ``setAutoClose``
+method:
+
+.. code-block:: php
+
+    $cache->setAutoClose(false); // static
+    $isAutoClose = $cache->isAutoClose(); // bool
+
 Cache Handlers
 --------------
 
@@ -138,7 +167,7 @@ already have default values:
 MemcachedCache
 ##############
 
-The Memcached handler already comes with the configs set to connect to Memcache
+The Memcached handler already comes with the configs set to connect to Memcached
 on localhost.
 
 If you want to set different configs, do as follows:
@@ -166,15 +195,17 @@ If you want to set different configs, do as follows:
     ];
     $cache = new MemcachedCache($configs);
 
-If you want to use a custom Memcached instance, pass ``null`` in the first parameter
-of the constructor and then set the instance:
+If you want to use a custom Memcached instance, pass it in the first parameter
+of the constructor:
 
 .. code-block:: php
 
     $memcached = new Memcached();
+    $cache = new MemcachedCache($memcached);
 
-    $cache = new MemcachedCache(null);
-    $cache->setMemcached($memcached);
+Note that when using a custom Memcached instance, it will not be automatically
+closed by the destructor. You need to call the ``close`` method directly or
+enable it with ``setAutoClose`` for that if you want.
 
 RedisCache
 ##########
@@ -196,15 +227,17 @@ If it is necessary to define another address, do as in the example below:
     ];
     $cache = new RedisCache($configs);
 
-If you want to use a custom Redis instance, pass ``null`` in the first parameter
-of the constructor and then set the instance:
+If you want to use a custom Redis instance, pass it in the first parameter
+of the constructor:
 
 .. code-block:: php
 
     $redis = new Redis();
+    $cache = new RedisCache($redis);
 
-    $cache = new RedisCache(null);
-    $cache->setRedis($redis);
+Note that when using a custom Redis instance, it will not be automatically
+closed by the destructor. You need to call the ``close`` method directly or
+enable it with ``setAutoClose`` for that if you want.
 
 Conclusion
 ----------
