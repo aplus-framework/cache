@@ -62,6 +62,7 @@ class MemcachedCache extends Cache
         parent::__construct($configs, $prefix, $serializer, $logger);
         if ($configs instanceof Memcached) {
             $this->setMemcached($configs);
+            $this->setAutoClose(false);
         }
     }
 

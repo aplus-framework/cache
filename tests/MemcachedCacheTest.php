@@ -57,6 +57,7 @@ class MemcachedCacheTest extends TestCase
         $memcached = new \Memcached();
         $cache->setMemcached($memcached);
         self::assertSame($memcached, $cache->getMemcached());
+        self::assertTrue($cache->isAutoClose());
     }
 
     public function testCustomInstanceConstructor() : void
@@ -64,5 +65,6 @@ class MemcachedCacheTest extends TestCase
         $memcached = new \Memcached();
         $cache = new MemcachedCache($memcached);
         self::assertSame($memcached, $cache->getMemcached());
+        self::assertFalse($cache->isAutoClose());
     }
 }

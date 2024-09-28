@@ -54,6 +54,7 @@ class RedisCache extends Cache
         parent::__construct($configs, $prefix, $serializer, $logger);
         if ($configs instanceof Redis) {
             $this->setRedis($configs);
+            $this->setAutoClose(false);
         }
     }
 
