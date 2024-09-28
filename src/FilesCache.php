@@ -9,9 +9,11 @@
  */
 namespace Framework\Cache;
 
+use Framework\Log\Logger;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;
+use SensitiveParameter;
 
 /**
  * Class FilesCache.
@@ -34,6 +36,24 @@ class FilesCache extends Cache
      * @var string|null
      */
     protected ?string $baseDirectory;
+
+    /**
+     * FilesCache constructor.
+     *
+     * @param array<string,mixed>|null $configs Driver specific configurations
+     * @param string|null $prefix Keys prefix
+     * @param Serializer|string $serializer Data serializer
+     * @param Logger|null $logger Logger instance
+     */
+    public function __construct(
+        #[SensitiveParameter]
+        ?array $configs = [],
+        ?string $prefix = null,
+        Serializer | string $serializer = Serializer::PHP,
+        ?Logger $logger = null
+    ) {
+        parent::__construct($configs, $prefix, $serializer, $logger);
+    }
 
     public function __destruct()
     {
