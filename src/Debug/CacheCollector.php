@@ -13,6 +13,7 @@ use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
 use Framework\Debug\Collector;
+use Framework\Debug\Debugger;
 
 /**
  * Class CacheCollector.
@@ -95,7 +96,7 @@ class CacheCollector extends Collector
                 <th>Value</th>
                 <th title="Time To Live in seconds">TTL</th>
                 <th>Expires At</th>
-                <th title="Seconds">Time</th>
+                <th title="Milliseconds">Time</th>
             </tr>
             </thead>
             <tbody>
@@ -116,7 +117,7 @@ class CacheCollector extends Collector
                             $ttl = $data['start'] + $data['ttl'];
                             echo \date('Y-m-d H:i:s', (int) $ttl);
                         } ?></td>
-                    <td><?= \round($data['end'] - $data['start'], 6) ?></td>
+                    <td><?= Debugger::roundSecondsToMilliseconds($data['end'] - $data['start']) ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
