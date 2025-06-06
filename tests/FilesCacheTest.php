@@ -30,14 +30,6 @@ class FilesCacheTest extends TestCase
         );
     }
 
-    public function tearDown() : void
-    {
-        if (\is_dir($this->configs['directory'])) {
-            \chmod($this->configs['directory'], 0777);
-        }
-        parent::tearDown();
-    }
-
     public function testSerializer() : void
     {
         $this->cache = new FilesCache(
@@ -104,7 +96,7 @@ class FilesCacheTest extends TestCase
         if (\getenv('GITLAB_CI')) {
             $this->markTestIncomplete();
         }
-        \chmod($this->configs['directory'], 0400);
+        \exec('chmod 400 ' . $this->configs['directory'] . '*');
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
             "Cache directory is not writable: {$this->configs['directory']}{$this->prefix}"
@@ -118,9 +110,15 @@ class FilesCacheTest extends TestCase
             $this->markTestIncomplete();
         }
         self::assertTrue($this->cache->set('key', 'value'));
-        \exec('chmod 444 ' . $this->configs['directory'] . '*');
+        $key = \md5('key');
+        $subdir = $key[0] . $key[1] . '/';
+        $prefix = '';
+        if ($this->prefix !== '') {
+            $prefix = $this->prefix . '/';
+        }
+        $dir = $this->configs['directory'] . $prefix;
+        \exec('chmod 444 ' . $dir . $subdir . '*');
         self::assertFalse($this->cache->set('key', 'value'));
-        \exec('chmod 777 ' . $this->configs['directory'] . '*');
     }
 
     public function testGetFailure() : void
