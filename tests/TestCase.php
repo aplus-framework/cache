@@ -9,6 +9,7 @@
  */
 namespace Tests\Cache;
 
+use Framework\Cache\ApcuCache;
 use Framework\Cache\Cache;
 use Framework\Cache\Debug\CacheCollector;
 use Framework\Cache\FilesCache;
@@ -245,6 +246,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->cache->setDebugCollector($collector);
         // @phpstan-ignore-next-line
         $handler = match ($this->cache::class) {
+            ApcuCache::class => 'apcu',
             FilesCache::class => 'files',
             MemcachedCache::class => 'memcached',
             RedisCache::class => 'redis',
