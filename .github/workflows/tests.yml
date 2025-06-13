@@ -98,6 +98,7 @@ jobs:
           php-version: latest
           tools: composer
           coverage: xdebug
+          ini-values: apc.enable_cli=1
 
       - name: Install dependencies
         run:
