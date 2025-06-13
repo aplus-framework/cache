@@ -34,7 +34,6 @@ jobs:
           php-version: 8.3
           tools: composer
           coverage: xdebug
-          extensions: apcu
           ini-values: apc.enabled=1, apc.enable_cli=1
 
       - name: Install dependencies
