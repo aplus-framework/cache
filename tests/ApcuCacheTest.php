@@ -11,7 +11,7 @@ namespace Tests\Cache;
 
 use Framework\Cache\ApcuCache;
 
-final class ApcuCacheTest extends TestCase
+class ApcuCacheTest extends TestCase
 {
     public function setUp() : void
     {
