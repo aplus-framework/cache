@@ -9,6 +9,8 @@
  */
 namespace Framework\Cache;
 
+use RuntimeException;
+
 /**
  * Class ApcuCache.
  *
@@ -16,6 +18,13 @@ namespace Framework\Cache;
  */
 class ApcuCache extends Cache
 {
+    protected function initialize() : void
+    {
+        if (!\apcu_enabled()) {
+            throw new RuntimeException('APCu extension is not enabled');
+        }
+    }
+
     public function get(string $key) : mixed
     {
         if (isset($this->debugCollector)) {

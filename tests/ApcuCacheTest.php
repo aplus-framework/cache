@@ -18,9 +18,6 @@ class ApcuCacheTest extends TestCase
         if (!\extension_loaded('apcu')) {
             throw new \RuntimeException('APCu extension is not loaded');
         }
-        if (!\apcu_enabled()) {
-           throw new \RuntimeException('APCu extension is not enabled');
-        }
         $this->cache = new ApcuCache(
             $this->configs,
             $this->prefix,
