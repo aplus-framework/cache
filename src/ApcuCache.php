@@ -34,7 +34,7 @@ class ApcuCache extends Cache
         $key = \apcu_fetch($this->renderKey($key), $success);
         return $success
             ? $this->unserialize($key)
-            : false;
+            : null;
     }
 
     public function set(string $key, mixed $value, ?int $ttl = null) : bool
