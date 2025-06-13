@@ -9,6 +9,7 @@
  */
 namespace Framework\Cache\Debug;
 
+use Framework\Cache\ApcuCache;
 use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
@@ -129,6 +130,7 @@ class CacheCollector extends Collector
     protected function getHandler() : string
     {
         foreach ([
+            'apcu' => ApcuCache::class,
             'files' => FilesCache::class,
             'memcached' => MemcachedCache::class,
             'redis' => RedisCache::class,
