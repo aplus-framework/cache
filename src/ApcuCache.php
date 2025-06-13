@@ -32,8 +32,6 @@ class ApcuCache extends Cache
     protected function getValue(string $key) : mixed
     {
         $key = \apcu_fetch($this->renderKey($key), $success);
-        \var_dump('$success:');
-        \var_dump($success);
         return $success
             ? $this->unserialize($key)
             : false;

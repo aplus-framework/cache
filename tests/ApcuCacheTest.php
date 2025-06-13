@@ -15,16 +15,12 @@ final class ApcuCacheTest extends TestCase
 {
     public function setUp() : void
     {
-        $loaded = \extension_loaded('apcu');
-        if (!$loaded) {
+        if (!\extension_loaded('apcu')) {
             throw new \RuntimeException('APCu extension is not loaded');
         }
-        \var_dump('apcu_cache_info():');
-        \var_dump(\apcu_cache_info());
         if (!\apcu_enabled()) {
-           // throw new \RuntimeException('APCu extension is not enabled');
+           throw new \RuntimeException('APCu extension is not enabled');
         }
-
         $this->cache = new ApcuCache(
             $this->configs,
             $this->prefix,
