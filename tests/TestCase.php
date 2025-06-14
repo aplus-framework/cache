@@ -47,6 +47,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         return $logger;
     }
 
+    public function testGetSerializer() : void
+    {
+        self::assertSame($this->serializer, $this->cache->getSerializer());
+    }
+
     public function testSetAndGet() : void
     {
         self::assertNull($this->cache->get('foo'));

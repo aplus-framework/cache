@@ -145,6 +145,11 @@ abstract class Cache
         return $this;
     }
 
+    public function getSerializer() : Serializer
+    {
+        return $this->serializer;
+    }
+
     /**
      * Initialize Cache handlers and configurations.
      */
