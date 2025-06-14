@@ -62,11 +62,16 @@ class ApcuCache extends Cache
             : null;
     }
 
-    public function set(string $key, mixed $value, ?int $ttl = null) : bool
+    protected function makeValue(mixed $value) : mixed
     {
         if ($this->isUsingCustomSerializer()) {
-            $value = $this->serialize($value);
+            return $this->serialize($value);
         }
+        return $value;
+    }
+
+    public function set(string $key, mixed $value, ?int $ttl = null) : bool
+    {
         if (isset($this->debugCollector)) {
             $start = \microtime(true);
             return $this->addDebugSet(
@@ -76,14 +81,14 @@ class ApcuCache extends Cache
                 $value,
                 \apcu_store(
                     $this->renderKey($key),
-                    $value,
+                    $this->makeValue($value),
                     $this->makeTtl($ttl)
                 )
             );
         }
         return \apcu_store(
             $this->renderKey($key),
-            $value,
+            $this->makeValue($value),
             $this->makeTtl($ttl)
         );
     }
