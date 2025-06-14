@@ -71,12 +71,22 @@ class CacheCollector extends Collector
         <?php
         endif ?>
         <p><strong>Serializer:</strong>
-            <?= \htmlentities($this->info['serializer']) ?>
+            <?= \htmlentities($this->getSerializer()) ?>
         </p>
         <h1>Commands</h1>
         <?php
         echo $this->renderCommands();
         return \ob_get_clean(); // @phpstan-ignore-line
+    }
+
+    protected function getSerializer() : string
+    {
+        if ($this->info['class'] === ApcuCache::class
+            && isset($this->info['configs']['use_custom_serializer'])
+            && $this->info['configs']['use_custom_serializer'] === false) {
+            return \ini_get('apc.serializer') ?: '';
+        }
+        return $this->info['serializer'];
     }
 
     protected function renderCommands() : string

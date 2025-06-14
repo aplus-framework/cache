@@ -396,6 +396,7 @@ abstract class Cache
         $this->debugCollector = $debugCollector;
         $this->debugCollector->setInfo([
             'class' => static::class,
+            'configs' => $this->configs,
             'prefix' => $this->prefix,
             'serializer' => $this->serializer->value,
         ]);
