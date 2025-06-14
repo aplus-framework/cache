@@ -86,7 +86,9 @@ class CacheCollector extends Collector
         }
         $count = \count($this->getData());
         \ob_start(); ?>
-        <p>Ran <?= $count ?> command<?= $count === 1 ? '' : 's' ?>:</p>
+        <p>Ran <?= $count ?> command<?= $count === 1 ? '' : 's' ?>
+            in <?= $this->getCommandsTime() ?> ms:
+        </p>
         <table>
             <thead>
             <tr>
@@ -125,6 +127,16 @@ class CacheCollector extends Collector
         </table>
         <?php
         return \ob_get_clean(); // @phpstan-ignore-line
+    }
+
+    protected function getCommandsTime() : float
+    {
+        $time = .0;
+        foreach ($this->getData() as $data) {
+            $total = $data['end'] - $data['start'];
+            $time += $total;
+        }
+        return Debugger::roundSecondsToMilliseconds($time);
     }
 
     protected function getHandler() : string
