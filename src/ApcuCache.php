@@ -26,24 +26,17 @@ class ApcuCache extends Cache
     protected array $configs = [
         'use_custom_serializer' => true,
     ];
-    protected bool $useCustomSerializer = true;
 
     protected function initialize() : void
     {
         if (!\apcu_enabled()) {
             throw new RuntimeException('APCu extension is not enabled');
         }
-        $this->setCustomSerializer();
-    }
-
-    protected function setCustomSerializer() : void
-    {
-        $this->useCustomSerializer = $this->configs['use_custom_serializer'];
     }
 
     public function isUsingCustomSerializer() : bool
     {
-        return $this->useCustomSerializer;
+        return $this->configs['use_custom_serializer'];
     }
 
     public function get(string $key) : mixed
