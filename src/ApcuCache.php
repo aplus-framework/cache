@@ -18,6 +18,14 @@ use RuntimeException;
  */
 class ApcuCache extends Cache
 {
+    /**
+     * APCu Cache handler configurations.
+     *
+     * @var array<string,mixed>
+     */
+    protected array $configs = [
+        'use_custom_serializer' => true,
+    ];
     protected bool $useCustomSerializer = true;
 
     protected function initialize() : void
@@ -30,7 +38,7 @@ class ApcuCache extends Cache
 
     protected function setCustomSerializer() : void
     {
-        $this->useCustomSerializer = $this->configs['use_custom_serializer'] ?? true;
+        $this->useCustomSerializer = $this->configs['use_custom_serializer'];
     }
 
     public function isUsingCustomSerializer() : bool
