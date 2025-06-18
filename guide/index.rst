@@ -139,13 +139,35 @@ method:
 Cache Handlers
 --------------
 
-There are 3 cache handlers in the library and they are the following:
+There are 4 cache handlers in the library and they are the following:
 
+- `ApcuCache`_
 - `FilesCache`_
 - `MemcachedCache`_
 - `RedisCache`_
 
-All handlers receive configs, prefix, serializer and logger through the constructor.
+All handlers receive configs, prefix, serializer and logger through the constructor:
+
+.. code-block:: php
+
+    public function __construct(
+        mixed $configs = [],
+        ?string $prefix = null,
+        Serializer | string $serializer = Serializer::PHP,
+        ?Logger $logger = null
+    ) {...}
+
+ApcuCache
+#########
+
+ApcuCache is the fastest caching system and can be instantiated as in the
+example below:
+
+.. code-block:: php
+
+    use Framework\Cache\ApcuCache;
+
+    $cache = new ApcuCache();
 
 FilesCache
 ##########
