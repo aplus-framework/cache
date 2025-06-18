@@ -101,7 +101,7 @@ class CacheCollector extends Collector
                 <th>Command</th>
                 <th>Status</th>
                 <th>Key</th>
-                <th>Value</th>
+                <th>Value Type</th>
                 <th title="Time To Live in seconds">TTL</th>
                 <th>Expires At</th>
                 <th title="Milliseconds">Time</th>

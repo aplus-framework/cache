@@ -10,7 +10,6 @@
 namespace Framework\Cache;
 
 use Framework\Cache\Debug\CacheCollector;
-use Framework\Debug\Debugger;
 use Framework\Log\Logger;
 use Framework\Log\LogLevel;
 use InvalidArgumentException;
@@ -412,7 +411,7 @@ abstract class Cache
             'command' => 'GET',
             'status' => $value === null ? 'FAIL' : 'OK',
             'key' => $key,
-            'value' => Debugger::makeDebugValue($value),
+            'value' => \get_debug_type($value),
         ]);
         return $value;
     }
@@ -426,7 +425,7 @@ abstract class Cache
             'command' => 'SET',
             'status' => $status ? 'OK' : 'FAIL',
             'key' => $key,
-            'value' => Debugger::makeDebugValue($value),
+            'value' => \get_debug_type($value),
             'ttl' => $this->makeTtl($ttl),
         ]);
         return $status;
