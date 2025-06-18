@@ -112,7 +112,9 @@ class CacheCollector extends Collector
                 <tr>
                     <td><?= $index + 1 ?></td>
                     <td><?= \htmlentities($data['command']) ?></td>
-                    <td><?= \htmlentities($data['status']) ?></td>
+                    <td style="color: <?= $data['status'] === 'OK' ? 'green' : 'red' ?>">
+                        <?= \htmlentities($data['status']) ?>
+                    </td>
                     <td><?= \htmlentities($data['key'] ?? '') ?></td>
                     <td>
                         <?php if (isset($data['value'])): ?>
