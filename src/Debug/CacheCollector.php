@@ -81,10 +81,6 @@ class CacheCollector extends Collector
 
     protected function getSerializer() : string
     {
-        if ($this->info['class'] === ApcuCache::class
-            && $this->info['configs']['use_custom_serializer'] === false) {
-            return \ini_get('apc.serializer') ?: '';
-        }
         return $this->info['serializer'];
     }
 

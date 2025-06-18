@@ -18,25 +18,11 @@ use RuntimeException;
  */
 class ApcuCache extends Cache
 {
-    /**
-     * APCu Cache handler configurations.
-     *
-     * @var array<string,mixed>
-     */
-    protected array $configs = [
-        'use_custom_serializer' => true,
-    ];
-
     protected function initialize() : void
     {
         if (!\apcu_enabled()) {
             throw new RuntimeException('APCu extension is not enabled');
         }
-    }
-
-    public function isUsingCustomSerializer() : bool
-    {
-        return $this->configs['use_custom_serializer'];
     }
 
     public function get(string $key) : mixed
@@ -55,20 +41,9 @@ class ApcuCache extends Cache
     protected function getValue(string $key) : mixed
     {
         $key = \apcu_fetch($this->renderKey($key), $success);
-        if ($success && $this->isUsingCustomSerializer()) {
-            $key = $this->unserialize($key);
-        }
         return $success
-            ? $key
+            ? $this->unserialize($key)
             : null;
-    }
-
-    protected function makeValue(mixed $value) : mixed
-    {
-        if ($this->isUsingCustomSerializer()) {
-            return $this->serialize($value);
-        }
-        return $value;
     }
 
     public function set(string $key, mixed $value, ?int $ttl = null) : bool
@@ -82,14 +57,14 @@ class ApcuCache extends Cache
                 $value,
                 \apcu_store(
                     $this->renderKey($key),
-                    $this->makeValue($value),
+                    $this->serialize($value),
                     $this->makeTtl($ttl)
                 )
             );
         }
         return \apcu_store(
             $this->renderKey($key),
-            $this->makeValue($value),
+            $this->serialize($value),
             $this->makeTtl($ttl)
         );
     }

@@ -46,12 +46,6 @@ class ApcuCacheTest extends TestCase
         );
     }
 
-    public function testCustomSerializer() : void
-    {
-        // @phpstan-ignore-next-line
-        self::assertTrue($this->cache->isUsingCustomSerializer());
-    }
-
     public function testDefaultConfigs() : void
     {
         self::assertInstanceOf(ApcuCache::class, new ApcuCache());
