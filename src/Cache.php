@@ -19,6 +19,8 @@ use SensitiveParameter;
 /**
  * Class Cache.
  *
+ * @todo Add way to use internal serializer in handlers
+ *
  * @package cache
  */
 abstract class Cache
