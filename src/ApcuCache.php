@@ -15,6 +15,8 @@ use RuntimeException;
  * Class ApcuCache.
  *
  * @package cache
+ *
+ * @since 4.3
  */
 class ApcuCache extends Cache
 {
