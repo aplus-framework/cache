@@ -112,7 +112,7 @@ class MemcachedCache extends Cache
 
     public function get(string $key) : mixed
     {
-        if (isset($this->debugCollector)) {
+        if ($this->isDebugging()) {
             $start = \microtime(true);
             return $this->addDebugGet(
                 $key,
@@ -133,7 +133,7 @@ class MemcachedCache extends Cache
 
     public function set(string $key, mixed $value, ?int $ttl = null) : bool
     {
-        if (isset($this->debugCollector)) {
+        if ($this->isDebugging()) {
             $start = \microtime(true);
             return $this->addDebugSet(
                 $key,
@@ -148,7 +148,7 @@ class MemcachedCache extends Cache
 
     public function delete(string $key) : bool
     {
-        if (isset($this->debugCollector)) {
+        if ($this->isDebugging()) {
             $start = \microtime(true);
             return $this->addDebugDelete(
                 $key,
@@ -161,7 +161,7 @@ class MemcachedCache extends Cache
 
     public function flush() : bool
     {
-        if (isset($this->debugCollector)) {
+        if ($this->isDebugging()) {
             $start = \microtime(true);
             return $this->addDebugFlush(
                 $start,

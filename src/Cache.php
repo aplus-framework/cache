@@ -466,4 +466,14 @@ abstract class Cache
         ]);
         return $status;
     }
+
+    /**
+     * Tell if the cache driver is in debug mode.
+     *
+     * @return bool
+     */
+    public function isDebugging() : bool
+    {
+        return isset($this->debugCollector);
+    }
 }
