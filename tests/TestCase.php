@@ -271,4 +271,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $cache->setDebugCollector($collector);
         self::assertStringContainsString('@anonymous', $collector->getHandler());
     }
+
+    public function testInvalidTtl() : void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('TTL must be greater than 0. -2 given');
+        $this->cache->set('foo', 'bar', -2);
+    }
 }

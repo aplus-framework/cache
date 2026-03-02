@@ -187,13 +187,20 @@ abstract class Cache
      */
     public function setDefaultTtl(int $seconds) : static
     {
-        if ($seconds < 1) {
-            throw new InvalidArgumentException(
-                'Default TTL must be greater than 0. ' . $seconds . ' given'
-            );
-        }
+        $this->validateTtl($seconds, true);
         $this->defaultTtl = $seconds;
         return $this;
+    }
+
+    protected function validateTtl(?int $seconds, bool $isDefault = false) : void
+    {
+        if ($seconds < 1) {
+            $message = 'TTL must be greater than 0. ' . $seconds . ' given';
+            if ($isDefault) {
+                $message = 'Default ' . $message;
+            }
+            throw new InvalidArgumentException($message);
+        }
     }
 
     /**
@@ -206,7 +213,9 @@ abstract class Cache
     #[Pure]
     protected function makeTtl(?int $seconds) : int
     {
-        return $seconds ?? $this->getDefaultTtl();
+        $seconds ??= $this->getDefaultTtl();
+        $this->validateTtl($seconds);
+        return $seconds;
     }
 
     /**
