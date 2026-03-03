@@ -192,6 +192,14 @@ abstract class Cache
         return $this;
     }
 
+    /**
+     * Validate TTL.
+     *
+     * @since 5
+     *
+     * @param int|null $seconds
+     * @param bool $isDefault
+     */
     protected function validateTtl(?int $seconds, bool $isDefault = false) : void
     {
         if ($seconds < 1) {
@@ -469,6 +477,8 @@ abstract class Cache
 
     /**
      * Tell if the cache driver is in debug mode.
+     *
+     * @since 5
      *
      * @return bool
      */
