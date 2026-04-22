@@ -242,7 +242,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
     public function testDebugHandler() : void
     {
-        $collector = new class() extends CacheCollector {
+        $collector = new class() extends CacheCollector
+        {
             public function getHandler() : string
             {
                 return parent::getHandler();
@@ -257,7 +258,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             RedisCache::class => 'redis',
         };
         self::assertSame($handler, $collector->getHandler());
-        $cache = new class() extends FilesCache {
+        $cache = new class() extends FilesCache
+        {
             protected Serializer $serializer = Serializer::PHP;
 
             public function __construct()
