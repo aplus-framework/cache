@@ -94,7 +94,7 @@ class FilesCache extends Cache
         }
         if (!\is_dir($real)) {
             throw new RuntimeException(
-                "Invalid cache directory path: {$real}"
+                "Cache directory does not exist: {$real}"
             );
         }
         if (!\is_writable($real)) {

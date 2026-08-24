@@ -81,7 +81,7 @@ class FilesCacheTest extends TestCase
         $this->prefix = 'foo';
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(
-            "Invalid cache directory path: {$this->configs['directory']}{$this->prefix}"
+            "Cache directory does not exist: {$this->configs['directory']}{$this->prefix}"
         );
         new FilesCache($this->configs, $this->prefix, $this->serializer);
     }
