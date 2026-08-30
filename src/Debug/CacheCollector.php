@@ -14,7 +14,7 @@ use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
 use Framework\Debug\Collector;
-use Framework\Debug\Debugger;
+use Framework\Debug\Debugger as D;
 
 /**
  * Class CacheCollector.
@@ -61,17 +61,17 @@ class CacheCollector extends Collector
         }
         \ob_start(); ?>
         <p><strong>Handler:</strong>
-            <?= \htmlentities($this->getHandler()) ?>
+            <?= D::esc($this->getHandler()) ?>
         </p>
         <?php
         if (isset($this->info['prefix'])) : ?>
             <p><strong>Keys Prefix:</strong>
-                <?= \htmlentities($this->info['prefix']) ?>
+                <?= D::esc($this->info['prefix']) ?>
             </p>
         <?php
         endif ?>
         <p><strong>Serializer:</strong>
-            <?= \htmlentities($this->getSerializer()) ?>
+            <?= D::esc($this->getSerializer()) ?>
         </p>
         <h1>Commands</h1>
         <?php
@@ -111,23 +111,23 @@ class CacheCollector extends Collector
             <?php foreach ($this->getData() as $index => $data): ?>
                 <tr>
                     <td><?= $index + 1 ?></td>
-                    <td><?= \htmlentities($data['command']) ?></td>
+                    <td><?= D::esc($data['command']) ?></td>
                     <td class="text-<?= $data['status'] === 'OK' ? 'success' : 'error' ?>">
-                        <?= \htmlentities($data['status']) ?>
+                        <?= D::esc($data['status']) ?>
                     </td>
-                    <td><?= \htmlentities($data['key'] ?? '') ?></td>
+                    <td><?= D::esc($data['key'] ?? '') ?></td>
                     <td>
                         <?php if (isset($data['value'])): ?>
-                            <pre><code class="language-php"><?= \htmlentities($data['value']) ?></code></pre>
+                            <pre><code class="language-php"><?= D::esc($data['value']) ?></code></pre>
                         <?php endif ?>
                     </td>
-                    <td><?= \htmlentities((string) ($data['ttl'] ?? '')) ?></td>
+                    <td><?= D::esc(($data['ttl'] ?? '')) ?></td>
                     <td><?php
                         if (isset($data['ttl'])) {
                             $ttl = $data['start'] + $data['ttl'];
                             echo \date('Y-m-d H:i:s', (int) $ttl);
                         } ?></td>
-                    <td><?= Debugger::roundSecondsToMilliseconds($data['end'] - $data['start']) ?></td>
+                    <td><?= D::roundSecondsToMilliseconds($data['end'] - $data['start']) ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
@@ -143,7 +143,7 @@ class CacheCollector extends Collector
             $total = $data['end'] - $data['start'];
             $time += $total;
         }
-        return Debugger::roundSecondsToMilliseconds($time);
+        return D::roundSecondsToMilliseconds($time);
     }
 
     protected function getHandler() : string
