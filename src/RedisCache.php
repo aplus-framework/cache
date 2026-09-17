@@ -29,16 +29,16 @@ class RedisCache extends Cache
      *      host: string,
      *      port: int,
      *      timeout: float,
-     *      password: mixed,
-     *      database: int|null,
+     *      credentials: mixed,
+     *      db: int|null,
      * }
      */
     protected array $configs = [
         'host' => '127.0.0.1',
         'port' => 6379,
         'timeout' => 0.0,
-        'password' => null,
-        'database' => null,
+        'credentials' => null,
+        'db' => null,
     ];
 
     /**
@@ -48,8 +48,8 @@ class RedisCache extends Cache
      *      host?: string,
      *      port?: int,
      *      timeout?: float,
-     *      password?: mixed,
-     *      database?: int|null,
+     *      credentials?: mixed,
+     *      db?: int|null,
      * }|null $configs Driver specific
      * configurations. Set null to not initialize or a custom Redis object.
      * @param string|null $prefix Keys prefix
@@ -83,11 +83,11 @@ class RedisCache extends Cache
             $this->configs['port'],
             $this->configs['timeout']
         );
-        if (isset($this->configs['password'])) {
-            $this->redis->auth($this->configs['password']);
+        if (isset($this->configs['credentials'])) {
+            $this->redis->auth($this->configs['credentials']);
         }
-        if (isset($this->configs['database'])) {
-            $this->redis->select($this->configs['database']);
+        if (isset($this->configs['db'])) {
+            $this->redis->select($this->configs['db']);
         }
     }
 

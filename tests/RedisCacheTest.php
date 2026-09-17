@@ -55,7 +55,7 @@ class RedisCacheTest extends TestCase
     {
         $this->configs = [
             'host' => \getenv('REDIS_HOST'),
-            'password' => 'foo',
+            'credentials' => 'foo',
         ];
         $this->expectException(\RedisException::class);
         $this->setCache();
@@ -65,7 +65,7 @@ class RedisCacheTest extends TestCase
     {
         $this->configs = [
             'host' => \getenv('REDIS_HOST'),
-            'database' => 0,
+            'db' => 0,
         ];
         $this->setCache();
         self::assertInstanceOf(RedisCache::class, $this->cache);
