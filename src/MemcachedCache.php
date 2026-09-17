@@ -28,7 +28,14 @@ class MemcachedCache extends Cache
     /**
      * Memcached Cache handler configurations.
      *
-     * @var array<string,mixed>
+     * @var array{
+     *      servers: array<array{
+     *          host: string,
+     *          port?: int,
+     *          weight?: int,
+     *      }>,
+     *      options: array<int,mixed>,
+     * }
      */
     protected array $configs = [
         'servers' => [
@@ -46,7 +53,14 @@ class MemcachedCache extends Cache
     /**
      * MemcachedCache constructor.
      *
-     * @param Memcached|array<string,mixed>|null $configs Driver specific
+     * @param Memcached|array{
+     *      servers?: array<array{
+     *          host: string,
+     *          port?: int,
+     *          weight?: int,
+     *      }>,
+     *      options?: array<int,mixed>,
+     * }|null $configs Driver specific
      * configurations. Set null to not initialize or a custom Memcached object.
      * @param string|null $prefix Keys prefix
      * @param Serializer|string $serializer Data serializer

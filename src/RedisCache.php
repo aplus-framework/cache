@@ -25,7 +25,13 @@ class RedisCache extends Cache
     /**
      * Redis Cache handler configurations.
      *
-     * @var array<string,mixed>
+     * @var array{
+     *      host: string,
+     *      port: int,
+     *      timeout: float,
+     *      password: mixed,
+     *      database: int|null,
+     * }
      */
     protected array $configs = [
         'host' => '127.0.0.1',
@@ -38,7 +44,13 @@ class RedisCache extends Cache
     /**
      * RedisCache constructor.
      *
-     * @param Redis|array<string,mixed>|null $configs Driver specific
+     * @param Redis|array{
+     *      host?: string,
+     *      port?: int,
+     *      timeout?: float,
+     *      password?: mixed,
+     *      database?: int|null,
+     * }|null $configs Driver specific
      * configurations. Set null to not initialize or a custom Redis object.
      * @param string|null $prefix Keys prefix
      * @param Serializer|string $serializer Data serializer

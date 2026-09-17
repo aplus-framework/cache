@@ -25,7 +25,11 @@ class FilesCache extends Cache
     /**
      * Files Cache handler configurations.
      *
-     * @var array<string,mixed>
+     * @var array{
+     *      directory: string|null,
+     *      files_permission: int,
+     *      gc: int,
+     * }
      */
     protected array $configs = [
         'directory' => null,
@@ -40,7 +44,11 @@ class FilesCache extends Cache
     /**
      * FilesCache constructor.
      *
-     * @param array<string,mixed>|null $configs Driver specific configurations
+     * @param array{
+     *      directory?: string|null,
+     *      files_permission?: int,
+     *      gc?: int,
+     * }|null $configs Driver specific configurations
      * @param string|null $prefix Keys prefix
      * @param Serializer|string $serializer Data serializer
      * @param Logger|null $logger Logger instance

@@ -18,7 +18,7 @@ class MemcachedCacheTest extends TestCase
         $this->configs = [
             'servers' => [
                 [
-                    'host' => \getenv('MEMCACHED_HOST'),
+                    'host' => (string) \getenv('MEMCACHED_HOST'),
                 ],
             ],
         ];

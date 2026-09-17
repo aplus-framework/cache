@@ -46,10 +46,10 @@ final class MemcachedCacheMultiServerTest extends MemcachedCacheTest
         $configs = [
             'servers' => [
                 [
-                    'host' => \getenv('MEMCACHED_HOST'),
+                    'host' => (string) \getenv('MEMCACHED_HOST'),
                 ],
                 [
-                    'host' => \getenv('MEMCACHED_HOST'),
+                    'host' => (string) \getenv('MEMCACHED_HOST'),
                 ],
             ],
         ];
