@@ -29,7 +29,7 @@ class RedisCache extends Cache
      *      host: string,
      *      port: int,
      *      timeout: float,
-     *      credentials: mixed,
+     *      credentials: array<string>|string|null,
      *      db: int|null,
      * }
      */
@@ -48,7 +48,7 @@ class RedisCache extends Cache
      *      host?: string,
      *      port?: int,
      *      timeout?: float,
-     *      credentials?: mixed,
+     *      credentials?: array<string>|string|null,
      *      db?: int|null,
      * }|null $configs Driver specific
      * configurations. Set null to not initialize or a custom Redis object.
