@@ -13,7 +13,6 @@ use Framework\Cache\Debug\CacheCollector;
 use Framework\Log\Logger;
 use Framework\Log\LogLevel;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\Pure;
 use SensitiveParameter;
 
 /**
@@ -172,7 +171,6 @@ abstract class Cache
      *
      * @return int
      */
-    #[Pure]
     public function getDefaultTtl() : int
     {
         return $this->defaultTtl;
@@ -218,7 +216,6 @@ abstract class Cache
      *
      * @return int The input $seconds or the $defaultTtl as integer
      */
-    #[Pure]
     protected function makeTtl(?int $seconds) : int
     {
         $seconds ??= $this->getDefaultTtl();
@@ -358,7 +355,6 @@ abstract class Cache
         return true;
     }
 
-    #[Pure]
     protected function renderKey(string $key) : string
     {
         return $this->prefix . $key;

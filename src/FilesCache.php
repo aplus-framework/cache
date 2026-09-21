@@ -11,7 +11,6 @@ namespace Framework\Cache;
 
 use Framework\Log\Logger;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use SensitiveParameter;
 
@@ -342,7 +341,6 @@ class FilesCache extends Cache
         }
     }
 
-    #[Pure]
     protected function renderFilepath(string $key) : string
     {
         $key = \md5($key);
