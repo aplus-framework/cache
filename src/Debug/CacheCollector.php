@@ -13,6 +13,7 @@ use Framework\Cache\ApcuCache;
 use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
+use Framework\Debug\Activity;
 use Framework\Debug\Collector;
 use Framework\Debug\Debugger as D;
 
@@ -43,13 +44,13 @@ class CacheCollector extends Collector
     {
         $activities = [];
         foreach ($this->getData() as $index => $data) {
-            $activities[] = [
-                'collector' => $this->getName(),
-                'class' => static::class,
-                'description' => 'Run command ' . ($index + 1),
-                'start' => $data['start'],
-                'end' => $data['end'],
-            ];
+            $activities[] = new Activity(
+                collector: $this->getName(),
+                class: static::class,
+                description: 'Run command ' . ($index + 1),
+                start: $data['start'],
+                end: $data['end'],
+            );
         }
         return $activities;
     }

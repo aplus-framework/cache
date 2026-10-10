@@ -16,6 +16,7 @@ use Framework\Cache\FilesCache;
 use Framework\Cache\MemcachedCache;
 use Framework\Cache\RedisCache;
 use Framework\Cache\Serializer;
+use Framework\Debug\Activity;
 use Framework\Log\Logger;
 use Framework\Log\Loggers\MultiFileLogger;
 
@@ -194,15 +195,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $collector = $this->setCollector();
         self::assertEmpty($collector->getActivities());
         $this->cache->get('foo');
-        self::assertSame(
-            [
-                'collector',
-                'class',
-                'description',
-                'start',
-                'end',
-            ],
-            \array_keys($collector->getActivities()[0]) // @phpstan-ignore-line
+        self::assertInstanceOf(
+            Activity::class,
+            $collector->getActivities()[0] // @phpstan-ignore-line
         );
     }
 
