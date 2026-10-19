@@ -58,7 +58,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Framework\\Cache\\": "src/"
+            "Aplus\\Cache\\": "src/"
         }
     },
     "autoload-dev": {
