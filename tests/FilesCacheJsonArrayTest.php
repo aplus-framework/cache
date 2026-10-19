@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Serializer;
+use Aplus\Cache\Serializer;
 
 final class FilesCacheJsonArrayTest extends FilesCacheTest
 {

@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\MemcachedCache;
+use Aplus\Cache\MemcachedCache;
 
 class MemcachedCacheTest extends TestCase
 {
@@ -40,7 +40,7 @@ class MemcachedCacheTest extends TestCase
         );
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            '"foo" is not a valid backing value for enum Framework\Cache\Serializer'
+            '"foo" is not a valid backing value for enum Aplus\Cache\Serializer'
         );
         $this->cache = new MemcachedCache(
             $this->configs,

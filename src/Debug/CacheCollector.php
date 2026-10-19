@@ -7,15 +7,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Framework\Cache\Debug;
+namespace Aplus\Cache\Debug;
 
-use Framework\Cache\ApcuCache;
-use Framework\Cache\FilesCache;
-use Framework\Cache\MemcachedCache;
-use Framework\Cache\RedisCache;
-use Framework\Debug\Activity;
-use Framework\Debug\Collector;
-use Framework\Debug\Debugger as D;
+use Aplus\Cache\ApcuCache;
+use Aplus\Cache\FilesCache;
+use Aplus\Cache\MemcachedCache;
+use Aplus\Cache\RedisCache;
+use Aplus\Debug\Activity;
+use Aplus\Debug\Collector;
+use Aplus\Debug\Debugger as D;
 
 /**
  * Class CacheCollector.

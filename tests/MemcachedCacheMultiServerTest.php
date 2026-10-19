@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\MemcachedCache;
+use Aplus\Cache\MemcachedCache;
 
 final class MemcachedCacheMultiServerTest extends MemcachedCacheTest
 {

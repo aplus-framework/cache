@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\FilesCache;
+use Aplus\Cache\FilesCache;
 
 class FilesCacheTest extends TestCase
 {
@@ -40,7 +40,7 @@ class FilesCacheTest extends TestCase
         );
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            '"foo" is not a valid backing value for enum Framework\Cache\Serializer'
+            '"foo" is not a valid backing value for enum Aplus\Cache\Serializer'
         );
         $this->cache = new FilesCache(
             $this->configs,

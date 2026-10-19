@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\ApcuCache;
+use Aplus\Cache\ApcuCache;
 
 class ApcuCacheTest extends TestCase
 {
@@ -36,7 +36,7 @@ class ApcuCacheTest extends TestCase
         );
         $this->expectException(\ValueError::class);
         $this->expectExceptionMessage(
-            '"foo" is not a valid backing value for enum Framework\Cache\Serializer'
+            '"foo" is not a valid backing value for enum Aplus\Cache\Serializer'
         );
         $this->cache = new ApcuCache(
             $this->configs,

@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache\Debug;
 
-use Framework\Cache\Debug\CacheCollection;
+use Aplus\Cache\Debug\CacheCollection;
 use PHPUnit\Framework\TestCase;
 
 final class CacheCollectionTest extends TestCase

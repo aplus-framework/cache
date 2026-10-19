@@ -9,7 +9,7 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\Cache;
+use Aplus\Cache\Cache;
 
 /**
  * Class CacheMock.

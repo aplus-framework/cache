@@ -9,16 +9,16 @@
  */
 namespace Tests\Cache;
 
-use Framework\Cache\ApcuCache;
-use Framework\Cache\Cache;
-use Framework\Cache\Debug\CacheCollector;
-use Framework\Cache\FilesCache;
-use Framework\Cache\MemcachedCache;
-use Framework\Cache\RedisCache;
-use Framework\Cache\Serializer;
-use Framework\Debug\Activity;
-use Framework\Log\Logger;
-use Framework\Log\Loggers\MultiFileLogger;
+use Aplus\Cache\ApcuCache;
+use Aplus\Cache\Cache;
+use Aplus\Cache\Debug\CacheCollector;
+use Aplus\Cache\FilesCache;
+use Aplus\Cache\MemcachedCache;
+use Aplus\Cache\RedisCache;
+use Aplus\Cache\Serializer;
+use Aplus\Debug\Activity;
+use Aplus\Log\Logger;
+use Aplus\Log\Loggers\MultiFileLogger;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
