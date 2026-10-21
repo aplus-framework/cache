@@ -32,7 +32,7 @@ The logic for caching values is similar to the example below:
 
 .. code-block:: php
 
-    use Framework\Cache\FilesCache;
+    use Aplus\Cache\FilesCache;
     
     $cache = new FilesCache([
         'directory' => '/tmp/cache/'
@@ -165,7 +165,7 @@ example below:
 
 .. code-block:: php
 
-    use Framework\Cache\ApcuCache;
+    use Aplus\Cache\ApcuCache;
 
     $cache = new ApcuCache();
 
@@ -177,7 +177,7 @@ already have default values:
 
 .. code-block:: php
 
-    use Framework\Cache\FilesCache;
+    use Aplus\Cache\FilesCache;
 
     $configs = [
         'directory' => '/patch/to/cache/directory',
@@ -196,7 +196,7 @@ If you want to set different configs, do as follows:
 
 .. code-block:: php
 
-    use Framework\Cache\MemcachedCache;
+    use Aplus\Cache\MemcachedCache;
 
     $configs = [
          'servers' => [
@@ -238,7 +238,7 @@ If it is necessary to define another address, do as in the example below:
 
 .. code-block:: php
 
-    use Framework\Cache\RedisCache;
+    use Aplus\Cache\RedisCache;
 
     $configs = [
         'host' => '192.168.1.100',
